@@ -172,8 +172,8 @@ const handleSubmit = () => {
                 maxlength="12"
                 @focus="isBusinessNumberFocused = true"
                 @blur="
-                  isBusinessNumberFocused = false
-                  touched.businessNumber = true
+                  isBusinessNumberFocused = false;
+                  touched.businessNumber = true;
                 "
               />
               <button
