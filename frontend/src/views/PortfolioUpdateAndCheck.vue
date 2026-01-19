@@ -201,42 +201,6 @@ const goBack = () => router.back()
 
 <template>
   <div class="bg-pattern text-gray-800 dark:text-gray-200 flex flex-col min-h-screen">
-    <div id="app-header"></div>
-
-    <div id="authModal" class="modal-backdrop" aria-hidden="true">
-      <div class="modal-card">
-        <div
-          class="rounded-3xl border border-gray-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-2xl p-5"
-        >
-          <div class="flex items-center justify-between mb-4">
-            <p class="text-sm font-black text-gray-900 dark:text-white">회원 선택</p>
-            <button
-              id="authClose"
-              class="w-9 h-9 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center justify-center"
-              aria-label="닫기"
-              type="button"
-            >
-              ✕
-            </button>
-          </div>
-          <div class="grid grid-cols-1 gap-3">
-            <a
-              href="login.html"
-              class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block"
-            >
-              <span class="text-base font-black text-gray-900 dark:text-white">👤 개인</span>
-            </a>
-            <a
-              href="login.html"
-              class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block"
-            >
-              <span class="text-base font-black text-gray-900 dark:text-white">🏢 법인</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <main class="flex-1 pt-10 pb-20 px-4">
       <div class="max-w-4xl mx-auto">
         <div class="mb-12 max-w-3xl mx-auto">
@@ -244,12 +208,12 @@ const goBack = () => router.back()
             class="flex justify-between text-sm font-bold text-gray-400 dark:text-gray-500 mb-2 px-1 font-poppins"
           >
             <span>01. 프로젝트 작성</span>
-            <span class="text-point-yellow">02. 프로젝트 수정 & 확인</span>
+            <span class="text-yellow-300">02. 프로젝트 수정 & 확인</span>
             <span>03. 스타일</span>
           </div>
           <div class="w-full h-1.5 bg-gray-200 dark:bg-zinc-800 rounded-full overflow-hidden">
             <div
-              class="w-2/3 h-full bg-point-yellow rounded-full transition-all duration-700"
+              class="w-2/3 h-full bg-yellow-300 rounded-full transition-all duration-700"
             ></div>
           </div>
         </div>
