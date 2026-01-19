@@ -1,0 +1,40 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "category": "App Redesign",
+      "date": "2023.01",
+      "title": "E-commerce Mobile App",
+      "description": "기존 쇼핑몰 앱의 복잡한 결제 프로세스를 개선하여 구매 전환율을 15% 상승시킨 리디자인 프로젝트입니다.",
+      "tags": ["UX_Research", "Figma"],
+      "iconClass": "fa-regular fa-image"
+    },
+    {
+      "id": 2,
+      "category": "Web Dashboard",
+      "date": "2023.05",
+      "title": "Finance Admin Dashboard",
+      "description": "복잡한 금융 데이터를 직관적인 차트와 그래프로 시각화하여 관리자 업무 효율을 높인 대시보드입니다.",
+      "tags": ["Data_Viz", "React"],
+      "iconClass": "fa-solid fa-chart-pie"
+    },
+    {
+      "id": 3,
+      "category": "Design System",
+      "date": "2023.08",
+      "title": "Enterprise Design System",
+      "description": "전사 프로덕트의 일관성을 위한 디자인 시스템 구축 프로젝트. 컴포넌트 라이브러리와 가이드라인을 제작했습니다.",
+      "tags": ["System_Design", "Documentation"],
+      "iconClass": "fa-solid fa-swatchbook"
+    },
+    {
+      "id": 4,
+      "category": "Brand Identity",
+      "date": "2023.11",
+      "title": "Startup Branding Package",
+      "description": "신규 IT 스타트업을 위한 로고 디자인, 컬러 팔레트 및 브랜드 가이드라인을 포함한 브랜딩 프로젝트입니다.",
+      "tags": ["Branding", "Illustrator"],
+      "iconClass": "fa-solid fa-pen-nib"
+    }
+  ]
+}
