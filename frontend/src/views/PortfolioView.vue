@@ -1,11 +1,18 @@
 <script setup>
-import { onMounted } from 'vue'
+import { ref } from 'vue'
+// 기존에 만든 컴포넌트 import (경로 확인 필요)
+import NamecardsFront from '@/components/namecards/NamecardsFront.vue'
+import NamecardsBack from '@/components/namecards/NamecardsBack.vue'
 
-function flipCard() {
-  const cardInner = document.getElementById('card-inner')
-  cardInner.classList.toggle('flipped')
+// 카드 뒤집기 상태 관리
+const isFlipped = ref(false)
+
+const toggleFlip = () => {
+  isFlipped.value = !isFlipped.value
 }
-onMounted(() => {})
+
+// 예시를 위한 userId (실제로는 props로 받거나 라우트에서 가져옴)
+const currentUserId = '1'
 </script>
 
 <template>
@@ -17,129 +24,32 @@ onMounted(() => {})
 
     <!-- 2. 메인 콘텐츠 -->
     <main class="flex-1 w-full max-w-5xl mx-auto px-4 pt-28 pb-20">
-      <!-- Hero Section: 명함 (클릭 시 뒤집힘) -->
-      <section class="flex flex-col items-center mb-24">
-        <div class="mb-4 text-center">
-          <span
-            class="inline-block px-3 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-xs font-bold mb-2 animate-bounce"
-          >
-            Click the card! 👇
-          </span>
-        </div>
-
-        <!-- Card Container -->
-        <div
-          class="relative w-full max-w-md aspect-[1.58/1] cursor-pointer group perspective-1000"
-          @click="flipCard()"
-        >
-          <div
-            id="card-inner"
-            class="relative w-full h-full transform-style-3d shadow-2xl rounded-2xl"
-          >
-            <!-- FRONT SIDE -->
-            <div
-              class="absolute inset-0 w-full h-full bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-8 backface-hidden overflow-hidden"
-            >
-              <!-- Deco -->
-              <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-400/20 rounded-bl-full"></div>
-
-              <div class="flex flex-col justify-between h-full relative z-10">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <p class="text-xs font-bold text-point-yellow uppercase tracking-widest mb-1">
-                      UX/UI Designer
-                    </p>
-                    <h2
-                      class="text-3xl font-black text-gray-900 dark:text-white tracking-tight mb-2"
-                    >
-                      Kim Poti
-                    </h2>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-                      사용자 경험을 디자인하는<br />디자이너 김포티입니다.
-                    </p>
-                  </div>
-                  <div
-                    class="w-20 h-20 rounded-full border-4 border-white dark:border-zinc-800 shadow-md overflow-hidden bg-gray-100"
-                  >
-                    <img
-                      src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-                      alt="Profile"
-                      class="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-
-                <div class="space-y-4">
-                  <div class="flex gap-2 flex-wrap">
-                    <span
-                      class="px-2.5 py-1 bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded-md"
-                      >#Figma</span
-                    >
-                    <span
-                      class="px-2.5 py-1 bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded-md"
-                      >#Prototyping</span
-                    >
-                    <span
-                      class="px-2.5 py-1 bg-gray-100 dark:bg-zinc-800 text-gray-600 dark:text-gray-300 text-[10px] font-bold rounded-md"
-                      >#Problem_Solver</span
-                    >
-                  </div>
-
-                  <div
-                    class="pt-4 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center"
-                  >
-                    <div class="flex gap-3 text-gray-400 dark:text-gray-500">
-                      <a href="#" class="hover:text-point-yellow transition-colors"
-                        ><i class="fa-brands fa-github text-xl"></i
-                      ></a>
-                      <a href="#" class="hover:text-point-yellow transition-colors"
-                        ><i class="fa-brands fa-linkedin text-xl"></i
-                      ></a>
-                      <a href="#" class="hover:text-point-yellow transition-colors"
-                        ><i class="fa-brands fa-instagram text-xl"></i
-                      ></a>
-                      <a href="#" class="hover:text-point-yellow transition-colors"
-                        ><i class="fa-solid fa-envelope text-xl"></i
-                      ></a>
-                    </div>
-                    <i
-                      class="fa-solid fa-qrcode text-3xl text-gray-800 dark:text-white opacity-80"
-                    ></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- BACK SIDE -->
-            <div
-              class="card-face card-back bg-zinc-900 text-white rounded-2xl border border-zinc-700 p-6 sm:p-8 flex flex-col"
-            >
-              <div
-                class="absolute bottom-0 left-0 w-24 h-24 bg-zinc-800 rounded-tr-full opacity-50"
-              ></div>
-              <div class="relative z-10 h-full flex flex-col">
-                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                  <span class="w-1.5 h-6 bg-yellow-400 rounded-full"></span> Contact Info
-                </h3>
-                <div class="space-y-4 flex-1 text-sm text-gray-300">
-                  <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-phone w-5"></i> 010-1234-5678
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-location-dot w-5"></i> Seoul, Korea
-                  </div>
-                  <div class="flex items-center gap-3">
-                    <i class="fa-solid fa-link w-5"></i> kimpoti.design
-                  </div>
-                </div>
-                <div class="text-right mt-auto">
-                  <span class="text-[10px] font-bold tracking-widest opacity-40">POTICARD</span>
-                </div>
-              </div>
-            </div>
+<section class="flex justify-center items-center min-h-[400px]">
+    
+    <div class="scene w-full max-w-md aspect-[1.58/1] cursor-pointer group">
+      
+      <div 
+        class="card-object w-full h-full relative shadow-2xl rounded-2xl transition-all duration-500"
+        :class="{ 'is-flipped': isFlipped }"
+        @click="toggleFlip"
+      >
+        
+        <div class="card-face card-front">
+          <NamecardsFront :userId="currentUserId" />
+          
+          <div class="absolute bottom-4 right-4 z-20 text-xs text-gray-400 animate-pulse pointer-events-none">
+             Click to flip <i class="fa-solid fa-rotate ml-1"></i>
           </div>
         </div>
-      </section>
+
+        <div class="card-face card-back">
+          <NamecardsBack :userId="currentUserId" />
+        </div>
+
+      </div>
+    </div>
+
+  </section>
 
       <!-- Projects Section -->
       <section>
