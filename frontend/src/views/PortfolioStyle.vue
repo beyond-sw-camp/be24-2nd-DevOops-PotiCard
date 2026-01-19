@@ -405,25 +405,16 @@ onMounted(() => {
     <main class="dot-bg">
       <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- Step progress -->
-        <div class="mb-6">
-          <div class="flex items-center justify-center gap-4 text-sm">
-            <div class="flex items-center gap-2 text-zinc-500">
-              <span class="font-semibold">01.</span> 기본 정보
+        <!-- 단계 표시기 (Progress Bar) - 1단계 활성화 -->
+        <div class="mb-10 max-w-3xl mx-auto">
+            <div class="flex justify-between text-sm font-bold text-gray-400 mb-2 px-1">
+                <span>01. 프로젝트 작성</span>
+                <span>02. 프로젝트 확인/수정</span>
+                <span class="text-yellow-300">03. 스타일</span>
             </div>
-            <div class="h-px w-20 bg-amber-300"></div>
-            <div class="flex items-center gap-2 text-zinc-500">
-              <span class="font-semibold">02.</span> 프로젝트
+            <div class="w-full h-2 bg-gray-300 dark:bg-zinc-800 rounded-full overflow-hidden">
+                <div class="w-3/3 h-full bg-yellow-300 rounded-full shadow-[0_0_10px_#FACC15] transition-all duration-500"></div>
             </div>
-            <div class="h-px w-20 bg-amber-300"></div>
-            <div class="flex items-center gap-2 text-amber-500 font-semibold">
-              <span>03.</span> 스타일
-            </div>
-          </div>
-          <div class="mt-3 flex justify-center">
-            <div class="h-1 w-[520px] rounded-full bg-zinc-100 overflow-hidden">
-              <div class="h-full w-full bg-amber-300"></div>
-            </div>
-          </div>
         </div>
 
         <!-- Two column layout -->
