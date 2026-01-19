@@ -1,0 +1,43 @@
+{
+	"success": true,
+	"code": 20000,
+	"message": "success",
+	"data": [
+			{ 
+				"id" : 1,
+				"name" : "김채용",
+				"company" : "DevOps Inc.",
+				"role" : "HR",
+				"unread" : 2,
+				"content" : "포트폴리오 잘 봤습니다!",
+				"tags" : ["Hiring", "Backend"]
+			},
+			{
+				"id" : 2,
+				"name" : "이민수",
+				"company" : "Side Project",
+				"role" : "Dev",
+				"unread" : 0,
+				"content" : "DB설계 같이보자",
+				"tags" : ["Study", "Dev"]
+			},
+			{
+				"id" : 3,
+				"name" : "박지영",
+				"company" : "Design Lab",
+				"role" : "PM",
+				"unread" : 5,
+				"content" : "일정 가능하실까요?",
+				"tags" : ["PM", "Project"]
+			},
+			{
+				"id" : 4,
+				"name" : "심준보",
+				"company" : "HanHwaSystem",
+				"role" : "Teacher",
+				"unread" : 0,
+				"content" : "수업 좀 열심히 들어라",
+				"tags" : ["Network"]
+			}
+		]
+}
