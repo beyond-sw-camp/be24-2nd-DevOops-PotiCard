@@ -2,7 +2,7 @@
 
 <br />
 
-<img alt="Group 144" src="./src/images/PoticardLogo.png" />
+<img alt="Group 144" src="./src/image/poticard-logo.png" />
 
 <br />
 
