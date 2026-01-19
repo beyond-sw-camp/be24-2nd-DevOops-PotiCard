@@ -3,41 +3,49 @@
 	"code": 20000,
 	"message": "success",
 	"data": [
-			{ 
-				"id" : 1,
-				"name" : "김채용",
-				"company" : "DevOps Inc.",
-				"role" : "HR",
-				"unread" : 2,
-				"content" : "포트폴리오 잘 봤습니다!",
-				"tags" : ["Hiring", "Backend"]
-			},
-			{
-				"id" : 2,
-				"name" : "이민수",
-				"company" : "Side Project",
-				"role" : "Dev",
-				"unread" : 0,
-				"content" : "DB설계 같이보자",
-				"tags" : ["Study", "Dev"]
-			},
-			{
-				"id" : 3,
-				"name" : "박지영",
-				"company" : "Design Lab",
-				"role" : "PM",
-				"unread" : 5,
-				"content" : "일정 가능하실까요?",
-				"tags" : ["PM", "Project"]
-			},
-			{
-				"id" : 4,
-				"name" : "심준보",
-				"company" : "HanHwaSystem",
-				"role" : "Teacher",
-				"unread" : 0,
-				"content" : "수업 좀 열심히 들어라",
-				"tags" : ["Network"]
-			}
-		]
+		{
+			"id" : 1,
+			"name" : "김채용",
+			"company" : "DevOps Inc.",
+			"role" : "HR",
+			"unread" : 1,
+			"content" : "Spring 기반 서비스 운영 경험 있으시면 좋을 것 같아요. 간단히 통화 가능하실까요?",
+			"tags" : ["Hiring", "Backend"],
+			"avatar" : "https://randomuser.me/api/portraits/men/35.jpg",
+			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
+		},
+		{
+			"id" : 2,
+			"name" : "이민수",
+			"company" : "Side Project",
+			"role" : "Dev",
+			"unread" : 0,
+			"content" : "오 고마워. 인덱스도 같이 잡아볼까?",
+			"tags" : ["Study", "Dev"],
+			"avatar" : "https://randomuser.me/api/portraits/men/21.jpg",
+			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
+		},
+		{
+			"id" : 3,
+			"name" : "박지영",
+			"company" : "Design Lab",
+			"role" : "PM",
+			"unread" : 3,
+			"content" : "대답",
+			"tags" : ["PM", "Project"],
+			"avatar" : "https://randomuser.me/api/portraits/women/60.jpg",
+			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
+		},
+		{
+			"id" : 4,
+			"name" : "심준보",
+			"company" : "HanHwaSystem",
+			"role" : "Teacher",
+			"unread" : 0,
+			"content" : "넵 ㅈㅅ요",
+			"tags" : ["Network"],
+			"avatar" : "https://randomuser.me/api/portraits/men/30.jpg",
+			"intro" : "Do it! IT 서비스 이해를 위한 네트워크 기초 많관부"
+		}
+	]
 }
