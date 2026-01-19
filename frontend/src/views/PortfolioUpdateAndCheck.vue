@@ -34,7 +34,28 @@ function extractKeywords() {
    - 선택한 첨삭본을 "같은 팝업에서 바로 수정" 가능 (textarea)
    - 적용은 수정된 텍스트(variantsDraft)를 본문에 반영
 ========================= */
-const circledNums = ['①','②','③','④','⑤','⑥','⑦','⑧','⑨','⑩','⑪','⑫','⑬','⑭','⑮','⑯','⑰','⑱','⑲','⑳']
+const circledNums = [
+  '①',
+  '②',
+  '③',
+  '④',
+  '⑤',
+  '⑥',
+  '⑦',
+  '⑧',
+  '⑨',
+  '⑩',
+  '⑪',
+  '⑫',
+  '⑬',
+  '⑭',
+  '⑮',
+  '⑯',
+  '⑰',
+  '⑱',
+  '⑲',
+  '⑳',
+]
 const getCircled = (n) => circledNums[n - 1] || String(n)
 
 // ✅ 본문 5개 섹션을 projects로 관리
@@ -184,18 +205,31 @@ const goBack = () => router.back()
 
     <div id="authModal" class="modal-backdrop" aria-hidden="true">
       <div class="modal-card">
-        <div class="rounded-3xl border border-gray-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-2xl p-5">
+        <div
+          class="rounded-3xl border border-gray-100 dark:border-zinc-800 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md shadow-2xl p-5"
+        >
           <div class="flex items-center justify-between mb-4">
             <p class="text-sm font-black text-gray-900 dark:text-white">회원 선택</p>
-            <button id="authClose" class="w-9 h-9 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center justify-center" aria-label="닫기" type="button">
+            <button
+              id="authClose"
+              class="w-9 h-9 rounded-xl hover:bg-gray-50 dark:hover:bg-zinc-800 flex items-center justify-center"
+              aria-label="닫기"
+              type="button"
+            >
               ✕
             </button>
           </div>
           <div class="grid grid-cols-1 gap-3">
-            <a href="login.html" class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block">
+            <a
+              href="login.html"
+              class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block"
+            >
               <span class="text-base font-black text-gray-900 dark:text-white">👤 개인</span>
             </a>
-            <a href="login.html" class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block">
+            <a
+              href="login.html"
+              class="w-full px-4 py-4 rounded-2xl border border-gray-100 dark:border-zinc-800 bg-gray-50 dark:bg-zinc-800/60 hover:border-point-yellow transition text-left block"
+            >
               <span class="text-base font-black text-gray-900 dark:text-white">🏢 법인</span>
             </a>
           </div>
@@ -206,26 +240,40 @@ const goBack = () => router.back()
     <main class="flex-1 pt-10 pb-20 px-4">
       <div class="max-w-4xl mx-auto">
         <div class="mb-12 max-w-3xl mx-auto">
-          <div class="flex justify-between text-sm font-bold text-gray-400 dark:text-gray-500 mb-2 px-1 font-poppins">
+          <div
+            class="flex justify-between text-sm font-bold text-gray-400 dark:text-gray-500 mb-2 px-1 font-poppins"
+          >
             <span>01. 프로젝트 작성</span>
             <span class="text-point-yellow">02. 프로젝트 수정 & 확인</span>
             <span>03. 스타일</span>
           </div>
           <div class="w-full h-1.5 bg-gray-200 dark:bg-zinc-800 rounded-full overflow-hidden">
-            <div class="w-2/3 h-full bg-point-yellow rounded-full transition-all duration-700"></div>
+            <div
+              class="w-2/3 h-full bg-point-yellow rounded-full transition-all duration-700"
+            ></div>
           </div>
         </div>
 
-        <div class="bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl shadow-gray-200/40 dark:shadow-none border border-gray-100 dark:border-zinc-800 p-8 md:p-14 relative">
-          <div class="flex flex-col md:flex-row md:items-start justify-between mb-16 pb-10 border-b border-gray-50 dark:border-zinc-800 gap-6">
+        <div
+          class="bg-white dark:bg-zinc-900 rounded-[2.5rem] shadow-2xl shadow-gray-200/40 dark:shadow-none border border-gray-100 dark:border-zinc-800 p-8 md:p-14 relative"
+        >
+          <div
+            class="flex flex-col md:flex-row md:items-start justify-between mb-16 pb-10 border-b border-gray-50 dark:border-zinc-800 gap-6"
+          >
             <div>
-              <div class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-500 rounded-full text-[11px] font-bold mb-4">
+              <div
+                class="inline-flex items-center gap-2 px-3 py-1 bg-yellow-50 dark:bg-yellow-900/20 text-yellow-700 dark:text-yellow-500 rounded-full text-[11px] font-bold mb-4"
+              >
                 <i class="fa-solid fa-wand-magic-sparkles"></i> AI Content Review
               </div>
-              <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-3">내용 확정 및 키워드 추출</h2>
+              <h2 class="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-3">
+                내용 확정 및 키워드 추출
+              </h2>
               <p class="text-gray-500 dark:text-gray-400 leading-relaxed text-sm md:text-base">
                 내용이 확정되면 키워드를 추출해 주세요.<br />
-                <span class="text-point-yellow font-bold">키워드 추출 후에는 내용 수정이 불가능합니다.</span>
+                <span class="text-point-yellow font-bold"
+                  >키워드 추출 후에는 내용 수정이 불가능합니다.</span
+                >
               </p>
             </div>
 
@@ -243,36 +291,66 @@ const goBack = () => router.back()
           <!-- ✅ 본문 5개 섹션 (projects에 연결) -->
           <div class="space-y-16 mb-20">
             <div>
-              <h3 class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]">Project Overview</h3>
-              <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              <h3
+                class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]"
+              >
+                Project Overview
+              </h3>
+              <div
+                class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+              >
                 {{ projects[0].original }}
               </div>
             </div>
 
             <div>
-              <h3 class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]">Key Features</h3>
-              <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              <h3
+                class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]"
+              >
+                Key Features
+              </h3>
+              <div
+                class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+              >
                 {{ projects[1].original }}
               </div>
             </div>
 
             <div>
-              <h3 class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]">Technical Challenges</h3>
-              <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              <h3
+                class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]"
+              >
+                Technical Challenges
+              </h3>
+              <div
+                class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+              >
                 {{ projects[2].original }}
               </div>
             </div>
 
             <div>
-              <h3 class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]">Collaboration</h3>
-              <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              <h3
+                class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]"
+              >
+                Collaboration
+              </h3>
+              <div
+                class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+              >
                 {{ projects[3].original }}
               </div>
             </div>
 
             <div>
-              <h3 class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]">Results & Future</h3>
-              <div class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+              <h3
+                class="text-[10px] font-black text-gray-300 dark:text-zinc-600 mb-4 uppercase tracking-[0.2em]"
+              >
+                Results & Future
+              </h3>
+              <div
+                class="text-lg text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line"
+              >
                 {{ projects[4].original }}
               </div>
             </div>
@@ -287,17 +365,31 @@ const goBack = () => router.back()
             >
               Final Tech Keywords
             </div>
-            <h4 class="text-sm font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
-              <i class="fa-solid fa-check-circle text-green-500"></i> 내용 확정 및 키워드 추출이 완료되었습니다.
+            <h4
+              class="text-sm font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2"
+            >
+              <i class="fa-solid fa-check-circle text-green-500"></i> 내용 확정 및 키워드 추출이
+              완료되었습니다.
             </h4>
             <div class="flex flex-wrap gap-3">
-              <span class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm">#React</span>
-              <span class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm">#Virtual Scroll</span>
-              <span class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm">#Atomic Design Pattern</span>
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm"
+                >#React</span
+              >
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm"
+                >#Virtual Scroll</span
+              >
+              <span
+                class="px-5 py-2.5 bg-white dark:bg-zinc-800 border-2 border-point-yellow/20 text-gray-700 dark:text-gray-300 text-sm rounded-2xl font-bold shadow-sm"
+                >#Atomic Design Pattern</span
+              >
             </div>
           </div>
 
-          <div class="mt-16 flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-gray-50 dark:border-zinc-800">
+          <div
+            class="mt-16 flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-gray-50 dark:border-zinc-800"
+          >
             <button
               type="button"
               class="px-8 py-3 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-gray-500 dark:text-gray-400 rounded-2xl font-bold hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all flex items-center gap-2 text-sm"
@@ -444,10 +536,18 @@ const goBack = () => router.back()
   background-image: radial-gradient(#2d2d2d 0.8px, transparent 0.8px);
 }
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.animate-fade-in { animation: fadeIn 0.5s ease-out; }
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
 </style>
 
 <!-- ✅ 전역 스타일(팝업은 html/body까지 제어해야 해서 scoped 불가) -->
@@ -499,7 +599,11 @@ html.eval-open body {
   background: linear-gradient(180deg, rgba(250, 204, 21, 0.12), transparent);
 }
 
-.eval-title { display: flex; align-items: center; gap: 10px; }
+.eval-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 
 .eval-badge {
   width: 34px;
@@ -512,9 +616,18 @@ html.eval-open body {
   font-weight: 900;
 }
 
-.eval-title h2 { font-size: 18px; font-weight: 900; line-height: 1.2; }
+.eval-title h2 {
+  font-size: 18px;
+  font-weight: 900;
+  line-height: 1.2;
+}
 
-.eval-sub { font-size: 12px; font-weight: 800; color: rgba(107, 114, 128, 1); margin-left: 6px; }
+.eval-sub {
+  font-size: 12px;
+  font-weight: 800;
+  color: rgba(107, 114, 128, 1);
+  margin-left: 6px;
+}
 
 .eval-x {
   width: 38px;
@@ -525,7 +638,9 @@ html.eval-open body {
   font-size: 18px;
   cursor: pointer;
 }
-.eval-x:hover { background: rgba(0, 0, 0, 0.04); }
+.eval-x:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
 
 .eval-body {
   display: grid;
@@ -538,7 +653,9 @@ html.eval-open body {
   padding: 16px;
   background: rgba(24, 24, 27, 0.02);
 }
-html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
+html.dark .eval-side {
+  background: rgba(255, 255, 255, 0.03);
+}
 
 .eval-side-title {
   font-size: 12px;
@@ -547,7 +664,11 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   margin-bottom: 10px;
 }
 
-.eval-side-list { display: flex; flex-direction: column; gap: 10px; }
+.eval-side-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
 
 .eval-item {
   display: flex;
@@ -560,7 +681,9 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   cursor: pointer;
   text-align: left;
 }
-.eval-item:hover { background: rgba(0, 0, 0, 0.03); }
+.eval-item:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
 .eval-item.active {
   border-color: rgba(250, 204, 21, 0.55);
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18);
@@ -576,9 +699,14 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   font-weight: 900;
 }
 
-.eval-item-text { font-weight: 900; }
+.eval-item-text {
+  font-weight: 900;
+}
 
-.eval-main { padding: 16px; overflow: auto; }
+.eval-main {
+  padding: 16px;
+  overflow: auto;
+}
 
 .eval-card {
   border: 1px solid var(--border, #e5e7eb);
@@ -595,7 +723,10 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   gap: 10px;
   margin-bottom: 10px;
 }
-.eval-card-head h3 { font-size: 14px; font-weight: 900; }
+.eval-card-head h3 {
+  font-size: 14px;
+  font-weight: 900;
+}
 
 .eval-chip {
   font-size: 11px;
@@ -606,9 +737,18 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   padding: 6px 10px;
 }
 
-.eval-text { font-size: 14px; line-height: 1.7; white-space: pre-line; }
+.eval-text {
+  font-size: 14px;
+  line-height: 1.7;
+  white-space: pre-line;
+}
 
-.eval-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.eval-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
 
 .eval-tab {
   padding: 10px 12px;
@@ -619,7 +759,9 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   font-weight: 900;
   font-size: 12px;
 }
-.eval-tab:hover { background: rgba(0, 0, 0, 0.03); }
+.eval-tab:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
 .eval-tab.active {
   border-color: rgba(250, 204, 21, 0.55);
   background: rgba(250, 204, 21, 0.16);
@@ -638,7 +780,12 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   white-space: pre-line;
 }
 
-.eval-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+.eval-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
 
 .eval-btn {
   padding: 10px 14px;
@@ -654,8 +801,12 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   color: inherit;
   border-color: var(--border, #e5e7eb);
 }
-.eval-btn.ghost:hover { background: rgba(0, 0, 0, 0.03); }
-.eval-btn:hover { filter: brightness(0.98); }
+.eval-btn.ghost:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+.eval-btn:hover {
+  filter: brightness(0.98);
+}
 
 .eval-empty {
   padding: 16px;
@@ -682,10 +833,18 @@ html.dark .eval-side { background: rgba(255, 255, 255, 0.03); }
   transition: all 0.2s ease;
   z-index: 10000;
 }
-.eval-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.eval-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
 
 @media (max-width: 920px) {
-  .eval-body { grid-template-columns: 1fr; }
-  .eval-side { border-right: none; border-bottom: 1px solid var(--border, #e5e7eb); }
+  .eval-body {
+    grid-template-columns: 1fr;
+  }
+  .eval-side {
+    border-right: none;
+    border-bottom: 1px solid var(--border, #e5e7eb);
+  }
 }
 </style>

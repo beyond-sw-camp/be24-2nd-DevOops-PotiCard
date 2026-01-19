@@ -25,5 +25,4 @@ const checkEmailDuplicate = async (email) => {
   return res
 }
 
-
 export default { login, signup, profile, checkEmailDuplicate }

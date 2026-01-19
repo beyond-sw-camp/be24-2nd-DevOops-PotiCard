@@ -1,25 +1,30 @@
-import { apiFetch } from '@/plugins/axiosinterceptor'
+import { apiFetch } from '@/plugins/interceptor'
 
-const getNamecardInfo = async () => {
+const getNamecardsInfo = async () => {
   try {
-    const res = await apiFetch('namecards/namecardsFront')
+    const res = await apiFetch('json/namecards/namecardsFront')
+
     // console.log('불러온 데이터 : ' + res)
+
     return res
   } catch (error) {
-    console.error('API 호출 실패:', error.message)
+    console.error('명함 정보 호출 실패:', error.message)
+
+    alert('명함 정보 호출 실패')
   }
 }
 
-const getProjectsInfo = async () => {
+const getUserInfo = async (userId) => {
   try {
-    const res = await apiFetch('/namecardBack.json')
+    const res = await apiFetch(`json/namecards/userId_${userId}`)
     return res
   } catch (error) {
-    console.error('API 호출 실패:', error.message)
+    console.error('명함 정보 호출 실패:', error.message)
+    alert('명함 정보 호출 실패')
   }
 }
 
 export default {
-  getNamecardInfo,
-  getProjectsInfo,
+  getUserInfo,
+  getNamecardsInfo,
 }
