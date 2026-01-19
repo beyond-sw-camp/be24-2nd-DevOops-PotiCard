@@ -13,10 +13,10 @@
             class="flex-1 relative flex items-center justify-center"
             @wheel.prevent="handleScroll"
           >
-<div class="stack-wrapper relative w-64 h-40"> <div
+<div class="stack-wrapper"> <div
       v-for="(userId, idx) in stackUserIds"
       :key="userId"
-      class="mini-card-container absolute inset-0 transition-all duration-700 ease-out"
+      class="mini-card-container transition-all duration-700 ease-out"
       :style="getMiniCardStyle(idx)"
     >
       <div 
@@ -184,7 +184,7 @@ const selectCard = (idx) => {
   isFlipped.value = false // 카드를 바꾸면 앞면으로 초기화
 }
 
-const initialCenter = Math.floor(stackUserIds.values.length / 2)
+const initialCenter = Math.floor(stackUserIds.length / 2)
 const selectedIdx = ref(initialCenter)
 const scrollOffset = ref(initialCenter)
 const isFlipped = ref(false)

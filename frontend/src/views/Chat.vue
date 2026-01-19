@@ -1,96 +1,25 @@
 <script setup>
-import { ref, onMounted, computed, nextTick } from 'vue'
-import commonAvatar from '@/image/common.png'
+import { ref, reactive, onMounted, computed, nextTick } from 'vue'
+import chatApi from '@/api/chat/index.js'
 
 /* --------- 1. 상태 관리 (Reactive State) --------- */
-const rooms = ref([
-  {
-    id: 1,
-    name: '김채용',
-    company: 'DevOps Inc.',
-    role: 'HR Manager',
-    unread: 2,
-    last: '포트폴리오 잘 봤습니다!',
-    tags: ['Hiring', 'Backend'],
-    avatar: commonAvatar,
-    intro: '좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다.',
-  },
-  {
-    id: 2,
-    name: '이민수',
-    company: 'Side Project',
-    role: 'Frontend Dev',
-    unread: 0,
-    last: 'DB 설계 같이 보자',
-    tags: ['Study', 'React'],
-    avatar: commonAvatar,
-    intro: '효율적인 UI/UX를 고민하는 개발자 이민수입니다.\n클린 코드를 지향합니다.',
-  },
-  {
-    id: 3,
-    name: '박지영',
-    company: 'Design Lab',
-    role: 'Product Designer',
-    unread: 5,
-    last: '일정 가능하실까요?',
-    tags: ['UI/UX', 'Figma'],
-    avatar: commonAvatar,
-    intro: '사용자 중심의 경험을 설계하는 박지영입니다.\n디자인 시스템 구축에 관심이 많습니다.',
-  },
-  {
-    id: 4,
-    name: '익명',
-    company: 'Community',
-    role: 'User',
-    unread: 0,
-    last: '좋은 글 감사합니다!',
-    tags: ['Free'],
-    avatar: commonAvatar,
-    intro: '커뮤니티 활동을 즐기는 익명의 사용자입니다.\n반갑습니다!',
-  },
-])
+const rooms = reactive([]);
+const getChatRoomList = async () => {
+  try {
+    const res = await chatApi.chatRoomList()
+    console.log('채팅방 목록:', res)
+    if (res && res.data) {
+      rooms.splice(0, rooms.length, ...res.data)
+    } else if (Array.isArray(res)) {
+      rooms.splice(0, rooms.length, ...res)
+    }
+  } catch (error) {
+    console.error('채팅방 목록 로드 실패:', error)
+  }
+}
 
-const messagesByRoom = ref({
-  1: [
-    {
-      who: 'them',
-      text: '안녕하세요! 포트폴리오 잘 봤습니다. 백엔드 쪽 지원 맞으신가요?',
-      time: '오후 2:03',
-    },
-    {
-      who: 'me',
-      text: '네 맞아요! 백엔드/풀스택 관심 있어요. 어떤 포지션인지 궁금합니다.',
-      time: '오후 2:04',
-    },
-    {
-      who: 'them',
-      text: 'Spring 기반 서비스 운영 경험 있으시면 좋을 것 같아요. 간단히 통화 가능하실까요?',
-      time: '오후 2:05',
-    },
-  ],
-  2: [
-    {
-      who: 'them',
-      text: 'ERD 그린 거 봤는데 notification 테이블 FK 구성 괜찮아 보여.',
-      time: '어제',
-    },
-    { who: 'me', text: '오 고마워. 인덱스도 같이 잡아볼까?', time: '어제' },
-  ],
-  3: [
-    { who: 'them', text: '포티카드 커뮤니티 UI 너무 깔끔하네요.', time: '오전 11:10' },
-    {
-      who: 'them',
-      text: '글쓰기 페이지도 연결하면 완성도 더 올라갈 것 같아요.',
-      time: '오전 11:11',
-    },
-    { who: 'me', text: '맞아요. 지금 채팅 페이지도 작업 중이에요.', time: '오전 11:12' },
-  ],
-  4: [
-    { who: 'them', text: '오늘 글 도움 됐어요!', time: '3일 전' },
-    { who: 'me', text: '감사합니다 🙂', time: '3일 전' },
-  ],
-})
-
+  
+const messagesByRoom = ref({})
 const activeRoomId = ref(null)
 const searchQuery = ref('')
 const messageInput = ref('')
@@ -117,13 +46,16 @@ let ws = null
 /* --------- 3. 계산된 속성 (Computed) --------- */
 const filteredRooms = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
-  if (!q) return rooms.value
-  return rooms.value.filter((r) =>
-    (r.name + ' ' + r.company + ' ' + r.role + ' ' + r.tags.join(' ')).toLowerCase().includes(q),
+  // if (!q) return rooms.value
+  // return rooms.value.filter((r) =>
+  //   (r.name + ' ' + r.company + ' ' + r.role + ' ' + r.tags.join(' ')).toLowerCase().includes(q),
+  if (!q) return rooms
+  return rooms.filter((r) =>
+  (r.name + ' ' + r.company + ' ' + r.role + ' ' + (r.tags?.join(' ') || '')).toLowerCase().includes(q),
   )
 })
 
-const activeRoom = computed(() => rooms.value.find((r) => r.id === activeRoomId.value))
+const activeRoom = computed(() => rooms.find((r) => r.id === activeRoomId.value))
 const currentMessages = computed(() => messagesByRoom.value[activeRoomId.value] || [])
 
 /* --------- 4. 로직 (Methods) --------- */
@@ -162,7 +94,7 @@ const wsConnect = () => {
         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       })
 
-      const r = rooms.value.find((x) => x.id === roomId)
+      const r = rooms.find((x) => x.id === roomId)
       if (r) r.last = msg.text.length > 30 ? msg.text.slice(0, 30) + '...' : msg.text
       if (roomId === activeRoomId.value) scrollBottom()
     }
@@ -176,13 +108,88 @@ const wsJoin = (roomId) => {
   ws.send(JSON.stringify({ type: 'join', roomId, userId: myUserId, userName: myUserName }))
 }
 
-const setActiveRoom = (roomId) => {
+// ActiveRoom 설정
+const setActiveRoom = async (roomId) => {
   activeRoomId.value = roomId
-  const room = rooms.value.find((r) => r.id === roomId)
+  const room = rooms.find((r) => r.id === roomId)
   if (room) room.unread = 0
-  isMenuOpen.value = false // 방 변경 시 메뉴 닫기
+  isMenuOpen.value = false
   wsJoin(roomId)
+  // 채팅방 메시지 불러오기
+  await loadChatMessages(roomId)
   scrollBottom()
+}
+
+// 날짜 포맷팅 함수
+const formatMessageTime = (dateString) => {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffMs = now - date;
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return "방금";
+    if (diffMins < 60) return `${diffMins}분 전`;
+    if (diffHours < 24) return `${diffHours}시간 전`;
+    if (diffDays === 1) return "어제";
+    if (diffDays < 7) return `${diffDays}일 전`;
+
+    // 오늘 날짜와 비교하여 오전/오후 표시
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const ampm = hours >= 12 ? "오후" : "오전";
+    const displayHours = hours % 12 || 12;
+    return `${ampm} ${displayHours}:${String(minutes).padStart(2, '0')}`;
+  }
+
+// 채팅방 메시지 불러오기
+const loadChatMessages = async (roomId) => {
+  try {
+    const res = await chatApi.getChatMessages(roomId)
+    if (res && res.data && res.data.messages) {
+      // 메시지 데이터를 messagesByRoom 형식으로 변환
+      const formattedMessages = res.data.messages.map(msg => {
+        // senderId가 1이면 오른쪽(me)으로 표시
+        const isMe = msg.senderId === 1 || String(msg.senderId) === String(myUserId)
+        return {
+          who: isMe ? "me" : "them",
+          text: msg.content,
+          time: formatMessageTime(msg.createdAt),
+          messageId: msg.messageId,
+          isRead: msg.isRead
+        }
+      })
+
+      // messagesByRoom에 저장
+      messagesByRoom.value[roomId] = formattedMessages
+      
+      console.log(`방 ${roomId}의 메시지 로드 완료:`, formattedMessages)
+    } else if (res && Array.isArray(res)) {
+      // 응답이 배열인 경우
+      const formattedMessages = res.map(msg => {
+        // senderId가 1이면 오른쪽(me)으로 표시 나중엔 빼주면됨
+        const isMe = msg.senderId === 1 || String(msg.senderId) === String(myUserId)
+        return {
+          who: isMe ? "me" : "them",
+          text: msg.content,
+          time: formatMessageTime(msg.createdAt),
+          messageId: msg.messageId,
+          isRead: msg.isRead
+        }
+      })
+      messagesByRoom.value[roomId] = formattedMessages
+      console.log(`방 ${roomId}의 메시지 로드 완료 (배열 형식):`, formattedMessages)
+    } else {
+      // 메시지가 없는 경우 빈 배열로 초기화
+      messagesByRoom.value[roomId] = []
+      console.log(`방 ${roomId}의 메시지가 없습니다.`)
+    }
+  } catch (error) {
+    console.error(`방 ${roomId}의 메시지 로드 실패:`, error)
+    // 에러 발생 시 빈 배열로 초기화
+    messagesByRoom.value[roomId] = []
+  }
 }
 
 const toggleCard = () => {
@@ -205,7 +212,8 @@ const leaveChat = () => {
       `'${activeRoom.value.name}'님과의 채팅방을 나가시겠습니까?\n나가면 대화 내용이 모두 삭제됩니다.`,
     )
   ) {
-    rooms.value = rooms.value.filter((r) => r.id !== activeRoomId.value)
+    const index = rooms.findIndex((r) => r.id === activeRoomId.value)
+    if (index > -1) rooms.splice(index, 1)
     activeRoomId.value = null
     isMenuOpen.value = false
   }
@@ -264,6 +272,7 @@ const startVideoCall = () => {
 }
 
 onMounted(() => {
+  getChatRoomList();
   wsConnect()
   if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark')
 })
@@ -442,7 +451,7 @@ onMounted(() => {
                   {{ room.company }} · {{ room.role }}
                 </p>
                 <p class="text-sm text-slate-600 dark:text-slate-300 truncate font-medium">
-                  {{ room.last }}
+                  {{ room.content }}
                 </p>
               </div>
             </button>
