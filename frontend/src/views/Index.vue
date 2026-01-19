@@ -13,38 +13,22 @@
             class="flex-1 relative flex items-center justify-center"
             @wheel.prevent="handleScroll"
           >
-            <div class="stack-wrapper">
-              <div
-                v-for="(card, idx) in userCards"
-                :key="card.id"
-                class="mini-card-container transition-all duration-700 ease-out"
-                :style="getMiniCardStyle(idx)"
-              >
-                <div
-                  class="w-full h-full bg-white rounded-2xl border border-slate-100 shadow-xl p-5 flex flex-col justify-between relative overflow-hidden"
-                  :class="{ 'ring-2 ring-yellow-400': idx === selectedIdx }"
-                >
-                  <div
-                    class="absolute top-0 right-0 w-12 h-12 bg-yellow-400/10 rounded-bl-full"
-                  ></div>
-                  <div class="relative z-10">
-                    <p class="text-[8px] font-bold text-yellow-600 uppercase">{{ card.role }}</p>
-                    <h4 class="text-sm font-black text-gray-900">{{ card.name }}</h4>
-                    <p class="mt-1 text-[10px] text-gray-400 font-semibold truncate">
-                      {{ card.tags.join('  ') }}
-                    </p>
-                  </div>
-                  <div class="flex justify-between items-end">
-                    <div
-                      class="w-8 h-8 rounded-full border border-slate-100 overflow-hidden shadow-sm"
-                    >
-                      <img :src="card.avatar" class="w-full h-full object-cover" />
-                    </div>
-                    <i class="fa-solid fa-qrcode text-xs text-gray-300"></i>
-                  </div>
-                </div>
-              </div>
-            </div>
+<div class="stack-wrapper relative w-64 h-40"> <div
+      v-for="(userId, idx) in stackUserIds"
+      :key="userId"
+      class="mini-card-container absolute inset-0 transition-all duration-700 ease-out"
+      :style="getMiniCardStyle(idx)"
+    >
+      <div 
+        class="w-full h-full rounded-2xl overflow-hidden transition-all"
+        :class="{ 'ring-4 ring-yellow-400': idx === selectedIdx }"
+      >
+        <NamecardsMini :userId="userId" />
+      </div>
+      
+    </div>
+
+  </div>
           </div>
         </div>
 
@@ -59,90 +43,34 @@
               >
             </div>
 
-            <transition name="card-switch" mode="out-in">
-              <div
-                :key="selectedIdx"
-                class="relative w-full max-w-md aspect-[1.58/1] cursor-pointer perspective-1000"
-                @click="isFlipped = !isFlipped"
-              >
-                <div
-                  :class="[
-                    'relative w-full h-full transform-style-3d shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl duration-700',
-                    isFlipped ? 'flipped' : '',
-                  ]"
-                >
-                  <div
-                    class="absolute inset-0 w-full h-full bg-white rounded-2xl border border-slate-100 p-8 backface-hidden overflow-hidden"
-                  >
-                    <div
-                      class="absolute top-0 right-0 w-32 h-32 bg-yellow-400/20 rounded-bl-full"
-                    ></div>
-                    <div class="flex flex-col justify-between h-full relative z-10">
-                      <div class="flex justify-between items-start">
-                        <div>
-                          <p
-                            class="text-xs font-bold text-yellow-600 uppercase tracking-widest mb-1"
-                          >
-                            {{ userCards[selectedIdx].role }}
-                          </p>
-                          <h2 class="text-3xl font-black text-gray-900 tracking-tight mb-2">
-                            {{ userCards[selectedIdx].name }}
-                          </h2>
-                          <p class="text-sm text-gray-500 leading-relaxed">
-                            사용자 경험을 디자인하는<br />디자이너
-                            {{ userCards[selectedIdx].name }}입니다.
-                          </p>
-                        </div>
-                        <div
-                          class="w-20 h-20 rounded-full border-4 border-slate-50 shadow-md overflow-hidden bg-gray-100"
-                        >
-                          <img
-                            :src="userCards[selectedIdx].avatar"
-                            class="w-full h-full object-cover"
-                          />
-                        </div>
-                      </div>
-                      <div class="space-y-4">
-                        <div class="flex gap-2">
-                          <span
-                            v-for="tag in userCards[selectedIdx].tags"
-                            :key="tag"
-                            class="px-2.5 py-1 bg-slate-50 border border-slate-100 text-gray-600 text-[10px] font-bold rounded-md"
-                            >{{ tag }}</span
-                          >
-                        </div>
-                        <div
-                          class="pt-4 border-t border-slate-100 flex justify-between items-center"
-                        >
-                          <div class="flex gap-3 text-gray-400">
-                            <i class="fa-brands fa-github text-xl"></i>
-                            <i class="fa-solid fa-envelope text-xl"></i>
-                          </div>
-                          <i class="fa-solid fa-qrcode text-3xl text-gray-800 opacity-80"></i>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="absolute inset-0 w-full h-full bg-zinc-900 rounded-2xl p-8 backface-hidden rotate-y-180 text-white"
-                  >
-                    <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
-                      <span class="w-1.5 h-6 bg-yellow-400 rounded-full"></span> Contact Info
-                    </h3>
-                    <div class="space-y-4 text-sm opacity-90">
-                      <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-phone w-5 text-yellow-400"></i> 010-1234-567{{
-                          selectedIdx
-                        }}
-                      </div>
-                      <div class="flex items-center gap-3">
-                        <i class="fa-solid fa-link w-5 text-yellow-400"></i> kimpoti.design
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </transition>
+<transition name="card-switch" mode="out-in">
+    
+    <div
+      :key="selectedIdx"
+      class="perspective-container relative w-full max-w-md aspect-[1.58/1] cursor-pointer"
+      @click="isFlipped = !isFlipped"
+    >
+      <div
+        class="card-object w-full h-full relative shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-2xl duration-700"
+        :class="{ 'is-flipped': isFlipped }"
+      >
+        
+        <div class="card-face card-front">
+          <NamecardsFront :userId="userCards[selectedIdx].id" />
+          
+          <div class="absolute bottom-4 right-4 z-20 text-xs text-gray-400 animate-pulse pointer-events-none">
+             Click to flip <i class="fa-solid fa-rotate ml-1"></i>
+          </div>
+        </div>
+
+        <div class="card-face card-back">
+          <NamecardsBack :userId="userCards[selectedIdx].id" />
+        </div>
+
+      </div>
+    </div>
+    
+  </transition>
           </div>
 
           <div
@@ -235,46 +163,28 @@
 
 <script setup>
 import { ref } from 'vue'
+import NamecardsMini from '@/components/namecards/MiniNamecards.vue' // 컴포넌트 경로 확인
+import NamecardsFront from '@/components/namecards/NamecardsFront.vue'
+import NamecardsBack from '@/components/namecards/NamecardsBack.vue'
 
-const userCards = ref([
-  {
-    id: 1,
-    name: 'Kim Poti',
-    role: 'UX/UI Designer',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
-    tags: ['#Figma', '#Prototyping', '#Problem_Solver'],
-  },
-  {
-    id: 2,
-    name: 'Park Job',
-    role: 'Frontend Dev',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
-    tags: ['#VueJS', '#Tailwind', '#Creative'],
-  },
-  {
-    id: 3,
-    name: 'Lee Card',
-    role: 'Product Manager',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Boo',
-    tags: ['#Strategy', '#Planning', '#Leader'],
-  },
-  {
-    id: 4,
-    name: 'Choi Dev',
-    role: 'Backend Dev',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Caleb',
-    tags: ['#NodeJS', '#Architecture', '#Cloud'],
-  },
-  {
-    id: 5,
-    name: 'Jung UI',
-    role: 'Visual Designer',
-    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Daisy',
-    tags: ['#Branding', '#Motion', '#Typography'],
-  },
-])
+// 45부터 55까지 숫자가 담긴 배열 생성: [45, 46, ... , 55]
+const stackUserIds = Array.from({ length: 11 }, (_, i) => 45 + i)
 
-const initialCenter = Math.floor(userCards.value.length / 2)
+// 1. 통합 데이터 생성 (45 ~ 55번 유저)
+// Array.from을 사용해 ID 객체 배열을 한 번에 만듭니다.
+const userCards = ref(
+  Array.from({ length: 11 }, (_, i) => ({
+    id: 45 + i
+  }))
+)
+
+// 3. 미니 카드 선택 함수
+const selectCard = (idx) => {
+  selectedIdx.value = idx
+  isFlipped.value = false // 카드를 바꾸면 앞면으로 초기화
+}
+
+const initialCenter = Math.floor(stackUserIds.values.length / 2)
 const selectedIdx = ref(initialCenter)
 const scrollOffset = ref(initialCenter)
 const isFlipped = ref(false)
@@ -365,5 +275,42 @@ const getMiniCardStyle = (idx) => {
 .card-switch-leave-to {
   opacity: 0;
   transform: translateY(-15px);
+}
+
+/* 2. 3D 플립 애니메이션 필수 스타일 */
+.perspective-container {
+  perspective: 1000px;
+}
+
+.card-object {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transform-style: preserve-3d; /* 입체감 유지 */
+}
+
+.card-object.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  inset: 0; /* top:0, left:0, w-full, h-full */
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1rem; /* rounded-2xl 대응 */
+  overflow: hidden;
+  /* 컴포넌트 배경색이 덮어쓰도록 투명 혹은 기본설정 유지 */
+}
+
+.card-front {
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
 }
 </style>
