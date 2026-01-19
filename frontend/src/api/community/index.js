@@ -1,14 +1,14 @@
-import { apiFetch } from './axiosinterceptor.js'
+import { apiFetch } from '@/plugins/interceptor'
 
-const getCommunityInfo = async () => {
+const getPostList = async (postId) => {
   try {
-    const res = await apiFetch('/community.json')
+    const res = await apiFetch(`json/posts/post_${postId}`)
     return res
   } catch (error) {
-    console.error('API 호출 실패:', error.message)
+    console.error('커뮤니티 글 호출 실패:', error.message)
   }
 }
 
 export default {
-  getCommunityInfo,
+  getPostList,
 }
