@@ -34,10 +34,14 @@
       <div class="p-6">
         <div class="flex items-center gap-4 mb-6 text-left">
           <div class="w-12 h-12 bg-zinc-800 rounded-2xl overflow-hidden">
-            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="avatar" />
+            <img
+              :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+              class="w-full h-full object-cover"
+              :alt="partnerInfo?.name || 'avatar'"
+            />
           </div>
           <div>
-            <h2 class="font-black text-lg">Kim Poti</h2>
+            <h2 class="font-black text-lg">{{ partnerInfo?.name || 'Kim Poti' }}</h2>
             <p class="text-[10px] text-yellow-400 font-bold uppercase">Live Session</p>
           </div>
         </div>
@@ -233,28 +237,33 @@
             >
               <div class="flex justify-between items-start">
                 <div>
-                  <p class="text-xs font-bold text-yellow-500 uppercase mb-1">UX/UI Designer</p>
-                  <h2 class="text-3xl font-black mb-2">Kim Poti</h2>
-                  <p class="text-sm opacity-60">
-                    사용자 경험을 디자인하는<br />디자이너 김포티입니다.
+                  <p class="text-xs font-bold text-yellow-500 uppercase mb-1">
+                    {{ partnerInfo?.role || 'UX/UI Designer' }}
+                  </p>
+                  <h2 class="text-3xl font-black mb-2">{{ partnerInfo?.name || 'Kim Poti' }}</h2>
+                  <p class="text-sm opacity-60 whitespace-pre-line">
+                    {{ partnerInfo?.intro || '사용자 경험을 디자인하는\n디자이너 김포티입니다.' }}
                   </p>
                 </div>
                 <div
                   class="w-20 h-20 rounded-full border-4 border-white dark:border-zinc-800 overflow-hidden"
                 >
                   <img
-                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
-                    class="w-full h-full"
-                    alt="avatar"
+                    :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+                    class="w-full h-full object-cover"
+                    :alt="partnerInfo?.name || 'avatar'"
                   />
                 </div>
               </div>
               <div
                 class="pt-4 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center"
               >
-                <div class="flex gap-2">
-                  <span class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold rounded"
-                    >#Figma</span
+                <div class="flex gap-2 flex-wrap">
+                  <span
+                    v-for="tag in partnerInfo?.tags || ['Figma']"
+                    :key="tag"
+                    class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold rounded"
+                    >#{{ tag }}</span
                   >
                 </div>
                 <i class="fa-solid fa-qrcode text-3xl opacity-80"></i>
@@ -271,10 +280,16 @@
               </h3>
               <div class="space-y-4 flex-1 text-sm">
                 <div class="flex items-center gap-3">
-                  <i class="fa-solid fa-phone text-yellow-500"></i><span>010-1234-5678</span>
+                  <i class="fa-solid fa-phone text-yellow-500"></i>
+                  <span>010-****-{{ partnerInfo?.id || '0000' }}000</span>
                 </div>
                 <div class="flex items-center gap-3">
-                  <i class="fa-solid fa-link text-yellow-500"></i><span>kimpoti.design</span>
+                  <i class="fa-solid fa-link text-yellow-500"></i>
+                  <span>{{ partnerInfo?.company?.toLowerCase().replace(' ', '') || 'kimpoti' }}.com</span>
+                </div>
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-location-dot text-yellow-500"></i>
+                  <span>Seoul, South Korea</span>
                 </div>
               </div>
               <div class="text-right opacity-40 text-[10px] font-bold uppercase">Poticard</div>
@@ -356,7 +371,8 @@
 
 <script setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import chatApi from '@/api/chat/index.js'
 
 /** refs */
 const remoteVideoRef = ref(null)
@@ -365,6 +381,10 @@ const sharePreviewVideoRef = ref(null)
 
 /** router */
 const router = useRouter()
+const route = useRoute()
+
+/** 상대방 정보 */
+const partnerInfo = ref(null)
 
 /** UI state */
 const micOn = ref(true)
@@ -383,26 +403,36 @@ const modals = ref({
   authModal: false,
 })
 
-const portfolios = ref([
-  {
-    id: 1,
-    title: 'Fintech App 2.0',
-    desc: '사용자 100만 명을 위한 결제 모듈 최적화 및 접근성 개선 프로젝트입니다.',
-    tags: ['Mobile', 'Fintech'],
-  },
-  {
-    id: 2,
-    title: 'Design System',
-    desc: '아토믹 디자인 기반의 전사 시스템 구축입니다. 50개 이상의 컴포넌트 표준화.',
-    tags: ['Figma', 'Atomic'],
-  },
-  {
-    id: 3,
-    title: 'Poticard Service',
-    desc: '개인 브랜딩과 명함 공유를 결합한 새로운 소셜 플랫폼입니다.',
-    tags: ['Web', 'React'],
-  },
-])
+const portfolios = ref([])
+
+/** 포트폴리오 로드 */
+async function loadPortfolios() {
+  try {
+    const res = await chatApi.loadPortfolios()
+    
+    if (res && res.data && Array.isArray(res.data)) {
+      // JSON 데이터를 컴포넌트에서 사용하는 형식으로 변환
+      portfolios.value = res.data.map((item, index) => ({
+        id: index + 1,
+        title: item.portfolio_name || '',
+        desc: item.portfolio_summary || '',
+        tags: item.keywords ? item.keywords.map(tag => tag.replace('#', '')) : []
+      }))
+      console.log('포트폴리오 로드 완료:', portfolios.value)
+    } else if (Array.isArray(res)) {
+      // 배열 형식으로 직접 응답이 오는 경우
+      portfolios.value = res.map((item, index) => ({
+        id: index + 1,
+        title: item.portfolio_name || '',
+        desc: item.portfolio_summary || '',
+        tags: item.keywords ? item.keywords.map(tag => tag.replace('#', '')) : []
+      }))
+      console.log('포트폴리오 로드 완료 (배열 형식):', portfolios.value)
+    }
+  } catch (error) {
+    console.error('포트폴리오 로드 실패:', error)
+  }
+}
 const selectedIds = ref(new Set())
 
 const selectionCountText = computed(
@@ -554,6 +584,8 @@ async function startScreenShare() {
       if (sender && newTrack) await sender.replaceTrack(newTrack)
     }
     screenStream.value.getVideoTracks()[0].onended = () => stopScreenShare()
+    
+    closeModal('shareModal')
   } catch (err) {
     console.error(err)
     log(`Screen share error: ${err?.message || err}`)
@@ -589,16 +621,23 @@ function toggleStatus(type) {
 }
 
 function handleShareClick() {
-  if (screenStream) stopScreenShare()
-  else openModal('shareModal')
+  if (screenStream.value) {
+    stopScreenShare()
+  } else {
+    openModal('shareModal')
+  }
 }
 
 function toggleShareSize() {
   if (sharePreviewVisible.value) sharePreviewFullSize.value = !sharePreviewFullSize.value
 }
 
-function openModal(id) {
+async function openModal(id) {
   modals.value[id] = true
+  // 권한 관리 모달을 열 때 포트폴리오 로드
+  if (id === 'authModal') {
+    await loadPortfolios()
+  }
 }
 
 function closeModal(id) {
@@ -645,10 +684,43 @@ function goExit() {
   window.location.href = 'index.html'
 }
 
+/** 상대방 정보 가져오기 */
+async function loadPartnerInfo() {
+  try {
+    const roomId = route.query.id ? Number(route.query.id) : null
+    if (!roomId) {
+      console.warn('roomId가 없습니다.')
+      return
+    }
+
+    const res = await chatApi.chatRoomList()
+    if (res && res.data) {
+      const room = res.data.find((r) => r.id === roomId)
+      if (room) {
+        partnerInfo.value = room
+        console.log('상대방 정보 로드 완료:', room)
+      } else {
+        console.warn(`roomId ${roomId}에 해당하는 방을 찾을 수 없습니다.`)
+      }
+    } else if (Array.isArray(res)) {
+      const room = res.find((r) => r.id === roomId)
+      if (room) {
+        partnerInfo.value = room
+        console.log('상대방 정보 로드 완료:', room)
+      }
+    }
+  } catch (error) {
+    console.error('상대방 정보 로드 실패:', error)
+  }
+}
+
 /** lifecycle */
 onMounted(async () => {
   // html class="dark" 유지하고 싶으면 아래 유지
   document.documentElement.classList.add('dark')
+
+  // 상대방 정보 가져오기
+  await loadPartnerInfo()
 
   initWebSocket()
   try {
@@ -767,7 +839,7 @@ onBeforeUnmount(() => {
   left: 24px;
   width: 320px;
   background: rgba(18, 18, 20, 0.9);
-  backdrop-blur: 20px;
+  backdrop-filter: blur(20px);
   border-radius: 0 0 20px 20px;
   border: 1px solid var(--border);
   border-top: none;
@@ -801,7 +873,7 @@ onBeforeUnmount(() => {
   left: 50%;
   transform: translateX(-50%);
   background: rgba(10, 10, 10, 0.8);
-  backdrop-blur: 20px;
+  backdrop-filter: blur(20px);
   padding: 14px 24px;
   border-radius: 28px;
   border: 1px solid var(--border);
