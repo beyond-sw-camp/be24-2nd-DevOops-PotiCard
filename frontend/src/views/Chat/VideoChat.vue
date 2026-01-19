@@ -681,7 +681,7 @@ function confirmAuth() {
 function goExit() {
   // 기존 index.html로 이동
   // SPA면 라우터로 바꿔도 됨: router.push('/')
-  window.location.href = 'index.html'
+  window.location.href = '/chat'
 }
 
 /** 상대방 정보 가져오기 */
