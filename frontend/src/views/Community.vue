@@ -1,64 +1,130 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, onMounted, watch } from 'vue'
+import api from '@/api/community/index'
 
-// 1. 데이터 및 상태 관리
-const posts = ref([
-  {
-    id: 1,
-    cat: 'QNA',
-    solved: true,
-    title: 'Spring Security 로그인 세션 질문',
-    author: '바강',
-    tags: ['Spring', 'Security'],
-    like: 23,
-    comment: 7,
-    time: '방금 전',
-  },
-  {
-    id: 2,
-    cat: 'SHOWCASE',
-    solved: false,
-    title: '포트폴리오 명함 UI 작업 공유',
-    author: '성훈',
-    tags: ['UI', 'Tailwind'],
-    like: 51,
-    comment: 12,
-    time: '12분 전',
-  },
-  {
-    id: 3,
-    cat: 'CAREER',
-    solved: false,
-    title: '신입 백엔드 포트폴리오 섹션 구성 조언',
-    author: 'JSH',
-    tags: ['Backend', 'Portfolio'],
-    like: 34,
-    comment: 18,
-    time: '1시간 전',
-  },
-  {
-    id: 4,
-    cat: 'FREE',
-    solved: false,
-    title: '개발하면서 멘탈 관리 어떻게 해?',
-    author: '익명',
-    tags: ['Talk'],
-    like: 17,
-    comment: 9,
-    time: '3시간 전',
-  },
-  {
-    id: 5,
-    cat: 'STUDY',
-    solved: false,
-    title: 'CS 스터디 같이 할 사람',
-    author: '민수',
-    tags: ['Study', 'CS'],
-    like: 9,
-    comment: 4,
-    time: '어제',
-  },
-])
+const posts = ref([])
+
+/**
+ * 날짜 문자열(YYYY-MM-DD-HH:mm:ss)을 "방금 전", "N시간 전"으로 변환하는 함수
+ */
+const formatTimeAgo = (dateString) => {
+  // 예: "2025-09-01-06:17:27" -> 숫자만 분리하여 Date 객체 생성
+  const parts = dateString.split(/[-:]/); 
+  // parts: [2025, 09, 01, 06, 17, 27]
+  const targetDate = new Date(parts[0], parts[1] - 1, parts[2], parts[3], parts[4], parts[5]);
+  
+  const now = new Date();
+  const diff = (now - targetDate) / 1000; // 초 단위 차이 계산
+
+  if (diff < 60) return '방금 전';
+  if (diff < 3600) return `${Math.floor(diff / 60)}분 전`;
+  if (diff < 86400) return `${Math.floor(diff / 3600)}시간 전`;
+  if (diff < 604800) return `${Math.floor(diff / 86400)}일 전`;
+  return `${targetDate.getFullYear()}.${targetDate.getMonth() + 1}.${targetDate.getDate()}`;
+};
+
+const fetchAllPosts = async () => {
+  try {
+    // 1. 1부터 30까지의 비동기 요청을 담을 배열 생성
+    const promises = [];
+    for (let i = 1; i <= 30; i++) {
+      // getPostList 함수를 실행하여 Promise를 배열에 추가
+      promises.push(api.getPostList(i));
+    }
+
+    // 2. 모든 요청이 완료될 때까지 대기 (병렬 처리)
+    const results = await Promise.all(promises);
+
+    // 3. 결과 데이터 가공 및 할당
+    // results에는 [응답1, 응답2, ... 응답30]이 들어있음
+    posts.value = results
+      .filter(res => res && res.data) // 통신 실패나 데이터 없는 경우 제외 (안전장치)
+      .map((res,index)=>{
+        const item = res.data
+
+        return {
+          id : item.postId,
+          cat : item.category,
+          solved : item.isSolved,
+          title : item.title,
+          author : item.author,
+          tags : item.tags,
+          like : Number(item.likes),
+          comment : Number(item.replys),
+          time: formatTimeAgo(item.createdAt)
+        }
+      });          // API 구조상 실제 내용은 .data 안에 있으므로 추출
+
+    console.log('불러온 전체 게시글:', posts.value);
+
+  } catch (error) {
+    console.error('전체 게시글 로딩 중 오류 발생:', error);
+  }
+};
+
+// 컴포넌트가 마운트(화면 로드)될 때 데이터 불러오기
+onMounted(() => {
+  posts.value = fetchAllPosts();
+});
+
+// // 1. 데이터 및 상태 관리
+// const posts = ref([
+//   {
+//     id: 1,
+//     cat: 'QNA',
+//     solved: true,
+//     title: 'Spring Security 로그인 세션 질문',
+//     author: '바강',
+//     tags: ['Spring', 'Security'],
+//     like: 23,
+//     comment: 7,
+//     time: '방금 전',
+//   },
+//   {
+//     id: 2,
+//     cat: 'SHOWCASE',
+//     solved: false,
+//     title: '포트폴리오 명함 UI 작업 공유',
+//     author: '성훈',
+//     tags: ['UI', 'Tailwind'],
+//     like: 51,
+//     comment: 12,
+//     time: '12분 전',
+//   },
+//   {
+//     id: 3,
+//     cat: 'CAREER',
+//     solved: false,
+//     title: '신입 백엔드 포트폴리오 섹션 구성 조언',
+//     author: 'JSH',
+//     tags: ['Backend', 'Portfolio'],
+//     like: 34,
+//     comment: 18,
+//     time: '1시간 전',
+//   },
+//   {
+//     id: 4,
+//     cat: 'FREE',
+//     solved: false,
+//     title: '개발하면서 멘탈 관리 어떻게 해?',
+//     author: '익명',
+//     tags: ['Talk'],
+//     like: 17,
+//     comment: 9,
+//     time: '3시간 전',
+//   },
+//   {
+//     id: 5,
+//     cat: 'STUDY',
+//     solved: false,
+//     title: 'CS 스터디 같이 할 사람',
+//     author: '민수',
+//     tags: ['Study', 'CS'],
+//     like: 9,
+//     comment: 4,
+//     time: '어제',
+//   },
+// ])
 
 const state = reactive({
   cat: 'ALL',
@@ -125,6 +191,8 @@ const resetFilters = () => {
 }
 
 const loadMore = () => state.page++
+
+
 </script>
 
 <template>
@@ -176,7 +244,7 @@ const loadMore = () => state.page++
                     v-for="cat in ['ALL', 'QNA', 'SHOWCASE', 'CAREER', 'STUDY', 'FREE']"
                     :key="cat"
                     @click="
-                      state.cat = cat
+                      state.cat = cat;
                       state.page = 1
                     "
                     :class="[

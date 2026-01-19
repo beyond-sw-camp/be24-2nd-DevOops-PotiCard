@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, onUnmounted } from 'vue'
+import { onMounted, ref, onUnmounted} from 'vue'
 // ★ 컴포넌트 import (경로는 실제 위치에 맞게 수정)
 import NamecardsFront from '@/components/namecards/NamecardsFront.vue'
 import NamecardsBack from '@/components/namecards/NamecardsBack.vue'
@@ -10,7 +10,7 @@ const userIds = ref([])
 const isLoading = ref(false)
 const loadTrigger = ref(null)
 let currentPage = 1
-const itemsPerPage = 12 // 한 번에 불러올 개수
+const itemsPerPage = 50 // 한 번에 불러올 개수
 
 // 2. ID 생성 함수 (실제 API가 리스트를 준다면 그걸 쓰면 되고, 여기선 1~100 생성 로직)
 const loadMoreIds = () => {
