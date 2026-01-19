@@ -5,9 +5,7 @@ function flipCard() {
   const cardInner = document.getElementById('card-inner')
   cardInner.classList.toggle('flipped')
 }
-onMounted(() => {
-
-})
+onMounted(() => {})
 </script>
 
 <template>
@@ -32,7 +30,7 @@ onMounted(() => {
         <!-- Card Container -->
         <div
           class="relative w-full max-w-md aspect-[1.58/1] cursor-pointer group perspective-1000"
-         @click="flipCard()"
+          @click="flipCard()"
         >
           <div
             id="card-inner"
@@ -113,21 +111,31 @@ onMounted(() => {
             </div>
 
             <!-- BACK SIDE -->
-            <div class="card-face card-back bg-zinc-900 text-white rounded-2xl border border-zinc-700 p-6 sm:p-8 flex flex-col">
-                <div class="absolute bottom-0 left-0 w-24 h-24 bg-zinc-800 rounded-tr-full opacity-50"></div>
-                <div class="relative z-10 h-full flex flex-col">
-                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                        <span class="w-1.5 h-6 bg-yellow-400 rounded-full"></span> Contact Info
-                    </h3>
-                    <div class="space-y-4 flex-1 text-sm text-gray-300">
-                         <div class="flex items-center gap-3"><i class="fa-solid fa-phone w-5"></i> 010-1234-5678</div>
-                         <div class="flex items-center gap-3"><i class="fa-solid fa-location-dot w-5"></i> Seoul, Korea</div>
-                         <div class="flex items-center gap-3"><i class="fa-solid fa-link w-5"></i> kimpoti.design</div>
-                    </div>
-                    <div class="text-right mt-auto">
-                        <span class="text-[10px] font-bold tracking-widest opacity-40">POTICARD</span>
-                    </div>
+            <div
+              class="card-face card-back bg-zinc-900 text-white rounded-2xl border border-zinc-700 p-6 sm:p-8 flex flex-col"
+            >
+              <div
+                class="absolute bottom-0 left-0 w-24 h-24 bg-zinc-800 rounded-tr-full opacity-50"
+              ></div>
+              <div class="relative z-10 h-full flex flex-col">
+                <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                  <span class="w-1.5 h-6 bg-yellow-400 rounded-full"></span> Contact Info
+                </h3>
+                <div class="space-y-4 flex-1 text-sm text-gray-300">
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-phone w-5"></i> 010-1234-5678
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-location-dot w-5"></i> Seoul, Korea
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-link w-5"></i> kimpoti.design
+                  </div>
                 </div>
+                <div class="text-right mt-auto">
+                  <span class="text-[10px] font-bold tracking-widest opacity-40">POTICARD</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -340,7 +348,7 @@ onMounted(() => {
   top: 0;
   left: 0;
   /* 뒷면 숨기기: 브라우저 호환성을 위해 webkit 접두사 포함 */
-  -webkit-backface-visibility: hidden; 
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   overflow: hidden; /* 둥근 모서리 밖으로 내용 삐져나감 방지 */
 }

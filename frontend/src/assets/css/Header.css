@@ -172,7 +172,7 @@ html.namecard-open #flyout-namecard .nav-panel {
   width: 42px;
   height: 42px;
   border-radius: 14px;
-  background: rgba(250, 204, 21, 0.10);
+  background: rgba(250, 204, 21, 0.1);
   border: 1px solid rgba(250, 204, 21, 0.18);
   display: flex;
   align-items: center;
@@ -232,13 +232,13 @@ html.namecard-open #flyout-namecard .nav-panel {
   border-radius: 999px;
   font-size: 12px;
   font-weight: 900;
-  color: rgba(17, 24, 39, 0.70);
+  color: rgba(17, 24, 39, 0.7);
   background: rgba(17, 24, 39, 0.06);
   transition: 0.15s ease;
 }
 .dark .pc-logout-btn {
   color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.10);
+  background: rgba(255, 255, 255, 0.1);
 }
 .pc-logout-btn:hover {
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18);
@@ -250,18 +250,18 @@ html.namecard-open #flyout-namecard .nav-panel {
   border: 1px solid rgba(250, 204, 21, 0.22);
   background:
     radial-gradient(900px 240px at 20% 0%, rgba(250, 204, 21, 0.18), transparent 60%),
-    radial-gradient(700px 220px at 80% 100%, rgba(59, 130, 246, 0.10), transparent 60%),
+    radial-gradient(700px 220px at 80% 100%, rgba(59, 130, 246, 0.1), transparent 60%),
     rgba(255, 255, 255, 0.55);
   backdrop-filter: blur(10px);
   box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.10),
+    0 18px 50px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.35);
   padding: 14px;
 }
 .dark .pc-mini-card {
   background:
-    radial-gradient(900px 240px at 20% 0%, rgba(250, 204, 21, 0.10), transparent 60%),
-    radial-gradient(700px 220px at 80% 100%, rgba(59, 130, 246, 0.10), transparent 60%),
+    radial-gradient(900px 240px at 20% 0%, rgba(250, 204, 21, 0.1), transparent 60%),
+    radial-gradient(700px 220px at 80% 100%, rgba(59, 130, 246, 0.1), transparent 60%),
     rgba(24, 24, 27, 0.65);
   box-shadow:
     0 18px 50px rgba(0, 0, 0, 0.32),
@@ -292,7 +292,7 @@ html.namecard-open #flyout-namecard .nav-panel {
 }
 .dark .pc-mini-avatar {
   background: rgba(0, 0, 0, 0.18);
-  border-color: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.1);
 }
 .pc-mini-avatar img {
   width: 40px;
@@ -316,7 +316,7 @@ html.namecard-open #flyout-namecard .nav-panel {
   margin: 2px 0 0;
   font-size: 11px;
   font-weight: 800;
-  color: rgba(17, 24, 39, 0.70);
+  color: rgba(17, 24, 39, 0.7);
 }
 .dark .pc-mini-role {
   color: rgba(255, 255, 255, 0.75);
@@ -328,7 +328,7 @@ html.namecard-open #flyout-namecard .nav-panel {
   color: rgba(17, 24, 39, 0.55);
 }
 .dark .pc-mini-company {
-  color: rgba(255, 255, 255, 0.60);
+  color: rgba(255, 255, 255, 0.6);
 }
 .pc-mini-badge {
   width: 34px;
@@ -354,8 +354,8 @@ html.namecard-open #flyout-namecard .nav-panel {
 .dark .pc-mini-divider {
   background: linear-gradient(
     to right,
-    rgba(250, 204, 21, 0.20),
-    rgba(255, 255, 255, 0.10),
+    rgba(250, 204, 21, 0.2),
+    rgba(255, 255, 255, 0.1),
     rgba(59, 130, 246, 0.16)
   );
 }
@@ -419,7 +419,7 @@ html.namecard-open #flyout-namecard .nav-panel {
 .dark .pc-mini-btn {
   color: #fff;
   border-color: rgba(250, 204, 21, 0.28);
-  background: rgba(250, 204, 21, 0.10);
+  background: rgba(250, 204, 21, 0.1);
 }
 .dark .pc-mini-btn.ghost {
   border-color: rgba(255, 255, 255, 0.14);
@@ -431,7 +431,7 @@ html.namecard-open #flyout-namecard .nav-panel {
   position: absolute;
   inset: 0;
   border-radius: 18px;
-  background: rgba(0, 0, 0, 0.30);
+  background: rgba(0, 0, 0, 0.3);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
@@ -444,12 +444,12 @@ html.namecard-open #flyout-namecard .nav-panel {
   border-radius: 18px;
   border: 1px solid rgba(250, 204, 21, 0.22);
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
   padding: 14px;
 }
 .dark .pc-confirm {
   background: rgba(24, 24, 27, 0.95);
-  border-color: rgba(250, 204, 21, 0.20);
+  border-color: rgba(250, 204, 21, 0.2);
 }
 .pc-confirm-title {
   margin: 0;
@@ -467,7 +467,7 @@ html.namecard-open #flyout-namecard .nav-panel {
   color: rgba(17, 24, 39, 0.65);
 }
 .dark .pc-confirm-desc {
-  color: rgba(255, 255, 255, 0.70);
+  color: rgba(255, 255, 255, 0.7);
 }
 .pc-confirm-actions {
   display: flex;
@@ -491,7 +491,7 @@ html.namecard-open #flyout-namecard .nav-panel {
 .dark .pc-confirm-btn {
   color: #fff;
   border-color: rgba(250, 204, 21, 0.28);
-  background: rgba(250, 204, 21, 0.10);
+  background: rgba(250, 204, 21, 0.1);
 }
 .dark .pc-confirm-btn.ghost {
   border-color: rgba(255, 255, 255, 0.14);

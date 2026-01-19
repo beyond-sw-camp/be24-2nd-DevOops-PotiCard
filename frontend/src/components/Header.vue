@@ -110,13 +110,10 @@ const cardRole = computed(
     authStore.userInfo?.role ||
     authStore.userInfo?.job ||
     authStore.userInfo?.position ||
-    'Portfolio Creator'
+    'Portfolio Creator',
 )
 const cardCompany = computed(
-  () =>
-    authStore.userInfo?.company ||
-    authStore.userInfo?.organization ||
-    'PotiCard'
+  () => authStore.userInfo?.company || authStore.userInfo?.organization || 'PotiCard',
 )
 const cardEmail = computed(() => authStore.userInfo?.userEmail || authStore.userInfo?.email || '')
 const cardPhone = computed(() => authStore.userInfo?.userPhone || authStore.userInfo?.phone || '')
@@ -147,9 +144,7 @@ onBeforeUnmount(() => {
           <div class="pc-brand-logo-wrap">
             <img :src="poticardLogo" alt="PotiCard" class="pc-brand-logo-img" />
           </div>
-          <h1 class="text-2xl font-black tracking-tighter text-point-yellow">
-            Poticard
-          </h1>
+          <h1 class="text-2xl font-black tracking-tighter text-point-yellow">Poticard</h1>
         </router-link>
 
         <!-- NAV (기존 유지) -->
@@ -274,11 +269,7 @@ onBeforeUnmount(() => {
                 >
                   <!-- 로그아웃만( X 없음 ) -->
                   <div class="flex justify-end mb-3">
-                    <button
-                      type="button"
-                      class="pc-logout-btn"
-                      @click="openLogoutConfirm"
-                    >
+                    <button type="button" class="pc-logout-btn" @click="openLogoutConfirm">
                       로그아웃
                     </button>
                   </div>
@@ -319,14 +310,20 @@ onBeforeUnmount(() => {
                       <button
                         type="button"
                         class="pc-mini-btn"
-                        @click="router.push('/namecard-modify'); closeUserMenu()"
+                        @click="
+                          router.push('/namecard-modify');
+                          closeUserMenu()
+                        "
                       >
                         내 명함 관리
                       </button>
                       <button
                         type="button"
                         class="pc-mini-btn ghost"
-                        @click="router.push('/namecard-search'); closeUserMenu()"
+                        @click="
+                          router.push('/namecard-search');
+                          closeUserMenu()
+                        "
                       >
                         명함 검색
                       </button>
@@ -334,7 +331,11 @@ onBeforeUnmount(() => {
                   </div>
 
                   <!-- ✅ 로그아웃 확인 모달 -->
-                  <div v-if="showLogoutConfirm" class="pc-confirm-backdrop" @click.self="cancelLogout">
+                  <div
+                    v-if="showLogoutConfirm"
+                    class="pc-confirm-backdrop"
+                    @click.self="cancelLogout"
+                  >
                     <div class="pc-confirm">
                       <p class="pc-confirm-title">로그아웃 하시겠습니까?</p>
                       <p class="pc-confirm-desc">확인을 누르면 로그아웃됩니다.</p>
@@ -376,9 +377,19 @@ onBeforeUnmount(() => {
             class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors text-gray-500 dark:text-gray-400"
             title="채팅"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 10h.01M12 10h.01M16 10h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+              />
             </svg>
           </router-link>
 
@@ -388,10 +399,22 @@ onBeforeUnmount(() => {
               class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors relative"
               title="알림"
             >
-              <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950"></span>
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+              <span
+                class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950"
+              ></span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                />
               </svg>
             </button>
 
@@ -407,12 +430,16 @@ onBeforeUnmount(() => {
                 v-if="showNotiPopup"
                 class="absolute right-0 top-full mt-3 w-80 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-[110]"
               >
-                <div class="px-5 py-4 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center">
+                <div
+                  class="px-5 py-4 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center"
+                >
                   <span class="font-bold">알림</span>
                   <button class="text-xs text-point-yellow font-bold">모두 읽음</button>
                 </div>
                 <div class="max-h-80 overflow-y-auto">
-                  <div class="p-4 hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition border-b border-gray-50 dark:border-zinc-800/50">
+                  <div
+                    class="p-4 hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition border-b border-gray-50 dark:border-zinc-800/50"
+                  >
                     <p class="text-sm font-bold">💬 새 메시지</p>
                     <p class="text-xs text-gray-500 mt-1">김채용님이 메시지를 보냈습니다.</p>
                   </div>
@@ -437,7 +464,9 @@ onBeforeUnmount(() => {
     <div v-if="showAuthModal" class="fixed inset-0 z-[200] flex items-center justify-center p-6">
       <div class="absolute inset-0 bg-zinc-950/40 backdrop-blur-sm" @click="closeAuthModal"></div>
 
-      <div class="relative w-full max-w-sm bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 shadow-2xl border border-gray-100 dark:border-zinc-800">
+      <div
+        class="relative w-full max-w-sm bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 shadow-2xl border border-gray-100 dark:border-zinc-800"
+      >
         <button
           @click="closeAuthModal"
           class="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-full hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors text-xl"
@@ -455,7 +484,11 @@ onBeforeUnmount(() => {
             @click="selectAuthType('personal')"
             class="w-full group p-5 rounded-3xl border-2 border-gray-100 dark:border-zinc-800 hover:border-point-yellow transition-all text-left flex items-center gap-4"
           >
-            <div class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">👤</div>
+            <div
+              class="w-12 h-12 rounded-2xl bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+            >
+              👤
+            </div>
             <div>
               <span class="block text-lg font-bold text-gray-900 dark:text-white">개인 회원</span>
               <span class="text-xs text-gray-500">포트폴리오 및 명함 관리</span>
@@ -466,7 +499,11 @@ onBeforeUnmount(() => {
             @click="selectAuthType('business')"
             class="w-full group p-5 rounded-3xl border-2 border-gray-100 dark:border-zinc-800 hover:border-point-yellow transition-all text-left flex items-center gap-4"
           >
-            <div class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">🏢</div>
+            <div
+              class="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-900/20 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform"
+            >
+              🏢
+            </div>
             <div>
               <span class="block text-lg font-bold text-gray-900 dark:text-white">기업 계정</span>
               <span class="text-xs text-gray-500">채용 및 인재 검색</span>
@@ -483,7 +520,7 @@ onBeforeUnmount(() => {
   width: 5px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 10px;
 }
 </style>
