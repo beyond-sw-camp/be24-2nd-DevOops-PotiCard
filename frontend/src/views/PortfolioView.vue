@@ -1,18 +1,29 @@
 <script setup>
-import { ref } from 'vue'
-// 기존에 만든 컴포넌트 import (경로 확인 필요)
+import { ref, onMounted } from 'vue'
 import NamecardsFront from '@/components/namecards/NamecardsFront.vue'
 import NamecardsBack from '@/components/namecards/NamecardsBack.vue'
+// portfolio.js에서 getProjects 가져오기
+import { getProjects } from '@/api/portfolio/index.js'
 
-// 카드 뒤집기 상태 관리
 const isFlipped = ref(false)
+const projects = ref([]) // 프로젝트 목록 저장
+const currentUserId = '1' // 명함용 ID는 유지
 
 const toggleFlip = () => {
   isFlipped.value = !isFlipped.value
 }
 
-// 예시를 위한 userId (실제로는 props로 받거나 라우트에서 가져옴)
-const currentUserId = '1'
+// 컴포넌트 로드 시 데이터 호출
+onMounted(async () => {
+  const data = await getProjects()
+  // JSON 파일이 { "projects": [...] } 형태라고 가정합니다.
+  if (data && data.projects) {
+    projects.value = data.projects
+  } else if (Array.isArray(data)) {
+    // JSON 자체가 배열인 경우
+    projects.value = data
+  }
+})
 </script>
 
 <template>
@@ -52,146 +63,53 @@ const currentUserId = '1'
   </section>
 
       <!-- Projects Section -->
-      <section>
-        <div class="flex items-center gap-3 mb-8">
-          <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Featured Projects</h3>
-          <div class="h-px flex-1 bg-gray-200 dark:bg-zinc-800"></div>
+      
+<section>
+  <div class="flex items-center gap-3 mb-8">
+    <h3 class="text-2xl font-bold text-gray-900 dark:text-white">Featured Projects</h3>
+    <div class="h-px flex-1 bg-gray-200 dark:bg-zinc-800"></div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <article
+      v-for="project in projects"
+      :key="project.id"
+      class="group bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-xl hover:shadow-yellow-100/50 dark:hover:shadow-none hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+    >
+      <div class="w-full h-48 bg-gray-100 dark:bg-zinc-800 relative overflow-hidden">
+        <div class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-zinc-700">
+          <i :class="project.iconClass || 'fa-regular fa-image'" class="text-4xl"></i>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <!-- Project Card 1 -->
-          <article
-            class="group bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-xl hover:shadow-yellow-100/50 dark:hover:shadow-none hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-          >
-            <div class="w-full h-48 bg-gray-100 dark:bg-zinc-800 relative overflow-hidden">
-              <!-- Placeholder Image -->
-              <div
-                class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-zinc-700"
-              >
-                <i class="fa-regular fa-image text-4xl"></i>
-              </div>
-              <!-- Overlay -->
-              <div
-                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30"
-                  >View Details</span
-                >
-              </div>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-2">
-                <span
-                  class="text-[10px] font-bold text-point-yellow bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded uppercase tracking-wide"
-                  >App Redesign</span
-                >
-                <span class="text-xs text-gray-400">2023.01</span>
-              </div>
-              <h4
-                class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-point-yellow transition-colors"
-              >
-                E-commerce Mobile App
-              </h4>
-              <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">
-                기존 쇼핑몰 앱의 복잡한 결제 프로세스를 개선하여 구매 전환율을 15% 상승시킨 리디자인
-                프로젝트입니다.
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span class="text-xs text-gray-400">#UX_Research</span>
-                <span class="text-xs text-gray-400">#Figma</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project Card 2 -->
-          <article
-            class="group bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-xl hover:shadow-yellow-100/50 dark:hover:shadow-none hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-          >
-            <div class="w-full h-48 bg-gray-100 dark:bg-zinc-800 relative overflow-hidden">
-              <div
-                class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-zinc-700"
-              >
-                <i class="fa-solid fa-chart-pie text-4xl"></i>
-              </div>
-              <div
-                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30"
-                  >View Details</span
-                >
-              </div>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-2">
-                <span
-                  class="text-[10px] font-bold text-point-yellow bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded uppercase tracking-wide"
-                  >Web Dashboard</span
-                >
-                <span class="text-xs text-gray-400">2023.05</span>
-              </div>
-              <h4
-                class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-point-yellow transition-colors"
-              >
-                Finance Admin Dashboard
-              </h4>
-              <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">
-                복잡한 금융 데이터를 직관적인 차트와 그래프로 시각화하여 관리자 업무 효율을 높인
-                대시보드입니다.
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span class="text-xs text-gray-400">#Data_Viz</span>
-                <span class="text-xs text-gray-400">#React</span>
-              </div>
-            </div>
-          </article>
-
-          <!-- Project Card 3 -->
-          <article
-            class="group bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 overflow-hidden hover:shadow-xl hover:shadow-yellow-100/50 dark:hover:shadow-none hover:-translate-y-1 transition-all duration-300 cursor-pointer"
-          >
-            <div class="w-full h-48 bg-gray-100 dark:bg-zinc-800 relative overflow-hidden">
-              <div
-                class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-zinc-700"
-              >
-                <i class="fa-solid fa-swatchbook text-4xl"></i>
-              </div>
-              <div
-                class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
-              >
-                <span
-                  class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30"
-                  >View Details</span
-                >
-              </div>
-            </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-2">
-                <span
-                  class="text-[10px] font-bold text-point-yellow bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded uppercase tracking-wide"
-                  >Design System</span
-                >
-                <span class="text-xs text-gray-400">2023.08</span>
-              </div>
-              <h4
-                class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-point-yellow transition-colors"
-              >
-                Enterprise Design System
-              </h4>
-              <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">
-                전사 프로덕트의 일관성을 위한 디자인 시스템 구축 프로젝트. 컴포넌트 라이브러리와
-                가이드라인을 제작했습니다.
-              </p>
-              <div class="flex flex-wrap gap-2">
-                <span class="text-xs text-gray-400">#System_Design</span>
-                <span class="text-xs text-gray-400">#Documentation</span>
-              </div>
-            </div>
-          </article>
+        
+        <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <span class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30">
+            View Details
+          </span>
         </div>
-      </section>
-    </main>
+      </div>
+
+      <div class="p-6">
+        <div class="flex justify-between items-start mb-2">
+          <span class="text-[10px] font-bold text-point-yellow bg-yellow-50 dark:bg-yellow-900/20 px-2 py-1 rounded uppercase tracking-wide">
+            {{ project.category }}
+          </span>
+          <span class="text-xs text-gray-400">{{ project.date }}</span>
+        </div>
+        <h4 class="text-lg font-bold text-gray-900 dark:text-white mb-2 group-hover:text-point-yellow transition-colors">
+          {{ project.title }}
+        </h4>
+        <p class="text-sm text-gray-500 dark:text-gray-400 line-clamp-2 mb-4">
+          {{ project.description }}
+        </p>
+        <div class="flex flex-wrap gap-2">
+          <span v-for="tag in project.tags" :key="tag" class="text-xs text-gray-400">
+            #{{ tag }}
+          </span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>    </main>
   </div>
 </template>
 

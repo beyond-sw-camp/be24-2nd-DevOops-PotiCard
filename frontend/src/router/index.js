@@ -88,6 +88,12 @@ const router = createRouter({
           meta: { requiresAuth: true, title: '포트폴리오 목록' },
         },
         {
+          path: 'project-detail',
+          name: 'projectdetail',
+          component: () => import('../views/ProjectDetail.vue'),
+          meta: { requiresAuth: true, title: '프로젝트 상세' },
+        },
+        {
           path: 'matching',
           name: 'matching',
           component: () => import('../views/Matching.vue'),
