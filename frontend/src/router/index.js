@@ -123,6 +123,12 @@ const router = createRouter({
           component: () => import('../views/Subscribe.vue'),
           meta: { requiresAuth: false, title: '구독' },
         },
+        {
+          path: 'searchresults',
+          name: 'searchresults',
+          component: () => import('../views/SearchResults.vue'),
+          meta: { requiresAuth: false, title: '검색 결과' },
+        },
       ],
     },
     {
