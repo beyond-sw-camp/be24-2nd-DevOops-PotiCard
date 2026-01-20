@@ -1,29 +1,55 @@
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { useRouter, RouterLink } from 'vue-router'
+import { useRouter, useRoute, RouterLink } from 'vue-router'
 import '@/assets/css/Header.css'
 import brandLogo from '@/image/poticard-logo.png'
 
 const router = useRouter()
+const route = useRoute()
 
-// 기업 로그인 정보(프로젝트에 맞게 localStorage에서 가져옴)
-const companyInfo = computed(() => {
+const loadCompanyInfo = () => {
   try {
     return JSON.parse(localStorage.getItem('USERINFO') || 'null')
   } catch {
     return null
   }
-})
+}
+
+const companyInfo = ref(loadCompanyInfo())
+
+const syncCompanyInfo = () => {
+  companyInfo.value = loadCompanyInfo()
+}
+
+const onStorage = (e) => {
+  if (e?.key === 'USERINFO' || e?.key === 'ATOKEN') syncCompanyInfo()
+}
+
+const isCompanyLoggedIn = computed(() => !!companyInfo.value)
 
 const companyName = computed(() => companyInfo.value?.userName ?? companyInfo.value?.name ?? 'Demo')
 const companyEmail = computed(() => companyInfo.value?.email ?? companyInfo.value?.userEmail ?? 'company@poticard.com')
 
-// 상태
+const isCompanyHome = computed(() => route.path === '/company')
+const isJobs = computed(() => route.path.startsWith('/company/job'))
+const isTalent = computed(() => route.path.startsWith('/namecard-search') || route.path.startsWith('/namecard'))
+const isApplicants = computed(() => route.path.startsWith('/company/applicants'))
+
+const navLinkClass = (active) => {
+  return [
+    'px-4 py-2 text-sm font-extrabold rounded-2xl transition',
+    active
+      ? 'text-amber-900 dark:text-amber-200 font-black text-[15px]'
+      : 'text-gray-500 dark:text-gray-400 hover:text-point-yellow hover:bg-amber-50/60 ' +
+      'dark:hover:bg-amber-500/10 border border-transparent',
+  ].join(' ')
+}
+
 const userMenuOpen = ref(false)
 const showLogoutConfirm = ref(false)
 const showNotiPopup = ref(false)
+const hasUnread = ref(true)
 
-// 토글
 const toggleUserMenu = (e) => {
   e?.stopPropagation?.()
   userMenuOpen.value = !userMenuOpen.value
@@ -34,7 +60,6 @@ const closeUserMenu = () => {
   showLogoutConfirm.value = false
 }
 
-// 바깥 클릭 닫기 (유저패널 + 알림팝업)
 const onDocClick = (e) => {
   if (userMenuOpen.value) {
     const userRoot = document.getElementById('companyUserWrap')
@@ -47,41 +72,71 @@ const onDocClick = (e) => {
   }
 }
 
-// ESC 닫기
 const onKeyDown = (e) => {
   if (e.key !== 'Escape') return
   closeUserMenu()
   showNotiPopup.value = false
 }
 
-// 패널 내부 버튼
 const goJobCreate = () => {
   closeUserMenu()
   router.push('/company/jobcreate')
 }
 const goApplicants = () => {
   closeUserMenu()
-  router.push('/company/applicants') // = 대기자보기/지원자보기 (너희 라우트에 맞게)
+  router.push('/company/applicants')
 }
 
-// 로그아웃
+const markAllReadAndClose = (e) => {
+  e?.stopPropagation?.()
+  hasUnread.value = false
+  showNotiPopup.value = false
+}
+
+const onNotiClick = (e) => {
+  e?.stopPropagation?.()
+
+  if (!isCompanyLoggedIn.value) {
+    showNotiPopup.value = false
+    router.push({ path: '/login', query: { redirect: '/chat' } })
+    return
+  }
+
+  showNotiPopup.value = !showNotiPopup.value
+}
+
 const openLogoutConfirm = (e) => {
   e?.stopPropagation?.()
   showLogoutConfirm.value = true
 }
 const cancelLogout = () => (showLogoutConfirm.value = false)
+
 const confirmLogout = () => {
   localStorage.removeItem('USERINFO')
+  localStorage.removeItem('ATOKEN')
+  sessionStorage.removeItem('ATOKEN')
   document.cookie = 'ATOKEN=; Max-Age=0; path=/'
+  document.cookie = 'RTOKEN=; Max-Age=0; path=/'
+
+  showNotiPopup.value = false
   closeUserMenu()
+
+  companyInfo.value = null
+  window.dispatchEvent(new Event('auth-changed'))
+
   router.push('/login')
 }
 
 onMounted(() => {
+  syncCompanyInfo()
+  window.addEventListener('storage', onStorage)
+  window.addEventListener('auth-changed', syncCompanyInfo)
   document.addEventListener('click', onDocClick)
   document.addEventListener('keydown', onKeyDown)
 })
 onBeforeUnmount(() => {
+  window.removeEventListener('storage', onStorage)
+  window.removeEventListener('auth-changed', syncCompanyInfo)
   document.removeEventListener('click', onDocClick)
   document.removeEventListener('keydown', onKeyDown)
 })
@@ -91,9 +146,7 @@ onBeforeUnmount(() => {
   <header
     class="sticky top-0 z-[1000] w-full border-b border-slate-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 shadow-sm">
     <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between gap-8">
-      <!-- LEFT -->
       <div class="flex items-center gap-8">
-        <!-- ✅ 로고 클릭 = 메인(/) -->
         <RouterLink to="/" class="group flex items-center gap-3">
           <span class="pc-brand-box">
             <img :src="brandLogo" alt="PotiCard" class="pc-brand-logo" />
@@ -105,29 +158,15 @@ onBeforeUnmount(() => {
           </span>
         </RouterLink>
 
-        <nav class="hidden lg:flex items-center gap-1">
-          <RouterLink to="/company"
-            class="px-4 py-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-point-yellow transition-colors">
-            기업 홈
-          </RouterLink>
-          <RouterLink to="/company/joblist"
-            class="px-4 py-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-point-yellow transition-colors">
-            공고
-          </RouterLink>
-          <RouterLink to="/namecard-search"
-            class="px-4 py-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-point-yellow transition-colors">
-            인재검색
-          </RouterLink>
-          <RouterLink to="/company/applicants"
-            class="px-4 py-2 text-sm font-bold text-gray-500 dark:text-gray-400 hover:text-point-yellow transition-colors">
-            지원자
-          </RouterLink>
+        <nav class="hidden lg:flex items-center gap-2">
+          <RouterLink to="/company" :class="navLinkClass(isCompanyHome)">기업 홈</RouterLink>
+          <RouterLink to="/company/joblist" :class="navLinkClass(isJobs)">공고</RouterLink>
+          <RouterLink to="/namecard-search" :class="navLinkClass(isTalent)">인재검색</RouterLink>
+          <RouterLink to="/company/applicants" :class="navLinkClass(isApplicants)">지원자</RouterLink>
         </nav>
       </div>
 
-      <!-- RIGHT -->
       <div class="flex items-center gap-3">
-        <!-- 공고 등록 버튼(헤더 밖 버튼 유지하고 싶으면 여기 살림) -->
         <RouterLink to="/company/jobcreate"
           class="hidden sm:inline-flex items-center justify-center h-11 px-6 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300 transition">
           공고 등록
@@ -135,10 +174,8 @@ onBeforeUnmount(() => {
 
         <div class="h-6 w-[1px] bg-gray-200 dark:border-zinc-800 mx-1"></div>
 
-        <!-- ✅ 기업계정(닉네임) + 오른쪽에 채팅/알림 (원래헤더 느낌) -->
         <div class="flex items-center gap-2">
-          <!-- 기업계정 / 닉네임 -->
-          <div class="relative" id="companyUserWrap">
+          <div v-if="isCompanyLoggedIn" class="relative" id="companyUserWrap">
             <button type="button" @click="toggleUserMenu" class="inline-flex items-center gap-2 h-11 px-3 rounded-2xl border border-gray-200 dark:border-zinc-800
                      bg-white dark:bg-zinc-900 hover:bg-gray-50 dark:hover:bg-zinc-800 transition">
               <span class="w-8 h-8 rounded-full bg-gray-100 dark:bg-zinc-800 block"></span>
@@ -151,20 +188,17 @@ onBeforeUnmount(() => {
               </span>
             </button>
 
-            <!-- ✅ 여기: 패널 무조건 보이게 v-if + absolute -->
             <Transition enter-active-class="transition duration-200 ease-out"
               enter-from-class="transform scale-95 opacity-0" enter-to-class="transform scale-100 opacity-100"
               leave-active-class="transition duration-150 ease-in" leave-from-class="transform scale-100 opacity-100"
               leave-to-class="transform scale-95 opacity-0">
-              <div v-if="userMenuOpen" class="absolute right-0 top-full mt-3 w-[420px] max-w-[85vw]
+              <div v-if="userMenuOpen" class="absolute right-0 top-full mt-3 w-[360px] max-w-[85vw]
                        bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800
                        rounded-[28px] shadow-2xl p-5 z-[120]">
-                <!-- 우상단 로그아웃 -->
                 <div class="flex justify-end mb-3">
                   <button type="button" class="pc-logout-chip" @click="openLogoutConfirm">로그아웃</button>
                 </div>
 
-                <!-- 미니 카드(원래 헤더 느낌) -->
                 <div class="pc-mini-card">
                   <div class="pc-mini-head">
                     <div class="pc-mini-avatar">
@@ -187,14 +221,12 @@ onBeforeUnmount(() => {
                     <span class="pc-mini-value">{{ companyEmail }}</span>
                   </div>
 
-                  <!-- ✅ 패널 버튼: 공고등록 / 대기자보기 -->
                   <div class="pc-mini-actions">
                     <button type="button" class="pc-mini-btn" @click="goJobCreate">공고등록</button>
                     <button type="button" class="pc-mini-btn ghost" @click="goApplicants">대기자보기</button>
                   </div>
                 </div>
 
-                <!-- 로그아웃 confirm -->
                 <div v-if="showLogoutConfirm" class="pc-confirm-backdrop" @click.self="cancelLogout">
                   <div class="pc-confirm">
                     <p class="pc-confirm-title">로그아웃하시겠습니까?</p>
@@ -208,7 +240,6 @@ onBeforeUnmount(() => {
             </Transition>
           </div>
 
-          <!-- 채팅 -->
           <RouterLink to="/chat"
             class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors text-gray-500 dark:text-gray-400"
             title="채팅">
@@ -219,12 +250,12 @@ onBeforeUnmount(() => {
             </svg>
           </RouterLink>
 
-          <!-- 알림 -->
           <div class="relative" id="companyNotiWrap">
-            <button @click.stop="showNotiPopup = !showNotiPopup"
+            <button @click.stop="onNotiClick"
               class="p-2.5 rounded-xl hover:bg-gray-100 dark:hover:bg-zinc-800 transition-colors relative" title="알림">
-              <span
+              <span v-if="hasUnread && isCompanyLoggedIn"
                 class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-zinc-950"></span>
+
               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -237,11 +268,14 @@ onBeforeUnmount(() => {
               leave-active-class="transition duration-150 ease-in" leave-from-class="transform scale-100 opacity-100"
               leave-to-class="transform scale-95 opacity-0">
               <div v-if="showNotiPopup" class="absolute right-0 top-full mt-3 w-80 bg-white dark:bg-zinc-900
-                       border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-[120]">
+              border border-gray-200 dark:border-zinc-800 rounded-2xl shadow-2xl overflow-hidden z-[120]">
                 <div class="px-5 py-4 border-b border-gray-100 dark:border-zinc-800 flex justify-between items-center">
                   <span class="font-bold">알림</span>
-                  <button class="text-xs text-point-yellow font-bold">모두 읽음</button>
+                  <button class="text-xs text-point-yellow font-bold" @click="markAllReadAndClose">
+                    모두 읽음
+                  </button>
                 </div>
+
                 <div class="max-h-80 overflow-y-auto">
                   <div
                     class="p-4 hover:bg-gray-50 dark:hover:bg-zinc-800/50 transition border-b border-gray-50 dark:border-zinc-800/50">
