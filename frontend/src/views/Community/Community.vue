@@ -197,7 +197,7 @@ const loadMore = () => state.page++
 
 <template>
   <div
-    class="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 font-sans transition-colors"
+    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors"
   >
     <main class="max-w-7xl mx-auto px-5 pt-10 pb-14">
       <div class="flex items-end justify-between gap-4 mb-8">
@@ -486,7 +486,15 @@ const loadMore = () => state.page++
 </template>
 
 <style scoped>
-/* @apply 없이 필요한 최소한의 CSS만 작성 (브라우저 기본 스타일 초기화 등) */
+/* 배경 패턴 클래스 추가 */
+.bg-pattern {
+    background-color: #f8fafc;
+}
+.dark .bg-pattern {
+    background-color: #18181b;
+}
+
+/* @apply 없이 필요한 최소한의 CSS */
 input::placeholder {
   @supports not (-webkit-hyphens: none) {
     color: rgba(161, 161, 170, 0.6);

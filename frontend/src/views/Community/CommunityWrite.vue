@@ -49,7 +49,8 @@ async function submit() {
 </script>
 
 <template>
-  <div class="bg-white text-zinc-900 font-sans dark:bg-zinc-950 dark:text-zinc-100">
+  <div
+    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors">
     <main class="max-w-7xl mx-auto px-5 pt-10 pb-14">
       <!-- 상단 -->
       <div class="flex items-end justify-between gap-4">
@@ -210,3 +211,14 @@ async function submit() {
     </main>
   </div>
 </template>
+
+<style scoped>
+
+.bg-pattern {
+    background-color: #f8fafc;
+}
+.dark .bg-pattern {
+    background-color: #18181b;
+}
+
+</style>
