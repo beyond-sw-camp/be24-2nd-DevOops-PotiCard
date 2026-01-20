@@ -12,7 +12,7 @@ const chatRoomList = async () => {
     }
 };
 
-// 채팅 메시지 목록 (특정 방의 메시지)
+// 채팅 메시지 목록
 const chatMessageList = async (roomId) => {
     try {
         // roomId가 있으면 쿼리 파라미터로 전달, 없으면 전체 메시지

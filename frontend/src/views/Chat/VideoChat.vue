@@ -3,29 +3,15 @@
   <div class="page">
     <video ref="remoteVideoRef" id="remoteVideo" autoplay playsinline></video>
 
-    <div
-      id="sharePreviewContainer"
-      :style="{ display: sharePreviewVisible ? 'block' : 'none' }"
-      :class="{ 'full-size': sharePreviewFullSize }"
-      @click="toggleShareSize"
-    >
+    <div id="sharePreviewContainer" :style="{ display: sharePreviewVisible ? 'block' : 'none' }"
+      :class="{ 'full-size': sharePreviewFullSize }" @click="toggleShareSize">
       <video ref="sharePreviewVideoRef" id="sharePreviewVideo" autoplay playsinline muted></video>
     </div>
 
     <div class="local-video-container" id="localContainer" :class="{ enlarged: localEnlarged }">
-      <video
-        ref="localVideoRef"
-        class="local-video"
-        id="localVideo"
-        autoplay
-        muted
-        playsinline
-      ></video>
-      <button
-        type="button"
-        class="absolute top-3 right-3 w-9 h-9 bg-black/50 backdrop-blur-md rounded-xl text-white"
-        @click="toggleEnlarge"
-      >
+      <video ref="localVideoRef" class="local-video" id="localVideo" autoplay muted playsinline></video>
+      <button type="button" class="absolute top-3 right-3 w-9 h-9 bg-black/50 backdrop-blur-md rounded-xl text-white"
+        @click="toggleEnlarge">
         <i class="fa-solid fa-maximize"></i>
       </button>
     </div>
@@ -34,11 +20,8 @@
       <div class="p-6">
         <div class="flex items-center gap-4 mb-6 text-left">
           <div class="w-12 h-12 bg-zinc-800 rounded-2xl overflow-hidden">
-            <img
-              :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
-              class="w-full h-full object-cover"
-              :alt="partnerInfo?.name || 'avatar'"
-            />
+            <img :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+              class="w-full h-full object-cover" :alt="partnerInfo?.name || 'avatar'" />
           </div>
           <div>
             <h2 class="font-black text-lg">{{ partnerInfo?.name || 'Kim Poti' }}</h2>
@@ -46,61 +29,35 @@
           </div>
         </div>
         <div class="grid grid-cols-1 gap-2">
-          <button
-            type="button"
-            @click="openModal('cardModal')"
-            class="w-full py-3 bg-white/5 rounded-xl text-sm font-bold border border-white/10"
-          >
+          <button type="button" @click="openModal('cardModal')"
+            class="w-full py-3 bg-white/5 rounded-xl text-sm font-bold border border-white/10">
             명함 상세보기
           </button>
-          <button
-            type="button"
-            @click="openModal('authModal')"
-            class="w-full py-3 bg-yellow-400 text-black rounded-xl text-sm font-black"
-          >
+          <button type="button" @click="openModal('authModal')"
+            class="w-full py-3 bg-yellow-400 text-black rounded-xl text-sm font-black">
             권한 관리
           </button>
         </div>
       </div>
 
       <button type="button" class="toggle-trigger" @click="toggleSidePanel">
-        <i
-          id="toggleIcon"
-          :class="sideCollapsed ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'"
-        ></i>
+        <i id="toggleIcon" :class="sideCollapsed ? 'fa-solid fa-chevron-down' : 'fa-solid fa-chevron-up'"></i>
       </button>
     </aside>
 
     <nav class="controls">
-      <button
-        id="micBtn"
-        type="button"
-        class="control-btn"
-        :class="{ on: micOn }"
-        @click="toggleStatus('mic')"
-      >
+      <button id="micBtn" type="button" class="control-btn" :class="{ on: micOn }" @click="toggleStatus('mic')">
         <i :class="micOn ? 'fa-solid fa-microphone' : 'fa-solid fa-microphone-slash'"></i>
         <span class="status-label">{{ micOn ? 'ON' : 'OFF' }}</span>
       </button>
 
-      <button
-        id="camBtn"
-        type="button"
-        class="control-btn"
-        :class="{ on: camOn }"
-        @click="toggleStatus('cam')"
-      >
+      <button id="camBtn" type="button" class="control-btn" :class="{ on: camOn }" @click="toggleStatus('cam')">
         <i :class="camOn ? 'fa-solid fa-video' : 'fa-solid fa-video-slash'"></i>
         <span class="status-label">{{ camOn ? 'ON' : 'OFF' }}</span>
       </button>
 
-      <button
-        id="shareBtn"
-        type="button"
-        class="control-btn"
-        :class="{ on: screenStream !== null }"
-        @click="handleShareClick"
-      >
+      <button id="shareBtn" type="button" class="control-btn" :class="{ on: screenStream !== null }"
+        @click="handleShareClick">
         <i class="fa-solid fa-desktop"></i><span class="status-label">SHARE</span>
       </button>
 
@@ -108,133 +65,81 @@
         <i class="fa-solid fa-gear"></i><span class="status-label">SETTING</span>
       </button>
 
-      <button
-        id="callBtn"
-        type="button"
-        class="control-btn"
-        @click="makeCall"
-        :disabled="callDisabled"
-      >
+      <button id="callBtn" type="button" class="control-btn" @click="makeCall" :disabled="callDisabled">
         <i class="fa-solid fa-phone"></i><span class="status-label">CALL</span>
       </button>
 
       <div class="w-px h-10 bg-white/10 mx-1"></div>
 
-      <button
-        type="button"
-        class="control-btn"
-        style="background: #ef4444; color: white; border: none"
-        @click="goExit"
-      >
+      <button type="button" class="control-btn" style="background: #ef4444; color: white; border: none" @click="goExit">
         <i class="fa-solid fa-phone-slash"></i><span class="status-label">EXIT</span>
       </button>
     </nav>
-
     <!-- Settings Modal -->
-    <div
-      id="settingsModal"
-      class="modal"
-      :class="{ open: modals.settingsModal }"
-      @click="onBackdropClick('settingsModal', $event)"
-    >
+    <div id="settingsModal" class="modal" :class="{ open: modals.settingsModal }"
+      @click="onBackdropClick('settingsModal', $event)">
       <div class="bg-zinc-900 border border-white/10 rounded-[32px] p-8 w-full max-w-md">
         <div class="flex justify-between items-center mb-6">
           <h3 class="text-xl font-black flex items-center gap-2">
             <i class="fa-solid fa-gear text-yellow-400"></i> 환경설정
           </h3>
-          <button
-            type="button"
-            @click="closeModal('settingsModal')"
-            class="text-zinc-500 hover:text-white"
-          >
+          <button type="button" @click="closeModal('settingsModal')" class="text-zinc-500 hover:text-white">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
         <div class="space-y-4 text-left">
           <div>
-            <label class="text-[10px] font-bold text-zinc-500 mb-2 block uppercase"
-              >Camera Source</label
-            >
+            <label class="text-[10px] font-bold text-zinc-500 mb-2 block uppercase">Camera Source</label>
             <select class="w-full bg-zinc-800 p-3 rounded-xl text-sm border-none">
               <option>Default</option>
             </select>
           </div>
           <div>
-            <label class="text-[10px] font-bold text-zinc-500 mb-2 block uppercase"
-              >Audio Source</label
-            >
+            <label class="text-[10px] font-bold text-zinc-500 mb-2 block uppercase">Audio Source</label>
             <select class="w-full bg-zinc-800 p-3 rounded-xl text-sm border-none">
               <option>Default</option>
             </select>
           </div>
         </div>
-        <button
-          type="button"
-          @click="closeModal('settingsModal')"
-          class="w-full mt-8 py-4 bg-yellow-400 text-black rounded-2xl font-black"
-        >
+        <button type="button" @click="closeModal('settingsModal')"
+          class="w-full mt-8 py-4 bg-yellow-400 text-black rounded-2xl font-black">
           설정 저장
         </button>
       </div>
     </div>
 
     <!-- Share Modal -->
-    <div
-      id="shareModal"
-      class="modal"
-      :class="{ open: modals.shareModal }"
-      @click="onBackdropClick('shareModal', $event)"
-    >
-      <div
-        class="bg-zinc-900 border border-white/10 rounded-[32px] p-8 w-full max-w-md text-center relative"
-      >
-        <button
-          type="button"
-          @click="closeModal('shareModal')"
-          class="absolute top-6 right-6 text-zinc-500 hover:text-white"
-        >
+    <div id="shareModal" class="modal" :class="{ open: modals.shareModal }"
+      @click="onBackdropClick('shareModal', $event)">
+      <div class="bg-zinc-900 border border-white/10 rounded-[32px] p-8 w-full max-w-md text-center relative">
+        <button type="button" @click="closeModal('shareModal')"
+          class="absolute top-6 right-6 text-zinc-500 hover:text-white">
           <i class="fa-solid fa-xmark text-xl"></i>
         </button>
         <div
-          class="w-16 h-16 bg-yellow-400/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-yellow-400 text-2xl"
-        >
+          class="w-16 h-16 bg-yellow-400/10 rounded-2xl flex items-center justify-center mx-auto mb-6 text-yellow-400 text-2xl">
           <i class="fa-solid fa-desktop"></i>
         </div>
         <h3 class="text-xl font-black mb-2">화면 공유 시작</h3>
         <p class="text-sm text-zinc-500 mb-8 leading-relaxed">
           공유할 브라우저 탭이나 프레젠테이션<br />파일을 선택해 주세요.
         </p>
-        <button
-          type="button"
-          @click="startScreenShare"
-          class="w-full py-4 bg-yellow-400 text-black rounded-2xl font-black"
-        >
+        <button type="button" @click="startScreenShare"
+          class="w-full py-4 bg-yellow-400 text-black rounded-2xl font-black">
           공유 할 탭 선택하기
         </button>
       </div>
     </div>
 
     <!-- Card Modal -->
-    <div
-      id="cardModal"
-      class="modal"
-      :class="{ open: modals.cardModal }"
-      @click="onBackdropClick('cardModal', $event)"
-    >
+    <div id="cardModal" class="modal" :class="{ open: modals.cardModal }" @click="onBackdropClick('cardModal', $event)">
       <div class="relative w-full max-w-md aspect-[1.58/1] perspective-1000">
-        <div
-          id="card-inner"
-          class="relative w-full h-full transform-style-3d shadow-2xl rounded-2xl cursor-pointer"
-          :class="{ flipped: cardFlipped }"
-          @click="flipCard"
-        >
+        <div id="card-inner" class="relative w-full h-full transform-style-3d shadow-2xl rounded-2xl cursor-pointer"
+          :class="{ flipped: cardFlipped }" @click="flipCard">
           <div
-            class="absolute inset-0 w-full h-full bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-8 backface-hidden overflow-hidden"
-          >
+            class="absolute inset-0 w-full h-full bg-white dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800 p-8 backface-hidden overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-yellow-400/20 rounded-bl-full"></div>
-            <div
-              class="flex flex-col justify-between h-full relative z-10 text-left text-gray-900 dark:text-white"
-            >
+            <div class="flex flex-col justify-between h-full relative z-10 text-left text-gray-900 dark:text-white">
               <div class="flex justify-between items-start">
                 <div>
                   <p class="text-xs font-bold text-yellow-500 uppercase mb-1">
@@ -245,26 +150,15 @@
                     {{ partnerInfo?.intro || '사용자 경험을 디자인하는\n디자이너 김포티입니다.' }}
                   </p>
                 </div>
-                <div
-                  class="w-20 h-20 rounded-full border-4 border-white dark:border-zinc-800 overflow-hidden"
-                >
-                  <img
-                    :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
-                    class="w-full h-full object-cover"
-                    :alt="partnerInfo?.name || 'avatar'"
-                  />
+                <div class="w-20 h-20 rounded-full border-4 border-white dark:border-zinc-800 overflow-hidden">
+                  <img :src="partnerInfo?.avatar || 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix'"
+                    class="w-full h-full object-cover" :alt="partnerInfo?.name || 'avatar'" />
                 </div>
               </div>
-              <div
-                class="pt-4 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center"
-              >
+              <div class="pt-4 border-t border-gray-100 dark:border-zinc-800 flex justify-between items-center">
                 <div class="flex gap-2 flex-wrap">
-                  <span
-                    v-for="tag in partnerInfo?.tags || ['Figma']"
-                    :key="tag"
-                    class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold rounded"
-                    >#{{ tag }}</span
-                  >
+                  <span v-for="tag in partnerInfo?.tags || ['Figma']" :key="tag"
+                    class="px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-[10px] font-bold rounded">#{{ tag }}</span>
                 </div>
                 <i class="fa-solid fa-qrcode text-3xl opacity-80"></i>
               </div>
@@ -272,8 +166,7 @@
           </div>
 
           <div
-            class="absolute inset-0 w-full h-full bg-zinc-900 dark:bg-white rounded-2xl border border-zinc-800 dark:border-gray-200 p-8 backface-hidden rotate-y-180 text-white dark:text-gray-900"
-          >
+            class="absolute inset-0 w-full h-full bg-zinc-900 dark:bg-white rounded-2xl border border-zinc-800 dark:border-gray-200 p-8 backface-hidden rotate-y-180 text-white dark:text-gray-900">
             <div class="flex flex-col h-full relative z-10 text-left">
               <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
                 <span class="w-1.5 h-6 bg-yellow-400 rounded-full"></span> Contact Info
@@ -300,15 +193,8 @@
     </div>
 
     <!-- Auth Modal -->
-    <div
-      id="authModal"
-      class="modal"
-      :class="{ open: modals.authModal }"
-      @click="onBackdropClick('authModal', $event)"
-    >
-      <div
-        class="bg-zinc-900 border border-white/10 rounded-[40px] p-10 w-full max-w-5xl shadow-3xl"
-      >
+    <div id="authModal" class="modal" :class="{ open: modals.authModal }" @click="onBackdropClick('authModal', $event)">
+      <div class="bg-zinc-900 border border-white/10 rounded-[40px] p-10 w-full max-w-5xl shadow-3xl">
         <div class="flex justify-between items-end mb-8 text-left">
           <div>
             <h3 class="text-3xl font-black mb-2">포트폴리오 권한 관리</h3>
@@ -318,46 +204,27 @@
           </div>
         </div>
 
-        <div
-          class="portfolio-scroll thin-scroll"
-          id="portfolioList"
-          @wheel.prevent="onPortfolioWheel"
-        >
-          <div
-            v-for="p in portfolios"
-            :key="p.id"
-            class="portfolio-item text-left"
-            :class="{ selected: selectedIds.has(p.id) }"
-            @click="togglePortfolio(p.id)"
-          >
+        <div class="portfolio-scroll thin-scroll" id="portfolioList" @wheel.prevent="onPortfolioWheel">
+          <div v-for="p in portfolios" :key="p.id" class="portfolio-item text-left"
+            :class="{ selected: selectedIds.has(p.id) }" @click="togglePortfolio(p.id)">
             <h4 class="font-black text-xl mb-3">{{ p.title }}</h4>
             <p class="text-[13px] text-zinc-400 leading-relaxed h-20 overflow-hidden">
               {{ p.desc }}
             </p>
             <div class="flex gap-2 mt-4">
-              <span
-                v-for="t in p.tags"
-                :key="t"
-                class="px-2 py-1 bg-black/40 text-[10px] font-bold rounded"
-                >#{{ t }}</span
-              >
+              <span v-for="t in p.tags" :key="t" class="px-2 py-1 bg-black/40 text-[10px] font-bold rounded">#{{ t
+                }}</span>
             </div>
           </div>
         </div>
 
         <div class="flex gap-4 mt-10">
-          <button
-            type="button"
-            @click="closeModal('authModal')"
-            class="flex-1 py-5 bg-zinc-800 rounded-2xl font-bold text-zinc-400"
-          >
+          <button type="button" @click="closeModal('authModal')"
+            class="flex-1 py-5 bg-zinc-800 rounded-2xl font-bold text-zinc-400">
             취소
           </button>
-          <button
-            type="button"
-            @click="confirmAuth"
-            class="flex-1 py-5 bg-yellow-400 text-black rounded-2xl font-black"
-          >
+          <button type="button" @click="confirmAuth"
+            class="flex-1 py-5 bg-yellow-400 text-black rounded-2xl font-black">
             권한 부여하기
           </button>
         </div>
@@ -374,19 +241,19 @@ import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import chatApi from '@/api/chat/index.js'
 
-/** refs */
+/* refs */
 const remoteVideoRef = ref(null)
 const localVideoRef = ref(null)
 const sharePreviewVideoRef = ref(null)
 
-/** router */
+/* router */
 const router = useRouter()
 const route = useRoute()
 
-/** 상대방 정보 */
+/* 상대방 정보 */
 const partnerInfo = ref(null)
 
-/** UI state */
+/* UI state */
 const micOn = ref(true)
 const camOn = ref(true)
 const sideCollapsed = ref(false)
@@ -405,13 +272,13 @@ const modals = ref({
 
 const portfolios = ref([])
 
-/** 포트폴리오 로드 */
+/* 포트폴리오 로드 */
 async function loadPortfolios() {
   try {
     const res = await chatApi.loadPortfolios()
-    
+
     if (res && res.data && Array.isArray(res.data)) {
-      // JSON 데이터를 컴포넌트에서 사용하는 형식으로 변환
+      /* JSON 데이터를 컴포넌트에서 사용하는 형식으로 변환 */
       portfolios.value = res.data.map((item, index) => ({
         id: index + 1,
         title: item.portfolio_name || '',
@@ -420,7 +287,7 @@ async function loadPortfolios() {
       }))
       console.log('포트폴리오 로드 완료:', portfolios.value)
     } else if (Array.isArray(res)) {
-      // 배열 형식으로 직접 응답이 오는 경우
+      /* 배열 형식으로 직접 응답이 오는 경우 */
       portfolios.value = res.map((item, index) => ({
         id: index + 1,
         title: item.portfolio_name || '',
@@ -439,14 +306,14 @@ const selectionCountText = computed(
   () => `${selectedIds.value.size}개의 프로젝트가 선택되었습니다.`,
 )
 
-/** debug log */
+/* debug log */
 const logText = ref('')
 function log(m) {
   console.log(m)
   logText.value = (logText.value + `\n> ${m}`).trim()
 }
 
-/** WebRTC */
+/* WebRTC */
 const localStream = ref(null)
 const screenStream = ref(null)
 
@@ -455,7 +322,7 @@ const pc = ref(null)
 
 const wsOpen = ref(false)
 
-// google STUN서버
+/* google STUN서버 */
 const rtcConfig = { iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] }
 
 const callDisabled = computed(() => !localStream.value || !wsOpen.value)
@@ -500,17 +367,17 @@ function createPeerConnectionIfNeeded() {
 
   pc.value = new RTCPeerConnection(rtcConfig)
 
-  // 로컬 트랙 추가
+  /* 로컬 트랙 추가 */
   localStream.value.getTracks().forEach((track) => pc.value.addTrack(track, localStream.value))
 
-  // 상대방 트랙 수신
+  /* 상대방 트랙 수신 */
   pc.value.ontrack = (e) => {
     const [remoteStream] = e.streams
     if (remoteVideoRef.value) remoteVideoRef.value.srcObject = remoteStream
     log('Remote stream received')
   }
 
-  // ICE 후보 전달
+  /* ICE 후보 전달 */
   pc.value.onicecandidate = (e) => {
     if (e.candidate && ws.value?.readyState === WebSocket.OPEN) {
       ws.value.send(JSON.stringify({ type: 'candidate', candidate: e.candidate }))
@@ -584,7 +451,7 @@ async function startScreenShare() {
       if (sender && newTrack) await sender.replaceTrack(newTrack)
     }
     screenStream.value.getVideoTracks()[0].onended = () => stopScreenShare()
-    
+
     closeModal('shareModal')
   } catch (err) {
     console.error(err)
@@ -607,7 +474,7 @@ async function stopScreenShare() {
   }
 }
 
-/** UI handlers (same behavior) */
+/* UI handlers (same behavior) */
 function toggleStatus(type) {
   if (type === 'mic') {
     micOn.value = !micOn.value
@@ -634,7 +501,7 @@ function toggleShareSize() {
 
 async function openModal(id) {
   modals.value[id] = true
-  // 권한 관리 모달을 열 때 포트폴리오 로드
+  /* 권한 관리 모달을 열 때 포트폴리오 로드 */
   if (id === 'authModal') {
     await loadPortfolios()
   }
@@ -668,7 +535,6 @@ function togglePortfolio(id) {
 }
 
 function onPortfolioWheel(e) {
-  // 기존: this.scrollLeft += event.deltaY
   const el = e.currentTarget
   if (el) el.scrollLeft += e.deltaY
 }
@@ -679,12 +545,10 @@ function confirmAuth() {
 }
 
 function goExit() {
-  // 기존 index.html로 이동
-  // SPA면 라우터로 바꿔도 됨: router.push('/')
   window.location.href = '/chat'
 }
 
-/** 상대방 정보 가져오기 */
+/* 상대방 정보 가져오기 */
 async function loadPartnerInfo() {
   try {
     const roomId = route.query.id ? Number(route.query.id) : null
@@ -714,12 +578,10 @@ async function loadPartnerInfo() {
   }
 }
 
-/** lifecycle */
+/* lifecycle */
 onMounted(async () => {
-  // html class="dark" 유지하고 싶으면 아래 유지
   document.documentElement.classList.add('dark')
-
-  // 상대방 정보 가져오기
+  /* 상대방 정보 가져오기 */
   await loadPartnerInfo()
 
   initWebSocket()
@@ -734,17 +596,17 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   try {
     if (ws) ws.close()
-  } catch {}
+  } catch { }
   try {
     if (pc) pc.close()
-  } catch {}
+  } catch { }
 
   try {
     if (screenStream) screenStream.getTracks().forEach((t) => t.stop())
-  } catch {}
+  } catch { }
   try {
     if (localStream) localStream.getTracks().forEach((t) => t.stop())
-  } catch {}
+  } catch { }
 
   ws = null
   pc = null
@@ -762,6 +624,7 @@ onBeforeUnmount(() => {
   --danger: #ef4444;
   --border: rgba(255, 255, 255, 0.08);
 }
+
 .page {
   background: var(--bg);
   color: var(--text);
@@ -799,6 +662,7 @@ onBeforeUnmount(() => {
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
+
 #sharePreviewContainer.full-size {
   width: calc(100vw - 48px);
   height: calc(100vh - 120px);
@@ -806,6 +670,7 @@ onBeforeUnmount(() => {
   right: 24px;
   z-index: 250;
 }
+
 #sharePreviewVideo {
   width: 100%;
   height: 100%;
@@ -820,9 +685,11 @@ onBeforeUnmount(() => {
   z-index: 100;
   transition: width 0.3s ease;
 }
+
 .local-video-container.enlarged {
   width: 440px;
 }
+
 .local-video {
   width: 100%;
   aspect-ratio: 16/9;
@@ -846,9 +713,11 @@ onBeforeUnmount(() => {
   transition: transform 0.4s ease;
   z-index: 50;
 }
+
 .side-panel.collapsed {
   transform: translateY(-100%);
 }
+
 .toggle-trigger {
   position: absolute;
   bottom: -32px;
@@ -882,6 +751,7 @@ onBeforeUnmount(() => {
   gap: 14px;
   z-index: 150;
 }
+
 .control-btn {
   width: 56px;
   height: 56px;
@@ -896,15 +766,18 @@ onBeforeUnmount(() => {
   color: #71717a;
   border: 1px solid var(--border);
 }
+
 .control-btn.on {
   background: var(--accent);
   color: #000;
   border: none;
 }
+
 .control-btn:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
+
 .status-label {
   font-size: 9px;
   font-weight: 800;
@@ -920,6 +793,7 @@ onBeforeUnmount(() => {
   z-index: 300;
   padding: 20px;
 }
+
 .modal.open {
   display: flex;
 }
@@ -927,16 +801,20 @@ onBeforeUnmount(() => {
 .perspective-1000 {
   perspective: 1000px;
 }
+
 .transform-style-3d {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
+
 .backface-hidden {
   backface-visibility: hidden;
 }
+
 .rotate-y-180 {
   transform: rotateY(180deg);
 }
+
 .flipped {
   transform: rotateY(180deg);
 }
@@ -950,17 +828,21 @@ onBeforeUnmount(() => {
   scrollbar-width: thin;
   scrollbar-color: var(--accent) transparent;
 }
+
 .portfolio-scroll::-webkit-scrollbar {
   height: 6px;
 }
+
 .portfolio-scroll::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
 }
+
 .portfolio-scroll::-webkit-scrollbar-thumb {
   background: var(--accent);
   border-radius: 10px;
 }
+
 .portfolio-item {
   flex: 0 0 320px;
   background: #1c1c1f;
@@ -969,6 +851,7 @@ onBeforeUnmount(() => {
   padding: 28px;
   cursor: pointer;
 }
+
 .portfolio-item.selected {
   border-color: var(--accent);
   background: rgba(250, 204, 21, 0.05);

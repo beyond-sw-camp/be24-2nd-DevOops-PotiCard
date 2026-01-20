@@ -1,9 +1,9 @@
 const BASE_URL = '/api' // local
-// const BASE_URL = 'http://192.100.200.10:8080/' // tomcat
-// const BASE_URL = 'https://www.beyond24lsj.kro.kr/api/' // aws
+/* const BASE_URL = 'http://192.100.200.10:8080/' tomcat */
+/* const BASE_URL = 'https://www.beyond24lsj.kro.kr/api/' aws */
 
 export async function apiFetch(url, options = {}) {
-  //요청 인터셉터
+  /* 요청 인터셉터 */
 
   const config = {
     method: options.method || 'GET',
@@ -23,7 +23,7 @@ export async function apiFetch(url, options = {}) {
     throw error
   }
 
-  //응답 인터셉터
+  /* 응답 인터셉터 */
 
   const body = await response.json().catch(() => null)
 

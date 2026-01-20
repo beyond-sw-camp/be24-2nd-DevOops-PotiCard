@@ -15,7 +15,7 @@ const categories = [
 const form = ref({
   category: 'QNA',
   title: '',
-  tags: '', // "Spring, JPA, MySQL" 같은 입력
+  tags: '',
   body: '',
   anonymous: false,
 })
@@ -40,17 +40,14 @@ function goBack() {
 async function submit() {
   if (!canSubmit.value) return
 
-  // ✅ 여기서 백엔드 API로 POST 연결하면 됨
-  // 예) await apiFetch("/api/community/posts", { method:"POST", body: JSON.stringify({...}) })
-
+  /* 여기서 백엔드 API로 POST 연결 */
   alert('게시물을 올렸습니다.')
   router.push('/community')
 }
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors">
+  <div class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors">
     <main class="max-w-7xl mx-auto px-5 pt-10 pb-14">
       <!-- 상단 -->
       <div class="flex items-end justify-between gap-4">
@@ -59,18 +56,13 @@ async function submit() {
         </div>
 
         <div class="flex items-center gap-2">
-          <button
-            @click="goBack"
-            class="px-4 py-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 font-bold"
-          >
+          <button @click="goBack"
+            class="px-4 py-2.5 rounded-2xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 font-bold">
             취소
           </button>
 
-          <button
-            :disabled="!canSubmit"
-            @click="submit"
-            class="px-4 py-2.5 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300 disabled:opacity-40 disabled:cursor-not-allowed"
-          >
+          <button :disabled="!canSubmit" @click="submit"
+            class="px-4 py-2.5 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300 disabled:opacity-40 disabled:cursor-not-allowed">
             등록
           </button>
         </div>
@@ -80,17 +72,13 @@ async function submit() {
       <section class="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- 작성 폼 -->
         <div class="lg:col-span-8">
-          <div
-            class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6"
-          >
+          <div class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6">
             <!-- 카테고리 -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-bold mb-2">카테고리</label>
-                <select
-                  v-model="form.category"
-                  class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
-                >
+                <select v-model="form.category"
+                  class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                   <option v-for="c in categories" :key="c.value" :value="c.value">
                     {{ c.label }}
                   </option>
@@ -110,30 +98,19 @@ async function submit() {
             <!-- 제목 -->
             <div class="mt-5">
               <label class="block text-sm font-bold mb-2">제목</label>
-              <input
-                v-model="form.title"
-                type="text"
-                placeholder="제목을 입력하세요"
-                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
-              />
+              <input v-model="form.title" type="text" placeholder="제목을 입력하세요"
+                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950" />
             </div>
 
             <!-- 태그 -->
             <div class="mt-5">
               <label class="block text-sm font-bold mb-2">태그 (쉼표로 구분)</label>
-              <input
-                v-model="form.tags"
-                type="text"
-                placeholder="예) Spring, JPA, MySQL"
-                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950"
-              />
+              <input v-model="form.tags" type="text" placeholder="예) Spring, JPA, MySQL"
+                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950" />
 
               <div class="mt-3 flex flex-wrap gap-2">
-                <span
-                  v-for="t in tagList"
-                  :key="t"
-                  class="px-2.5 py-1 rounded-full text-xs font-bold border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300"
-                >
+                <span v-for="t in tagList" :key="t"
+                  class="px-2.5 py-1 rounded-full text-xs font-bold border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300">
                   {{ t }}
                 </span>
               </div>
@@ -142,26 +119,18 @@ async function submit() {
             <!-- 내용 -->
             <div class="mt-5">
               <label class="block text-sm font-bold mb-2">내용</label>
-              <textarea
-                v-model="form.body"
-                rows="12"
-                placeholder="내용을 입력하세요"
-                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 resize-y"
-              />
+              <textarea v-model="form.body" rows="12" placeholder="내용을 입력하세요"
+                class="w-full px-4 py-3 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 resize-y" />
             </div>
           </div>
         </div>
 
         <!-- 우측 미리보기/가이드 -->
         <aside class="lg:col-span-4">
-          <div
-            class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6"
-          >
+          <div class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-6">
             <div class="flex items-center justify-between">
               <h2 class="text-lg font-extrabold">미리보기</h2>
-              <span
-                class="text-xs px-2 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-500"
-              >
+              <span class="text-xs px-2 py-1 rounded-full border border-zinc-200 dark:border-zinc-800 text-zinc-500">
                 Demo
               </span>
             </div>
@@ -169,7 +138,7 @@ async function submit() {
             <div class="mt-4">
               <div class="text-xs text-zinc-500 dark:text-zinc-400">카테고리</div>
               <div class="mt-1 font-extrabold">
-                {{ categories.find((c) => c.value === form.category)?.label }}
+                {{categories.find((c) => c.value === form.category)?.label}}
               </div>
             </div>
 
@@ -183,11 +152,8 @@ async function submit() {
             <div class="mt-4">
               <div class="text-xs text-zinc-500 dark:text-zinc-400">태그</div>
               <div class="mt-2 flex flex-wrap gap-2">
-                <span
-                  v-for="t in tagList.length ? tagList : ['태그']"
-                  :key="t"
-                  class="px-2.5 py-1 rounded-full text-xs font-bold border border-zinc-200 dark:border-zinc-800"
-                >
+                <span v-for="t in tagList.length ? tagList : ['태그']" :key="t"
+                  class="px-2.5 py-1 rounded-full text-xs font-bold border border-zinc-200 dark:border-zinc-800">
                   {{ t }}
                 </span>
               </div>
@@ -213,12 +179,11 @@ async function submit() {
 </template>
 
 <style scoped>
-
 .bg-pattern {
-    background-color: #f8fafc;
-}
-.dark .bg-pattern {
-    background-color: #18181b;
+  background-color: #f8fafc;
 }
 
+.dark .bg-pattern {
+  background-color: #18181b;
+}
 </style>

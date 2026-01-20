@@ -116,7 +116,7 @@ const cancelLogout = () => (showLogoutConfirm.value = false)
 const confirmLogout = () => {
   try {
     authStore.logout()
-  } catch {}
+  } catch { }
 
   showNotiPopup.value = false
   closeUserMenu()

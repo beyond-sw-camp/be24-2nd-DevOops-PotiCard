@@ -11,34 +11,20 @@
           <div class="cardHead">
             <h2 class="cardTitle">요금제</h2>
             <div class="pill">
-              <button
-                type="button"
-                class="pillBtn"
-                :class="{ on: billingCycle === 'monthly' }"
-                @click="billingCycle = 'monthly'"
-              >
+              <button type="button" class="pillBtn" :class="{ on: billingCycle === 'monthly' }"
+                @click="billingCycle = 'monthly'">
                 월간
               </button>
-              <button
-                type="button"
-                class="pillBtn"
-                :class="{ on: billingCycle === 'yearly' }"
-                @click="billingCycle = 'yearly'"
-              >
+              <button type="button" class="pillBtn" :class="{ on: billingCycle === 'yearly' }"
+                @click="billingCycle = 'yearly'">
                 연간 <span class="badge">할인</span>
               </button>
             </div>
           </div>
 
           <div class="plans">
-            <button
-              v-for="p in displayPlans"
-              :key="p.id"
-              type="button"
-              class="plan"
-              :class="{ selected: planId === p.id }"
-              @click="planId = p.id"
-            >
+            <button v-for="p in displayPlans" :key="p.id" type="button" class="plan"
+              :class="{ selected: planId === p.id }" @click="planId = p.id">
               <div class="planTop">
                 <div>
                   <div class="planName">{{ p.name }}</div>
@@ -63,25 +49,14 @@
 
           <div class="field">
             <label class="label">이메일</label>
-            <input
-              class="input"
-              type="email"
-              v-model.trim="email"
-              placeholder="example@poticard.com"
-            />
+            <input class="input" type="email" v-model.trim="email" placeholder="example@poticard.com" />
           </div>
 
           <div class="field">
             <label class="label">결제수단</label>
             <div class="payMethods">
-              <button
-                v-for="m in payMethods"
-                :key="m.key"
-                type="button"
-                class="payBtn"
-                :class="{ on: payMethod === m.key }"
-                @click="payMethod = m.key"
-              >
+              <button v-for="m in payMethods" :key="m.key" type="button" class="payBtn"
+                :class="{ on: payMethod === m.key }" @click="payMethod = m.key">
                 {{ m.label }}
               </button>
             </div>
@@ -157,10 +132,10 @@
 <script setup>
 import { computed, reactive, ref } from 'vue'
 
-const billingCycle = ref('monthly') // 'monthly' | 'yearly'
+const billingCycle = ref('monthly')
 const planId = ref('pro')
 const email = ref('')
-const payMethod = ref('card') // card | kakaopay | toss | bank
+const payMethod = ref('card')
 const agreeTerms = ref(false)
 const agreeAutoRenew = ref(false)
 
@@ -176,7 +151,7 @@ const plans = [
     id: 'basic',
     name: 'Basic',
     monthly: 1900,
-    yearly: 1900 * 12 * 0.85, // 20% 할인
+    yearly: 1900 * 12 * 0.85,
     benefits: ['명함 생성', '명함 커스터마이징', 'ㅋ'],
     highlight: false,
   },
@@ -184,7 +159,7 @@ const plans = [
     id: 'pro',
     name: 'Pro',
     monthly: 4900,
-    yearly: 4900 * 12 * 0.8, // 20% 할인
+    yearly: 4900 * 12 * 0.8,
     benefits: [
       'Basic 포함',
       '포트폴리오 프로젝트 무제한 등록',
@@ -207,7 +182,6 @@ const selectedPlan = computed(() => displayPlans.value.find((p) => p.id === plan
 const discount = computed(() => {
   if (!selectedPlan.value) return 0
   if (billingCycle.value === 'yearly') {
-    // (연간가격) = monthly*12 - discount
     const original = Math.round(selectedPlan.value.monthly * 12)
     return Math.max(0, original - selectedPlan.value.price)
   }
@@ -237,7 +211,6 @@ function formatWon(v) {
 const modal = reactive({ open: false, payload: '' })
 
 function onPay() {
-  // 여기서 실제 결제 연동 넣으면 됨
   const payload = {
     email: email.value,
     planId: planId.value,
@@ -248,10 +221,6 @@ function onPay() {
 
   modal.payload = JSON.stringify(payload, null, 2)
   modal.open = true
-
-  // 예) 결제 시작
-  // await api.post('/api/billing/subscribe', payload)
-  // window.location.href = redirectUrl
 }
 </script>
 
@@ -261,18 +230,22 @@ function onPay() {
   background: #f6f7fb;
   padding: 40px 16px;
 }
+
 .container {
   max-width: 1100px;
   margin: 0 auto;
 }
+
 .top {
   margin-bottom: 18px;
 }
+
 .title {
   font-size: 28px;
   font-weight: 900;
   margin: 0;
 }
+
 .sub {
   margin: 8px 0 0;
   color: #6b7280;
@@ -284,6 +257,7 @@ function onPay() {
   grid-template-columns: 1.2fr 0.8fr;
   gap: 16px;
 }
+
 @media (max-width: 960px) {
   .grid {
     grid-template-columns: 1fr;
@@ -296,6 +270,7 @@ function onPay() {
   border-radius: 18px;
   padding: 18px;
 }
+
 .cardHead {
   display: flex;
   align-items: center;
@@ -303,6 +278,7 @@ function onPay() {
   gap: 12px;
   margin-bottom: 12px;
 }
+
 .cardTitle {
   font-size: 16px;
   font-weight: 900;
@@ -315,6 +291,7 @@ function onPay() {
   border-radius: 999px;
   padding: 4px;
 }
+
 .pillBtn {
   border: 0;
   background: transparent;
@@ -325,10 +302,12 @@ function onPay() {
   cursor: pointer;
   color: #6b7280;
 }
+
 .pillBtn.on {
   background: #111827;
   color: #fff;
 }
+
 .badge {
   margin-left: 6px;
   font-size: 10px;
@@ -342,6 +321,7 @@ function onPay() {
   display: grid;
   gap: 12px;
 }
+
 .plan {
   position: relative;
   text-align: left;
@@ -355,36 +335,44 @@ function onPay() {
     border-color 0.12s ease,
     box-shadow 0.12s ease;
 }
+
 .plan:hover {
   transform: translateY(-1px);
   box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06);
 }
+
 .plan.selected {
   border-color: #111827;
   box-shadow: 0 10px 24px rgba(17, 24, 39, 0.12);
 }
+
 .planTop {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
 }
+
 .planName {
   font-size: 16px;
   font-weight: 900;
 }
+
 .planDesc {
   font-size: 12px;
   color: #6b7280;
   margin-top: 4px;
 }
+
 .price {
   text-align: right;
 }
+
 .priceMain {
   font-weight: 900;
   font-size: 18px;
 }
+
 .priceSub {
   font-size: 11px;
   color: #6b7280;
@@ -399,6 +387,7 @@ function onPay() {
   font-size: 12px;
   color: #374151;
 }
+
 .highlight {
   position: absolute;
   top: 12px;
@@ -414,6 +403,7 @@ function onPay() {
 .field {
   margin-top: 10px;
 }
+
 .label {
   display: block;
   font-size: 12px;
@@ -421,6 +411,7 @@ function onPay() {
   margin-bottom: 6px;
   color: #111827;
 }
+
 .input {
   width: 100%;
   border: 1px solid #e5e7eb;
@@ -429,6 +420,7 @@ function onPay() {
   font-size: 14px;
   outline: none;
 }
+
 .input:focus {
   border-color: #111827;
   box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
@@ -439,6 +431,7 @@ function onPay() {
   flex-wrap: wrap;
   gap: 8px;
 }
+
 .payBtn {
   border: 1px solid #e5e7eb;
   background: #fff;
@@ -449,6 +442,7 @@ function onPay() {
   font-size: 12px;
   color: #374151;
 }
+
 .payBtn.on {
   border-color: #111827;
   background: #111827;
@@ -472,12 +466,14 @@ function onPay() {
   gap: 8px;
   font-size: 13px;
 }
+
 .row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   color: #374151;
 }
+
 .total {
   font-size: 14px;
   color: #111827;
@@ -487,6 +483,7 @@ function onPay() {
   display: grid;
   gap: 8px;
 }
+
 .chk {
   display: flex;
   gap: 10px;
@@ -494,6 +491,7 @@ function onPay() {
   font-size: 12px;
   color: #374151;
 }
+
 .chk input {
   margin-top: 2px;
 }
@@ -509,6 +507,7 @@ function onPay() {
   background: #facc15;
   color: #111;
 }
+
 .cta:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -528,6 +527,7 @@ function onPay() {
   place-items: center;
   padding: 16px;
 }
+
 .modalBox {
   width: 100%;
   max-width: 520px;
@@ -536,15 +536,18 @@ function onPay() {
   padding: 18px;
   border: 1px solid #e5e7eb;
 }
+
 .modalTitle {
   margin: 0 0 6px;
   font-weight: 900;
 }
+
 .modalDesc {
   margin: 0 0 12px;
   color: #6b7280;
   font-size: 13px;
 }
+
 .code {
   background: #0b1020;
   color: #e5e7eb;
@@ -553,6 +556,7 @@ function onPay() {
   overflow: auto;
   font-size: 12px;
 }
+
 .modalBtn {
   margin-top: 12px;
   width: 100%;

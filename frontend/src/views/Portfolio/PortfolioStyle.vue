@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted } from 'vue'
 onMounted(() => {
-  // ====== (샘플) 작성된 포트폴리오 섹션 데이터 ======
+  /* 작성된 포트폴리오 섹션 데이터 */
   const defaultSections = [
     {
       id: 's1',
@@ -53,13 +53,13 @@ onMounted(() => {
     },
   ]
 
-  // state
+  /* state */
   let sections = JSON.parse(JSON.stringify(defaultSections))
-  let layout = 'single' // single | two | cards
+  let layout = 'single'
   let accent = 'amber'
   let font = 'sans'
 
-  // DOM
+  /* DOM */
   const sectionListEl = document.getElementById('sectionList')
   const previewSectionsEl = document.getElementById('previewSections')
   const tagRowEl = document.getElementById('tagRow')
@@ -67,7 +67,7 @@ onMounted(() => {
   const roleTextEl = document.getElementById('roleText')
   const avatarEl = document.getElementById('avatar')
 
-  // inputs
+  /* inputs */
   document.getElementById('layout_single').addEventListener('change', () => {
     layout = 'single'
     renderPreview()
@@ -87,7 +87,7 @@ onMounted(() => {
     renderPreview()
   })
 
-  // accent buttons
+  /* accent buttons */
   document.querySelectorAll('[data-accent]').forEach((btn) => {
     btn.addEventListener('click', () => {
       accent = btn.dataset.accent
@@ -99,7 +99,7 @@ onMounted(() => {
     })
   })
 
-  // typography buttons
+  /* typography buttons */
   const fontSansBtn = document.getElementById('fontSans')
   const fontSerifBtn = document.getElementById('fontSerif')
 
@@ -129,7 +129,7 @@ onMounted(() => {
     renderPreview()
   })
 
-  // helpers
+  /* helpers */
   const accentMap = {
     amber: {
       text: 'text-amber-500',
@@ -168,7 +168,7 @@ onMounted(() => {
     },
   }
 
-  // Left: render section list (drag + toggle)
+  /* Left: render section list (drag + toggle) */
   function renderList() {
     sectionListEl.innerHTML = ''
     sections.forEach((s, idx) => {
@@ -202,14 +202,14 @@ onMounted(() => {
           </label>
         `
 
-      // toggle visibility
+      /* toggle visibility */
       right.querySelector('input').addEventListener('change', (e) => {
         s.visible = e.target.checked
         right.querySelector('span').textContent = s.visible ? 'ON' : 'OFF'
         renderPreview()
       })
 
-      // drag events
+      /* drag events */
       item.addEventListener('dragstart', () => item.classList.add('dragging'))
       item.addEventListener('dragend', () => {
         item.classList.remove('dragging')
@@ -242,21 +242,21 @@ onMounted(() => {
     })
   }
 
-  // Right: render preview by selected layout
+  /* Right: render preview by selected layout */
   function renderPreview() {
     const a = accentMap[accent] || accentMap.amber
 
     roleTextEl.className = `text-[11px] font-bold tracking-wider ${a.text}`
     avatarEl.className = `w-16 h-16 rounded-2xl border ${a.border} ${a.panel} grid place-items-center`
 
-    // tags (항상 표시)
+    /* tags */
     tagRowEl.innerHTML = ''
-    ;['#Figma', '#Prototyping', '#Problem_Solver'].forEach((t) => {
-      const span = document.createElement('span')
-      span.className = `px-2.5 py-1 rounded-full ${a.pillBg} ${a.pillText} text-xs font-semibold`
-      span.textContent = t
-      tagRowEl.appendChild(span)
-    })
+      ;['#Figma', '#Prototyping', '#Problem_Solver'].forEach((t) => {
+        const span = document.createElement('span')
+        span.className = `px-2.5 py-1 rounded-full ${a.pillBg} ${a.pillText} text-xs font-semibold`
+        span.textContent = t
+        tagRowEl.appendChild(span)
+      })
 
     const visibleSections = sections.filter((s) => s.visible)
     previewSectionsEl.innerHTML = ''
@@ -342,8 +342,8 @@ onMounted(() => {
 
           <div class="mt-2 flex flex-wrap gap-1.5">
             ${p.tags
-              .map(
-                (t) => `
+            .map(
+              (t) => `
               <span class="px-2 py-0.5 rounded-full
                 bg-zinc-100 dark:bg-zinc-800
                 text-zinc-700 dark:text-zinc-200
@@ -351,8 +351,8 @@ onMounted(() => {
                 ${t}
               </span>
             `,
-              )
-              .join('')}
+            )
+            .join('')}
           </div>
         `
 
@@ -394,29 +394,28 @@ onMounted(() => {
     return wrap
   }
 
-  // init
+  /* init */
   renderList()
   renderPreview()
 })
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors"
-  >
+  <div class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors">
     <main class="dot-bg">
       <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- Step progress -->
         <!-- 단계 표시기 (Progress Bar) - 1단계 활성화 -->
         <div class="mb-10 max-w-3xl mx-auto">
-            <div class="flex justify-between text-sm font-bold text-gray-400 mb-2 px-1">
-                <span>01. 프로젝트 작성</span>
-                <span>02. 프로젝트 확인/수정</span>
-                <span class="text-yellow-300">03. 스타일</span>
+          <div class="flex justify-between text-sm font-bold text-gray-400 mb-2 px-1">
+            <span>01. 프로젝트 작성</span>
+            <span>02. 프로젝트 확인/수정</span>
+            <span class="text-yellow-300">03. 스타일</span>
+          </div>
+          <div class="w-full h-2 bg-gray-300 dark:bg-zinc-800 rounded-full overflow-hidden">
+            <div class="w-3/3 h-full bg-yellow-300 rounded-full shadow-[0_0_10px_#FACC15] transition-all duration-500">
             </div>
-            <div class="w-full h-2 bg-gray-300 dark:bg-zinc-800 rounded-full overflow-hidden">
-                <div class="w-3/3 h-full bg-yellow-300 rounded-full shadow-[0_0_10px_#FACC15] transition-all duration-500"></div>
-            </div>
+          </div>
         </div>
 
         <!-- Two column layout -->
@@ -424,8 +423,7 @@ onMounted(() => {
           <!-- Left panel -->
           <section class="col-span-12 lg:col-span-4">
             <div
-              class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-5"
-            >
+              class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-5">
               <div class="flex items-center gap-2 mb-4">
                 <span class="text-lg">✏️</span>
                 <h2 class="font-bold">스타일 커스터마이징</h2>
@@ -435,31 +433,12 @@ onMounted(() => {
               <div class="mb-5">
                 <div class="text-xs text-zinc-500 font-semibold mb-2">ACCENT COLOR</div>
                 <div class="flex items-center gap-3">
-                  <button
-                    data-accent="amber"
-                    class="w-8 h-8 rounded-full bg-amber-400 ring-2 ring-amber-200"
-                    title="Yellow"
-                  ></button>
-                  <button
-                    data-accent="sky"
-                    class="w-8 h-8 rounded-full bg-sky-400"
-                    title="Blue"
-                  ></button>
-                  <button
-                    data-accent="emerald"
-                    class="w-8 h-8 rounded-full bg-emerald-400"
-                    title="Green"
-                  ></button>
-                  <button
-                    data-accent="violet"
-                    class="w-8 h-8 rounded-full bg-violet-400"
-                    title="Violet"
-                  ></button>
-                  <button
-                    data-accent="pink"
-                    class="w-8 h-8 rounded-full bg-pink-400"
-                    title="Pink"
-                  ></button>
+                  <button data-accent="amber" class="w-8 h-8 rounded-full bg-amber-400 ring-2 ring-amber-200"
+                    title="Yellow"></button>
+                  <button data-accent="sky" class="w-8 h-8 rounded-full bg-sky-400" title="Blue"></button>
+                  <button data-accent="emerald" class="w-8 h-8 rounded-full bg-emerald-400" title="Green"></button>
+                  <button data-accent="violet" class="w-8 h-8 rounded-full bg-violet-400" title="Violet"></button>
+                  <button data-accent="pink" class="w-8 h-8 rounded-full bg-pink-400" title="Pink"></button>
                 </div>
               </div>
 
@@ -467,17 +446,13 @@ onMounted(() => {
               <div class="mb-5">
                 <div class="text-xs text-zinc-500 font-semibold mb-2">TYPOGRAPHY</div>
                 <div class="grid grid-cols-2 gap-3">
-                  <button
-                    id="fontSans"
-                    class="typo-btn border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 rounded-xl p-3 text-left transition-colors"
-                  >
+                  <button id="fontSans"
+                    class="typo-btn border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 rounded-xl p-3 text-left transition-colors">
                     <div class="text-sm font-bold">Sans-serif</div>
                     <div class="text-xs text-zinc-500">Modern &amp; Clean</div>
                   </button>
-                  <button
-                    id="fontSerif"
-                    class="typo-btn border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 rounded-xl p-3 text-left transition-colors"
-                  >
+                  <button id="fontSerif"
+                    class="typo-btn border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 rounded-xl p-3 text-left transition-colors">
                     <div class="text-sm font-bold font-serif">Serif</div>
                     <div class="text-xs text-zinc-500">Classic &amp; Elegant</div>
                   </button>
@@ -489,17 +464,8 @@ onMounted(() => {
                 <div class="text-xs text-zinc-500 font-semibold mb-2">SECTION LAYOUT</div>
                 <div class="grid gap-3">
                   <div class="radio-card">
-                    <input
-                      id="layout_single"
-                      name="portfolio_layout"
-                      type="radio"
-                      checked
-                      class="hidden"
-                    />
-                    <label
-                      for="layout_single"
-                      class="block cursor-pointer border border-zinc-200 rounded-xl p-3"
-                    >
+                    <input id="layout_single" name="portfolio_layout" type="radio" checked class="hidden" />
+                    <label for="layout_single" class="block cursor-pointer border border-zinc-200 rounded-xl p-3">
                       <div class="font-semibold">Single Column</div>
                       <div class="text-xs text-zinc-500">섹션을 위에서 아래로 쭉</div>
                     </label>
@@ -507,10 +473,7 @@ onMounted(() => {
 
                   <div class="radio-card">
                     <input id="layout_two" name="portfolio_layout" type="radio" class="hidden" />
-                    <label
-                      for="layout_two"
-                      class="block cursor-pointer border border-zinc-200 rounded-xl p-3"
-                    >
+                    <label for="layout_two" class="block cursor-pointer border border-zinc-200 rounded-xl p-3">
                       <div class="font-semibold">Two Column</div>
                       <div class="text-xs text-zinc-500">왼쪽(요약) + 오른쪽(프로젝트/경험)</div>
                     </label>
@@ -518,10 +481,7 @@ onMounted(() => {
 
                   <div class="radio-card">
                     <input id="layout_cards" name="portfolio_layout" type="radio" class="hidden" />
-                    <label
-                      for="layout_cards"
-                      class="block cursor-pointer border border-zinc-200 rounded-xl p-3"
-                    >
+                    <label for="layout_cards" class="block cursor-pointer border border-zinc-200 rounded-xl p-3">
                       <div class="font-semibold">Cards</div>
                       <div class="text-xs text-zinc-500">섹션을 카드 묶음으로</div>
                     </label>
@@ -536,10 +496,8 @@ onMounted(() => {
                     SECTIONS (드래그로 순서 변경)
                   </div>
 
-                  <button
-                    id="resetSections"
-                    class="text-xs px-2 py-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 transition-colors"
-                  >
+                  <button id="resetSections"
+                    class="text-xs px-2 py-1 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 hover:bg-zinc-50 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-200 transition-colors">
                     초기화
                   </button>
                 </div>
@@ -554,21 +512,15 @@ onMounted(() => {
           <!-- Right panel: Live Preview -->
           <section class="col-span-12 lg:col-span-8">
             <div
-              class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-5"
-            >
+              class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-5">
               <div class="flex items-center justify-between mb-4">
                 <h2 class="font-bold">Live Preview</h2>
-                <!-- (삭제) Portfolio 검은 탭 -->
               </div>
 
               <!-- Preview Canvas -->
-              <div
-                class="rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 p-6"
-              >
-                <div
-                  id="previewCard"
-                  class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-6 transition-all duration-200 preview-card"
-                >
+              <div class="rounded-2xl border border-zinc-100 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-800/60 p-6">
+                <div id="previewCard"
+                  class="bg-white dark:bg-zinc-900 rounded-2xl shadow-soft border border-zinc-100 dark:border-zinc-800 p-6 transition-all duration-200 preview-card">
                   <!-- header (always) -->
                   <div class="flex items-start justify-between gap-6">
                     <div>
@@ -586,7 +538,7 @@ onMounted(() => {
                     </div>
                   </div>
 
-                  <!-- tags (항상 표시) -->
+                  <!-- tags -->
                   <div id="tagRow" class="mt-4 flex flex-wrap gap-2"></div>
 
                   <!-- sections render target -->
@@ -597,15 +549,12 @@ onMounted(() => {
               <!-- Bottom actions -->
               <div class="mt-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <a href="portfolio-update-n-check"
-   class="px-6 py-2 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center">
-    <i class="fa-solid fa-arrow-left mr-2 text-lg"></i> 이전 단계
-</a>
+                  class="px-6 py-2 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center">
+                  <i class="fa-solid fa-arrow-left mr-2 text-lg"></i> 이전 단계
+                </a>
                 <div class="flex gap-3">
-                  <!-- (삭제) 화면 캡처 / 링크 공유 -->
-                  <a
-                    href="portfolio-view"
-                    class="px-4 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center"
-                  >
+                  <a href="portfolio-view"
+                    class="px-4 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center">
                     저장하기 (완료)
                   </a>
                 </div>
@@ -621,15 +570,18 @@ onMounted(() => {
 
 <style scoped>
 .bg-pattern {
-    background-color: #f8fafc;
+  background-color: #f8fafc;
 }
+
 .dark .bg-pattern {
-    background-color: #18181b;
+  background-color: #18181b;
 }
-.radio-card input:checked + label {
+
+.radio-card input:checked+label {
   border-color: rgb(250 204 21);
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.25);
 }
+
 .preview-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
@@ -639,9 +591,11 @@ onMounted(() => {
 .drag-item {
   user-select: none;
 }
+
 .drag-item.dragging {
   opacity: 0.55;
 }
+
 .drag-item.over {
   outline: 2px dashed rgba(250, 204, 21, 0.9);
   outline-offset: 4px;
