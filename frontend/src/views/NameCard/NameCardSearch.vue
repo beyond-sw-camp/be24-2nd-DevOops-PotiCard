@@ -293,7 +293,5 @@ onUnmounted(() => {
 /* 배경 패턴 */
 .bg-pattern {
   background-color: #f8fafc;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 24px 24px;
 }
 </style>

@@ -355,12 +355,11 @@ const goBack = () => router.back()
             class="mt-16 flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-gray-50 dark:border-zinc-800"
           >
             <button
-              type="button"
-              class="px-8 py-3 bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 text-gray-500 dark:text-gray-400 rounded-2xl font-bold hover:bg-gray-50 dark:hover:bg-zinc-700 transition-all flex items-center gap-2 text-sm"
-              @click="goBack"
-            >
-              <i class="fa-solid fa-arrow-left"></i> 이전 단계
-            </button>
+            type="button"
+            class="px-8 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center"
+            @click="goBack">
+            <i class="fa-solid fa-arrow-left mr-2"></i> 이전 단계
+          </button>
 
             <div class="flex items-center gap-3 w-full md:w-auto">
               <button
@@ -382,9 +381,8 @@ const goBack = () => router.back()
               <RouterLink
                 id="next-step-btn"
                 to="/portfolio-style"
-                class="hidden flex-1 md:flex-none px-12 py-3 bg-point-yellow text-gray-900 rounded-2xl font-bold shadow-xl shadow-yellow-200/50 hover:bg-yellow-400 transform hover:-translate-y-0.5 transition-all animate-fade-in inline-flex items-center justify-center"
-              >
-                스타일 설정하기 <i class="fa-solid fa-chevron-right ml-1 text-sm"></i>
+                class="hidden flex-1 md:flex-none px-12 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors animate-fade-in inline-flex items-center justify-center">
+                스타일 설정하기 <i class="fa-solid fa-arrow-right ml-2 text-lg"></i>
               </RouterLink>
             </div>
           </div>

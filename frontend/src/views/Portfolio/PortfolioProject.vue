@@ -121,10 +121,10 @@ onMounted( async () => {
                 <!-- 하단 액션 버튼 -->
                 <div class="pt-6 flex justify-end items-center">
                     <a href="portfolio-update-n-check"
-                    class="px-8 py-3 bg-point-yellow dark:text-white dark:hover:text-gray-900 text-gray-900 rounded-xl font-bold shadow-lg shadow-yellow-500/50 dark:shadow-yellow-200/50 hover:bg-yellow-300 transform hover:-translate-y-0.5 transition-all inline-flex items-center">
-                        다음 단계 <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </a>
-                </div>
+                    class="px-8 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center">
+                    다음 단계 <i class="fa-solid fa-arrow-right ml-2 text-lg"></i>
+                </a>
+            </div>
             </form>
         </div>
     </div>
@@ -138,12 +138,9 @@ onMounted( async () => {
         
         .bg-pattern {
             background-color: #f8fafc;
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 24px 24px;
         }
         .dark .bg-pattern {
             background-color: #18181b;
-            background-image: radial-gradient(#3f3f46 1px, transparent 1px);
         }
         .prj_detail {
             display:flex;
