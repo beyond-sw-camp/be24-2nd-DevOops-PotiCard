@@ -38,7 +38,11 @@ const list = async () => {
   try {
     const data = await fetchJson(`${BASE}/list.json`)
     if (data) {
-      const arr = Array.isArray(data) ? data : Array.isArray(data?.companies) ? data.companies : null
+      const arr = Array.isArray(data)
+        ? data
+        : Array.isArray(data?.companies)
+          ? data.companies
+          : null
       if (arr) return arr.map(normalize)
     }
   } catch (e) {}

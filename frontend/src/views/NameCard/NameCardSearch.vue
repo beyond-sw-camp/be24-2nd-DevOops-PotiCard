@@ -1,18 +1,17 @@
 <script setup>
-import { onMounted, ref, onUnmounted} from 'vue'
-// ★ 컴포넌트 import (경로는 실제 위치에 맞게 수정)
+import { onMounted, ref, onUnmounted } from 'vue'
 import NamecardsFront from '@/components/namecards/NamecardsFront.vue'
 import NamecardsBack from '@/components/namecards/NamecardsBack.vue'
 import MiniNamecards from '@/components/namecards/MiniNamecards.vue'
 
-// 1. 유저 ID 리스트 관리 (데이터 객체가 아니라 ID 숫자만 관리)
+// 유저 ID 리스트 관리 (데이터 객체가 아니라 ID 숫자만 관리)
 const userIds = ref([])
 const isLoading = ref(false)
 const loadTrigger = ref(null)
 let currentPage = 1
-const itemsPerPage = 50 // 한 번에 불러올 개수
+const itemsPerPage = 50
 
-// 2. ID 생성 함수 (실제 API가 리스트를 준다면 그걸 쓰면 되고, 여기선 1~100 생성 로직)
+// ID 생성 함수
 const loadMoreIds = () => {
   if (isLoading.value) return
   isLoading.value = true
@@ -31,11 +30,11 @@ const loadMoreIds = () => {
 
     currentPage++
     isLoading.value = false
-  }, 500) // 약간의 딜레이 시뮬레이션
+  }, 500)
 }
 
-// 3. 모달 관련 로직
-const selectedUserId = ref(null) // 객체 대신 ID만 저장
+// 모달 관련 로직
+const selectedUserId = ref(null)
 const isModalCardFlipped = ref(false)
 
 const openModal = (id) => {
@@ -56,7 +55,7 @@ const toggleModalCardFlip = () => {
 // 4. 무한 스크롤 옵저버
 let observer
 onMounted(() => {
-  loadMoreIds() // 초기 로드
+  loadMoreIds()
 
   observer = new IntersectionObserver(
     (entries) => {
@@ -81,12 +80,9 @@ onUnmounted(() => {
       <!-- 2. 좌측 고정 패널 (기업용 필터) -->
 
       <aside
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white/90 backdrop-blur border-r border-gray-100 p-6 overflow-y-auto z-40 hidden lg:block transition-colors duration-300"
-      >
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white/90 backdrop-blur border-r border-gray-100 p-6 overflow-y-auto z-40 hidden lg:block transition-colors duration-300">
         <div class="mb-8">
-          <h2
-            class="text-xs font-black text-point-yellow uppercase tracking-wider mb-6 flex items-center gap-2"
-          >
+          <h2 class="text-xs font-black text-point-yellow uppercase tracking-wider mb-6 flex items-center gap-2">
             <span class="w-2 h-2 bg-point-yellow rounded-full"></span> Targeting
           </h2>
 
@@ -100,44 +96,27 @@ onUnmounted(() => {
 
               <div class="space-y-2.5">
                 <label
-                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100"
-                  />
+                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                  <input type="checkbox"
+                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100" />
 
-                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors"
-                    >기획/PM</span
-                  >
+                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">기획/PM</span>
                 </label>
 
                 <label
-                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    checked
-                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100"
-                  />
+                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100" />
 
-                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors"
-                    >디자인</span
-                  >
+                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">디자인</span>
                 </label>
 
                 <label
-                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors"
-                >
-                  <input
-                    type="checkbox"
-                    checked
-                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100"
-                  />
+                  class="flex items-center gap-3 cursor-pointer group p-2 rounded-lg hover:bg-gray-50 transition-colors">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded border-gray-300 text-yellow-500 focus:ring-yellow-500 bg-gray-100" />
 
-                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors"
-                    >개발 (FE/BE)</span
-                  >
+                  <span class="text-sm text-gray-600 group-hover:text-gray-900 transition-colors">개발 (FE/BE)</span>
                 </label>
               </div>
             </div>
@@ -151,19 +130,13 @@ onUnmounted(() => {
 
               <div class="flex flex-wrap gap-2">
                 <span
-                  class="px-3 py-1.5 bg-yellow-50 dtext-yellow-700 text-xs font-bold rounded-lg cursor-pointer border border-yellow-100 hover:bg-yellow-100 transition-colors"
-                  >React</span
-                >
+                  class="px-3 py-1.5 bg-yellow-50 dtext-yellow-700 text-xs font-bold rounded-lg cursor-pointer border border-yellow-100 hover:bg-yellow-100 transition-colors">React</span>
 
                 <span
-                  class="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg cursor-pointer border border-gray-200 hover:bg-gray-100 transition-colors"
-                  >Figma</span
-                >
+                  class="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg cursor-pointer border border-gray-200 hover:bg-gray-100 transition-colors">Figma</span>
 
                 <span
-                  class="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg cursor-pointer border border-gray-200 hover:bg-gray-100 transition-colors"
-                  >Python</span
-                >
+                  class="px-3 py-1.5 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg cursor-pointer border border-gray-200 hover:bg-gray-100 transition-colors">Python</span>
               </div>
             </div>
           </div>
@@ -173,8 +146,7 @@ onUnmounted(() => {
 
         <div class="absolute bottom-6 left-6 right-6">
           <button
-            class="w-full py-3 bg-gray-900 text-white rounded-2xl font-black hover:bg-gray-800 shadow-lg transition-all transform hover:-translate-y-1"
-          >
+            class="w-full py-3 bg-gray-900 text-white rounded-2xl font-black hover:bg-gray-800 shadow-lg transition-all transform hover:-translate-y-1">
             필터 적용하기
           </button>
         </div>
@@ -182,15 +154,10 @@ onUnmounted(() => {
 
       <main class="flex-1 lg:ml-64 p-8 overflow-y-auto h-full scrollbar-hide">
         <div class="grid grid-cols-[repeat(auto-fill,280px)] justify-center gap-8 pb-10">
-          <div
-            v-for="id in userIds"
-            :key="id"
-            class="group cursor-pointer perspective-container"
-            @click="openModal(id)"
-          >
+          <div v-for="id in userIds" :key="id" class="group cursor-pointer perspective-container"
+            @click="openModal(id)">
             <div
-              class="relative w-full aspect-[1.58/1] transition-transform duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl rounded-2xl"
-            >
+              class="relative w-full aspect-[1.58/1] transition-transform duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl rounded-2xl">
               <MiniNamecards :userId="id" />
             </div>
           </div>
@@ -204,32 +171,22 @@ onUnmounted(() => {
 
         <Teleport to="body">
           <Transition name="modal-fade">
-            <div
-              v-if="selectedUserId"
-              class="fixed inset-0 z-[9999] flex items-center justify-center px-4 py-8"
-            >
+            <div v-if="selectedUserId" class="fixed inset-0 z-[9999] flex items-center justify-center px-4 py-8">
               <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" @click="closeModal"></div>
 
               <div class="absolute top-4 right-4 z-50">
-                <button
-                  @click="closeModal"
-                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors backdrop-blur-md"
-                >
+                <button @click="closeModal"
+                  class="w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors backdrop-blur-md">
                   <i class="fa-solid fa-times text-xl"></i>
                 </button>
               </div>
 
               <div class="scene w-full max-w-[450px] aspect-[1.58/1]">
-                <div
-                  class="card-object w-full h-full relative cursor-pointer shadow-2xl rounded-2xl"
-                  :class="{ 'is-flipped': isModalCardFlipped }"
-                  @click="toggleModalCardFlip"
-                >
+                <div class="card-object w-full h-full relative cursor-pointer shadow-2xl rounded-2xl"
+                  :class="{ 'is-flipped': isModalCardFlipped }" @click="toggleModalCardFlip">
                   <div class="card-face card-front">
                     <NamecardsFront :userId="selectedUserId" />
-                    <div
-                      class="absolute bottom-4 right-4 z-20 text-xs text-gray-400 animate-pulse pointer-events-none"
-                    >
+                    <div class="absolute bottom-4 right-4 z-20 text-xs text-gray-400 animate-pulse pointer-events-none">
                       Click to flip <i class="fa-solid fa-rotate ml-1"></i>
                     </div>
                   </div>
@@ -247,18 +204,19 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* 기존 스타일 유지 + 3D 관련 스타일 */
-
 .scene {
   perspective: 1000px;
 }
+
 .card-object {
   transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
   transform-style: preserve-3d;
 }
+
 .card-object.is-flipped {
   transform: rotateY(180deg);
 }
+
 .card-face {
   position: absolute;
   width: 100%;
@@ -267,11 +225,12 @@ onUnmounted(() => {
   left: 0;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  /* 컴포넌트들이 꽉 차게 */
 }
+
 .card-back {
   transform: rotateY(180deg);
 }
+
 .card-front {
   transform: rotateY(0deg);
 }
@@ -281,10 +240,12 @@ onUnmounted(() => {
 .modal-fade-leave-active {
   transition: all 0.3s ease;
 }
+
 .modal-fade-enter-from,
 .modal-fade-leave-to {
   opacity: 0;
 }
+
 .modal-fade-enter-from .scene,
 .modal-fade-leave-to .scene {
   transform: scale(0.95) translateY(20px);

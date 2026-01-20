@@ -1,11 +1,21 @@
-/* ===== header.css 그대로 이식 (scoped 금지: html 클래스/ID 선택자 때문) ===== */
-.bg-pastel-yellow { background-color: #fef9c3; }
-.text-point-yellow { color: #facc15; }
-.border-point-yellow { border-color: #facc15; }
-.ring-point-yellow { --tw-ring-color: #facc15; }
+/*header.css */
+.bg-pastel-yellow {
+  background-color: #fef9c3;
+}
+.text-point-yellow {
+  color: #facc15;
+}
+.border-point-yellow {
+  border-color: #facc15;
+}
+.ring-point-yellow {
+  --tw-ring-color: #facc15;
+}
 
-/* ✅ 헤더 네비 호버 서브메뉴 */
-.nav-item { position: relative; }
+/* 헤더 네비 호버 서브메뉴 */
+.nav-item {
+  position: relative;
+}
 .nav-panel {
   position: absolute;
   left: 50%;
@@ -15,7 +25,10 @@
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s ease;
 }
 .nav-item:hover .nav-panel {
   opacity: 1;
@@ -39,81 +52,7 @@
   pointer-events: auto;
 }
 
-/* ✅ (수정) 명함은 hover가 아니라 클릭으로도 카드처럼 뜨게 */
-html.namecard-open #flyout-namecard .nav-panel {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
-  transform: translateX(-50%) translateY(0) !important;
-}
-
-/* ✅ "명함 옆 📋"로 전체 메뉴 펼치기 */
-.menu-open #mainNav {
-  display: grid !important;
-  position: fixed;
-  top: 84px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: min(1120px, calc(100vw - 32px));
-  padding: 16px;
-  gap: 16px;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: start;
-  border: 1px solid #f3f4f6;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.12);
-  z-index: 9999;
-}
-.dark.menu-open #mainNav {
-  border-color: #27272a;
-  background: rgba(24, 24, 27, 0.92);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-}
-.menu-open #mainNav .nav-item {
-  position: static;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  min-width: 0;
-}
-.menu-open #mainNav .nav-panel {
-  position: static;
-  left: auto;
-  top: auto;
-  transform: none;
-  width: 100%;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition: none;
-}
-.menu-open #mainNav .nav-item .nav-title a {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-weight: 900;
-  color: #111827;
-  padding: 6px 10px;
-  border-radius: 999px;
-  background: rgba(250, 204, 21, 0.12);
-  border: 1px solid rgba(250, 204, 21, 0.25);
-  width: fit-content;
-}
-.dark.menu-open #mainNav .nav-item .nav-title a {
-  color: #fff;
-  background: rgba(250, 204, 21, 0.1);
-  border-color: rgba(250, 204, 21, 0.25);
-}
-@media (max-width: 1024px) {
-  .menu-open #mainNav { grid-template-columns: 1fr; top: 76px; }
-}
-@media (min-width: 640px) and (max-width: 1024px) {
-  .menu-open #mainNav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-
-/* ✅ 로그인/회원가입 팝업 */
+/* 로그인/회원가입 팝업 */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -122,7 +61,9 @@ html.namecard-open #flyout-namecard .nav-panel {
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.15s ease, visibility 0.15s ease;
+  transition:
+    opacity 0.15s ease,
+    visibility 0.15s ease;
   z-index: 10000;
 }
 .modal-open .modal-backdrop {
@@ -138,63 +79,33 @@ html.namecard-open #flyout-namecard .nav-panel {
   width: min(420px, calc(100vw - 32px));
 }
 
-/* =========================
-   ✅ 추가: 브랜드 로고 크게
-========================= */
-/* ✅ 레이아웃(간격) 절대 안 밀리게: 박스 크기 고정 */
-.pc-brand-box{
+/* 브랜드 로고 */
+.pc-brand-box {
   width: 44px;
   height: 44px;
   display: inline-block;
   flex: 0 0 44px;
   overflow: hidden;
   border-radius: 14px;
-  transform: translateY(8px); /* ✅ 2~6px로 조절 */
+  transform: translateY(8px);
 }
 
-
-/* ✅ 실제 이미지만 확대 */
-.pc-brand-logo{
+/* 이미지만 확대 */
+.pc-brand-logo {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: contain;     /* 로고 안 잘리게 */
-  transform: scale(2.5);   /* 여기만 조절 */
+  object-fit: contain;
+  transform: scale(2.5);
   transform-origin: center;
 }
 
-
-
-/* =========================
-   ✅ 추가: 기업 페이지 버튼 (다크모드 버튼 자리)
-========================= */
-.pc-company-btn{
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 12px;
-  font-size: 13px;
-  font-weight: 900;
-  color: rgba(107, 114, 128, 1);
-  background: rgba(243, 244, 246, 1);
-  transition: 0.15s ease;
-}
-.dark .pc-company-btn{
-  background: rgba(39, 39, 42, 1);
-  color: rgba(161, 161, 170, 1);
-}
-.pc-company-btn:hover{
-  color: #facc15;
-  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.15);
+/* 유저 패널(닉네임 클릭) */
+#flyout-user {
+  position: relative;
 }
 
-/* =========================
-   ✅ 추가: 유저 패널(닉네임 클릭)
-   - 기존 nav-panel 규칙을 유지하되
-   - 우측 정렬 + 클릭으로 보여주기
-========================= */
-#flyout-user { position: relative; }
-
-#flyout-user .pc-user-panel{
+#flyout-user .pc-user-panel {
   left: auto;
   right: 0;
   top: calc(100% + 10px);
@@ -206,298 +117,273 @@ html.namecard-open #flyout-namecard .nav-panel {
   z-index: 5000;
 }
 
-#flyout-user .pc-user-panel.pc-open{
+#flyout-user .pc-user-panel.pc-open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-.pc-user-panel-card{
+.pc-user-panel-card {
   position: relative;
   width: 360px;
   border-radius: 24px;
   border: 1px solid rgba(229, 231, 235, 1);
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.12);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.12);
   padding: 16px;
 }
-.dark .pc-user-panel-card{
+.dark .pc-user-panel-card {
   border-color: rgba(39, 39, 42, 1);
   background: rgba(24, 24, 27, 0.92);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.35);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
 }
 
-/* 로그아웃 칩 */
-.pc-logout-chip{
+/* 로그아웃 */
+.pc-logout-chip {
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 12px;
   font-weight: 900;
-  color: rgba(17, 24, 39, 0.60);
+  color: rgba(17, 24, 39, 0.6);
   background: rgba(17, 24, 39, 0.06);
   transition: 0.15s ease;
 }
-.dark .pc-logout-chip{
-  color: rgba(255,255,255,0.75);
-  background: rgba(255,255,255,0.10);
+.dark .pc-logout-chip {
+  color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.1);
 }
-.pc-logout-chip:hover{
+.pc-logout-chip:hover {
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18);
 }
 
-/* =========================
-   ✅ 미니 명함 (스샷 느낌)
-========================= */
-.pc-mini-card{
+/* 미니 명함 (스샷 느낌) */
+.pc-mini-card {
   border-radius: 18px;
   border: 1px solid rgba(250, 204, 21, 0.28);
   background:
     radial-gradient(800px 240px at 20% 0%, rgba(250, 204, 21, 0.18), transparent 60%),
-    rgba(255,255,255,0.70);
+    rgba(255, 255, 255, 0.7);
   padding: 14px;
 }
-.dark .pc-mini-card{
+.dark .pc-mini-card {
   background:
     radial-gradient(800px 240px at 20% 0%, rgba(250, 204, 21, 0.12), transparent 60%),
-    rgba(24,24,27,0.70);
+    rgba(24, 24, 27, 0.7);
 }
 
-.pc-mini-head{
+.pc-mini-head {
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.pc-mini-avatar{
+.pc-mini-avatar {
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: rgba(255,255,255,0.6);
-  border: 1px solid rgba(0,0,0,0.06);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 }
-.dark .pc-mini-avatar{
-  background: rgba(0,0,0,0.18);
-  border-color: rgba(255,255,255,0.10);
+.dark .pc-mini-avatar {
+  background: rgba(0, 0, 0, 0.18);
+  border-color: rgba(255, 255, 255, 0.1);
 }
-.pc-mini-avatar img{
+.pc-mini-avatar img {
   width: 38px;
   height: 38px;
   border-radius: 12px;
   object-fit: cover;
 }
 
-.pc-mini-main{ min-width: 0; flex: 1; }
-.pc-mini-name{
+.pc-mini-main {
+  min-width: 0;
+  flex: 1;
+}
+.pc-mini-name {
   margin: 0;
   font-size: 15px;
   font-weight: 900;
   color: #111827;
   line-height: 1.2;
 }
-.dark .pc-mini-name{ color: #fff; }
+.dark .pc-mini-name {
+  color: #fff;
+}
 
-.pc-mini-role{
+.pc-mini-role {
   margin: 2px 0 0;
   font-size: 12px;
   font-weight: 800;
-  color: rgba(17,24,39,0.65);
+  color: rgba(17, 24, 39, 0.65);
 }
-.dark .pc-mini-role{ color: rgba(255,255,255,0.75); }
+.dark .pc-mini-role {
+  color: rgba(255, 255, 255, 0.75);
+}
 
-.pc-mini-company{
+.pc-mini-company {
   margin: 2px 0 0;
   font-size: 12px;
   font-weight: 800;
-  color: rgba(17,24,39,0.45);
+  color: rgba(17, 24, 39, 0.45);
 }
-.dark .pc-mini-company{ color: rgba(255,255,255,0.60); }
+.dark .pc-mini-company {
+  color: rgba(255, 255, 255, 0.6);
+}
 
-.pc-mini-icon{
+.pc-mini-icon {
   width: 40px;
   height: 40px;
   border-radius: 16px;
-  background: rgba(250,204,21,0.18);
-  border: 1px solid rgba(250,204,21,0.30);
+  background: rgba(250, 204, 21, 0.18);
+  border: 1px solid rgba(250, 204, 21, 0.3);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.pc-mini-divider{
+.pc-mini-divider {
   height: 1px;
   margin: 12px 0 10px;
-  background: rgba(0,0,0,0.08);
+  background: rgba(0, 0, 0, 0.08);
 }
-.dark .pc-mini-divider{
-  background: rgba(255,255,255,0.12);
+.dark .pc-mini-divider {
+  background: rgba(255, 255, 255, 0.12);
 }
 
-.pc-mini-row{
+.pc-mini-row {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   align-items: center;
 }
 
-.pc-mini-label{
+.pc-mini-label {
   font-size: 11px;
   font-weight: 900;
-  color: rgba(17,24,39,0.55);
+  color: rgba(17, 24, 39, 0.55);
 }
-.dark .pc-mini-label{ color: rgba(255,255,255,0.55); }
+.dark .pc-mini-label {
+  color: rgba(255, 255, 255, 0.55);
+}
 
-.pc-mini-value{
+.pc-mini-value {
   font-size: 11px;
   font-weight: 900;
-  color: rgba(17,24,39,0.80);
+  color: rgba(17, 24, 39, 0.8);
   max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.dark .pc-mini-value{ color: rgba(255,255,255,0.85); }
+.dark .pc-mini-value {
+  color: rgba(255, 255, 255, 0.85);
+}
 
-.pc-mini-actions{
+.pc-mini-actions {
   display: flex;
   gap: 10px;
   margin-top: 12px;
 }
-.pc-mini-btn{
+.pc-mini-btn {
   flex: 1;
   padding: 12px 10px;
   border-radius: 14px;
-  border: 1px solid rgba(250,204,21,0.36);
-  background: rgba(250,204,21,0.18);
+  border: 1px solid rgba(250, 204, 21, 0.36);
+  background: rgba(250, 204, 21, 0.18);
   font-weight: 900;
   font-size: 12px;
   color: #111827;
   cursor: pointer;
   transition: 0.15s ease;
 }
-.pc-mini-btn:hover{
+.pc-mini-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 0 0 0 3px rgba(250,204,21,0.16);
+  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.16);
 }
-.pc-mini-btn.ghost{
-  border-color: rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.55);
+.pc-mini-btn.ghost {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.55);
 }
-.dark .pc-mini-btn{
+.dark .pc-mini-btn {
   color: #fff;
-  border-color: rgba(250,204,21,0.28);
-  background: rgba(250,204,21,0.10);
+  border-color: rgba(250, 204, 21, 0.28);
+  background: rgba(250, 204, 21, 0.1);
 }
-.dark .pc-mini-btn.ghost{
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.06);
+.dark .pc-mini-btn.ghost {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
 }
 
-/* =========================
-   ✅ 로그아웃 확인 모달(패널 내부)
-========================= */
-.pc-confirm-backdrop{
+/* 로그아웃 확인 */
+.pc-confirm-backdrop {
   position: absolute;
   inset: 0;
   border-radius: 24px;
-  background: rgba(0,0,0,0.28);
+  background: rgba(0, 0, 0, 0.28);
   backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
 }
-.pc-confirm{
+.pc-confirm {
   width: 100%;
   max-width: 280px;
   border-radius: 18px;
-  border: 1px solid rgba(250,204,21,0.22);
-  background: rgba(255,255,255,0.95);
-  box-shadow: 0 18px 60px rgba(0,0,0,0.20);
+  border: 1px solid rgba(250, 204, 21, 0.22);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.2);
   padding: 14px;
 }
-.dark .pc-confirm{
-  background: rgba(24,24,27,0.96);
-  border-color: rgba(250,204,21,0.20);
+.dark .pc-confirm {
+  background: rgba(24, 24, 27, 0.96);
+  border-color: rgba(250, 204, 21, 0.2);
 }
-.pc-confirm-title{
+.pc-confirm-title {
   margin: 0 0 12px;
   font-size: 13px;
   font-weight: 900;
   color: #111827;
 }
-.dark .pc-confirm-title{ color: #fff; }
+.dark .pc-confirm-title {
+  color: #fff;
+}
 
-.pc-confirm-actions{
+.pc-confirm-actions {
   display: flex;
   gap: 10px;
 }
-.pc-confirm-btn{
+.pc-confirm-btn {
   flex: 1;
   padding: 10px 12px;
   border-radius: 14px;
-  border: 1px solid rgba(250,204,21,0.36);
-  background: rgba(250,204,21,0.18);
+  border: 1px solid rgba(250, 204, 21, 0.36);
+  background: rgba(250, 204, 21, 0.18);
   font-weight: 900;
   font-size: 12px;
   color: #111827;
   cursor: pointer;
 }
-.pc-confirm-btn.ghost{
-  border-color: rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.65);
+.pc-confirm-btn.ghost {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.65);
 }
-.dark .pc-confirm-btn{
+.dark .pc-confirm-btn {
   color: #fff;
-  border-color: rgba(250,204,21,0.28);
-  background: rgba(250,204,21,0.10);
+  border-color: rgba(250, 204, 21, 0.28);
+  background: rgba(250, 204, 21, 0.1);
 }
-.dark .pc-confirm-btn.ghost{
-  border-color: rgba(255,255,255,0.14);
-  background: rgba(255,255,255,0.08);
-}
-
-/* ✅ 기본 헤더에서만 보이는 "기업으로" 버튼(아이콘 영역과 자연스럽게) */
-.pc-company-pill{
-  height: 44px;
-  padding: 0 14px;
-  border-radius: 14px;
-  font-size: 13px;
-  font-weight: 900;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-
-  color: rgba(107, 114, 128, 1);
-  background: rgba(243, 244, 246, 1);
-  border: 1px solid rgba(0,0,0,0.06);
-  transition: 0.15s ease;
-}
-
-.dark .pc-company-pill{
-  background: rgba(39, 39, 42, 1);
-  border-color: rgba(255,255,255,0.12);
-  color: rgba(161, 161, 170, 1);
-}
-
-.pc-company-pill:hover{
-  color: #facc15;
-  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.14);
-}
-
-.pc-company-pill-dot{
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: rgba(250, 204, 21, 1);
-  box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.20);
+.dark .pc-confirm-btn.ghost {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* ✅ 닉네임 패널 안 "법인" 버튼(로그아웃 옆) */
-.pc-company-chip{
+.pc-company-chip {
   padding: 8px 14px;
   border-radius: 999px;
   font-size: 12px;
@@ -507,12 +393,12 @@ html.namecard-open #flyout-namecard .nav-panel {
   border: 1px solid rgba(250, 204, 21, 0.35);
   transition: 0.15s ease;
 }
-.dark .pc-company-chip{
+.dark .pc-company-chip {
   color: rgba(250, 204, 21, 0.95);
   background: rgba(250, 204, 21, 0.12);
   border-color: rgba(250, 204, 21, 0.25);
 }
-.pc-company-chip:hover{
+.pc-company-chip:hover {
   box-shadow: 0 0 0 3px rgba(250, 204, 21, 0.18);
   transform: translateY(-1px);
 }
