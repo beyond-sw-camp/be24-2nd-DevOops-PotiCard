@@ -4,35 +4,35 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-const accent = ref('amber') 
+const accent = ref('sky') // Poticard의 프로페셔널한 느낌을 위해 sky 색상으로 변경
 const font = ref('sans')
 
 const projectInfo = ref({
-  name: 'E-commerce Mobile App 리디자인',
-  period: '2023.01 – 2023.06',
-  tags: ['App Redesign', 'UX Research', 'Figma', 'React'],
-  heroImage: 'https://images.unsplash.com/photo-1523206489230-c012c745c25f?auto=format&fit=crop&q=80&w=1200',
+  name: 'Poticard: 개발자 전용 명함 & 채용 관리 플랫폼',
+  period: '2026.01 – 현재',
+  tags: ['Vue.js', 'Tailwind CSS', 'Vite', 'Frontend-focused'],
+  heroImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=1200',
   
   fullStory: [
     {
       title: 'Project Overview',
-      content: `최근 이커머스 시장의 급격한 성장과 함께 사용자들의 기대 수준이 높아짐에 따라, 기존 플랫폼의 복잡한 결제 프로세스가 높은 이탈률의 주된 원인으로 파악되었습니다. 본 프로젝트는 '사용자의 인지 부하를 최소화하는 결제 경험'을 목표로 시작되었습니다. 단순히 UI를 예쁘게 바꾸는 것을 넘어, 기존 5단계에 달하던 결제 과정을 심리적 허들을 낮춘 원스톱 프로세스로 재설계했습니다.`
+      content: `Poticard는 단순한 구인구직 사이트를 넘어, 개발자와 기업이 '명함'이라는 매개체를 통해 보다 직관적으로 연결되는 네트워킹 플랫폼입니다. 기존의 경직된 채용 프로세스를 유연한 명함 교환 방식으로 재구성하여 접근성을 높였습니다.`
     },
     {
       title: 'Key Features',
-      content: `가장 핵심적인 기능은 '실시간 재고 연동 시스템'과 '지능형 배송지 입력'입니다. React 기반의 SPA 환경에서 상태 관리 라이브러리를 고도화하여 사용자 경험을 최적화했습니다.`
+      content: `주요 기능으로는 개인/기업용 디지털 명함 관리, 직관적인 공고 등록 및 현황 확인 대시보드가 있습니다. 특히 기업 사용자가 등록한 공고에 대한 지원자 현황을 한눈에 파악하고, 실시간 채팅을 통해 소통할 수 있는 기능을 핵심으로 합니다.`
     },
     {
-      title: 'Technical Challenges',
-      content: `가상 스크롤(Virtual Scroll) 기법을 도입하여 대규모 데이터 렌더링 병목 현상을 해결했습니다. WebP 적용으로 로딩 속도를 40% 개선하는 성과를 거두었습니다.`
+      title: 'Technical Implementation',
+      content: `Vue.js 3와 Tailwind CSS를 사용하여 컴포넌트 기반의 개발을 진행했습니다. 특히 유지보수와 스타일 일관성을 위해 Tailwind의 유틸리티 클래스를 직접 활용하고, 재사용 가능한 UI 컴포넌트를 설계하는 데 집중했습니다.`
     },
     {
-      title: 'Design System',
-      content: `Atomic Design 패턴을 기반으로 공통 컴포넌트 라이브러리를 구축했습니다. Figma Variables를 활용해 코드와의 싱크를 1:1로 맞추어 협업 효율을 극대화했습니다.`
+      title: 'Frontend Challenges',
+      content: `백엔드 API와의 연동을 위해 Axios 인터셉터와 Vite 프록시 설정을 구축하여 데이터 통신 효율을 높였습니다. 공고 현황 대시보드에서는 복잡한 상태 관리를 최적화하여 사용자에게 매끄러운 UX를 제공하고자 노력했습니다.`
     },
     {
-      title: 'Results & Learning',
-      content: `런칭 후 결제 완료 건수가 15% 상승했으며, 전환율이 22% 개선되었습니다. 비즈니스 로직과 UI 로직 분리의 중요성을 깊이 깨달은 프로젝트였습니다.`
+      title: 'Learning Points',
+      content: `Git을 통한 협업 과정에서 충돌 해결 및 브랜치 관리 전략의 중요성을 학습하고 있습니다. 프론트엔드 개발자로서 단순히 화면을 구현하는 것을 넘어, 비즈니스 로직과 데이터 흐름을 어떻게 효율적으로 연결할지에 대한 깊은 고민을 담은 프로젝트입니다.`
     }
   ]
 })
@@ -74,7 +74,8 @@ const goBack = () => router.push('/portfolio-view')
             </span>
             {{ projectInfo.period }}
           </div>
-          <h1 class="text-4xl md:text-6xl font-black tracking-tight mb-8 leading-[1.1]">
+          
+          <h1 class="text-3xl md:text-5xl font-black tracking-tight mb-8 leading-[1.2]">
             {{ projectInfo.name }}
           </h1>
           
@@ -135,6 +136,7 @@ const goBack = () => router.push('/portfolio-view')
 </template>
 
 <style scoped>
+/* 기존 스타일 유지 */
 .dot-bg {
   background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1.5px, transparent 1.5px);
   background-size: 30px 30px;
@@ -142,15 +144,12 @@ const goBack = () => router.push('/portfolio-view')
 .dark .dot-bg {
   background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1.5px, transparent 1.5px);
 }
-
 .font-serif { font-family: 'Charter', 'Georgia', serif; }
 .font-sans { font-family: 'Pretendard', system-ui, sans-serif; }
 
-/* Entrance Animation */
 header, section {
   animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-
 section:nth-child(1) { animation-delay: 0.1s; }
 section:nth-child(2) { animation-delay: 0.2s; }
 section:nth-child(3) { animation-delay: 0.3s; }
