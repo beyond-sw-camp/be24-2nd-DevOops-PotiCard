@@ -5,10 +5,10 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 
 // 사업자 번호 관련 상태
-const rawBusinessNumber = ref('') // 하이픈 없는 순수 숫자
-const formattedBusinessNumber = ref('') // 화면 표시용 (하이픈 포함)
-const isDuplicateChecked = ref(false) // 중복 확인 여부
-const isBusinessNumberFocused = ref(false) // 포커스 상태 추적
+const rawBusinessNumber = ref('')
+const formattedBusinessNumber = ref('')
+const isDuplicateChecked = ref(false)
+const isBusinessNumberFocused = ref(false)
 
 const form = reactive({
   file: null,
@@ -38,15 +38,13 @@ const handleBusinessNumberInput = (e) => {
 
   // 숫자가 아닌 모든 문자를 즉시 제거
   let val = e.target.value.replace(/[^0-9]/g, '')
-
-  // 10자리까지만 허용
   if (val.length > 10) {
     val = val.slice(0, 10)
   }
 
   rawBusinessNumber.value = val
 
-  // 하이픈 자동 삽입 로직 (3-2-5 형식)
+  // 하이픈 자동 삽입 로직
   if (val.length <= 3) {
     formattedBusinessNumber.value = val
   } else if (val.length <= 5) {
@@ -122,12 +120,10 @@ const handleSubmit = () => {
 
 <template>
   <div
-    class="business-signup-container min-h-screen justify-center bg-slate-50 bg-white text-slate-900 dark:bg-zinc-950/70 dark:text-white flex flex-col items-center py-12 px-4 transition-colors"
-  >
+    class="business-signup-container min-h-screen justify-center bg-slate-50 bg-white text-slate-900 dark:bg-zinc-950/70 dark:text-white flex flex-col items-center py-12 px-4 transition-colors">
     <!-- 메인 카드 -->
     <div
-      class="w-full max-w-lg rounded-3xl shadow-2xl p-8 md:p-10 border transition-all bg-white border-slate-100 text-slate-900 dark:bg-zinc-900 dark:border-zinc-800 dark:text-white"
-    >
+      class="w-full max-w-lg rounded-3xl shadow-2xl p-8 md:p-10 border transition-all bg-white border-slate-100 text-slate-900 dark:bg-zinc-900 dark:border-zinc-800 dark:text-white">
       <form @submit.prevent="handleSubmit" class="space-y-8">
         <!-- 상단 로고 및 헤더 -->
         <div class="mb-10 text-center">
@@ -148,16 +144,10 @@ const handleSubmit = () => {
 
           <!-- 사업자 등록 번호 -->
           <div class="space-y-2">
-            <label class="text-sm font-semibold ml-1 text-slate-600 dark:text-zinc-400"
-              >사업자 등록 번호</label
-            >
+            <label class="text-sm font-semibold ml-1 text-slate-600 dark:text-zinc-400">사업자 등록 번호</label>
             <div class="flex gap-2">
-              <input
-                v-model="formattedBusinessNumber"
-                @input="handleBusinessNumberInput"
-                type="text"
-                inputmode="numeric"
-                placeholder="사업자 번호 10자리 입력"
+              <input v-model="formattedBusinessNumber" @input="handleBusinessNumberInput" type="text"
+                inputmode="numeric" placeholder="사업자 번호 10자리 입력"
                 class="flex-1 px-4 py-3 border rounded-xl focus:bg-white dark:focus:bg-zinc-900 focus:outline-none focus:ring-2 focus:ring-[#facc15] focus:border-[#facc15] transition-all text-sm font-poppins bg-slate-50 border-slate-200 text-slate-900 dark:bg-zinc-800 dark:border-zinc-700 dark:text-white"
                 :class="{
                   'border-red-500 ring-1 ring-red-500':
@@ -168,35 +158,23 @@ const handleSubmit = () => {
                     !isBusinessNumberFocused &&
                     touched.businessNumber &&
                     rawBusinessNumber.length < 10,
-                }"
-                maxlength="12"
-                @focus="isBusinessNumberFocused = true"
-                @blur="
+                }" maxlength="12" @focus="isBusinessNumberFocused = true" @blur="
                   isBusinessNumberFocused = false;
-                  touched.businessNumber = true;
-                "
-              />
-              <button
-                type="button"
-                @click="checkDuplicate"
-                :disabled="rawBusinessNumber.length < 10"
-                class="px-4 py-3 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition-colors whitespace-nowrap dark:bg-black dark:hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+                touched.businessNumber = true;
+                " />
+              <button type="button" @click="checkDuplicate" :disabled="rawBusinessNumber.length < 10"
+                class="px-4 py-3 bg-slate-900 text-white rounded-xl text-sm font-semibold hover:bg-black transition-colors whitespace-nowrap dark:bg-black dark:hover:bg-zinc-800 disabled:opacity-50 disabled:cursor-not-allowed">
                 중복 확인
               </button>
             </div>
 
-            <p
-              v-if="isDuplicateChecked && rawBusinessNumber.length === 10"
-              class="text-xs ml-1 mt-1 font-medium text-blue-500 dark:text-blue-400"
-            >
+            <p v-if="isDuplicateChecked && rawBusinessNumber.length === 10"
+              class="text-xs ml-1 mt-1 font-medium text-blue-500 dark:text-blue-400">
               <i class="fa-solid fa-check-circle mr-1"></i> 사업자 번호 중복 확인이 완료되었습니다.
             </p>
 
-            <p
-              v-if="touched.businessNumber && rawBusinessNumber.length < 10"
-              class="text-xs ml-1 mt-1 font-medium text-red-500 dark:text-[#facc15]"
-            >
+            <p v-if="touched.businessNumber && rawBusinessNumber.length < 10"
+              class="text-xs ml-1 mt-1 font-medium text-red-500 dark:text-[#facc15]">
               <i class="fa-solid fa-circle-exclamation mr-1"></i> 사업자 번호 10자리를 정확히
               입력해주세요.
             </p>
@@ -204,17 +182,12 @@ const handleSubmit = () => {
 
           <!-- 파일 업로드 -->
           <div class="space-y-2">
-            <label class="text-sm font-semibold ml-1 text-slate-600 dark:text-zinc-400"
-              >사업자등록증명원</label
-            >
-            <div
-              @click="triggerFileInput"
-              class="border-2 border-dashed rounded-xl p-6 transition-all cursor-pointer group text-center bg-slate-50 border-slate-200 hover:border-[#facc15] dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-[#facc15]"
-            >
+            <label class="text-sm font-semibold ml-1 text-slate-600 dark:text-zinc-400">사업자등록증명원</label>
+            <div @click="triggerFileInput"
+              class="border-2 border-dashed rounded-xl p-6 transition-all cursor-pointer group text-center bg-slate-50 border-slate-200 hover:border-[#facc15] dark:bg-zinc-800 dark:border-zinc-700 dark:hover:border-[#facc15]">
               <input type="file" ref="fileInput" @change="handleFileUpload" class="hidden" />
               <i
-                class="fa-solid fa-cloud-arrow-up text-2xl mb-2 transition-colors text-slate-400 group-hover:text-[#facc15] dark:text-zinc-500 dark:group-hover:text-[#facc15]"
-              ></i>
+                class="fa-solid fa-cloud-arrow-up text-2xl mb-2 transition-colors text-slate-400 group-hover:text-[#facc15] dark:text-zinc-500 dark:group-hover:text-[#facc15]"></i>
               <p class="text-sm font-medium text-slate-500 dark:text-zinc-400" v-if="!fileName">
                 파일을 드래그하거나 클릭하여 업로드
               </p>
@@ -225,10 +198,7 @@ const handleSubmit = () => {
                 PDF, JPG, PNG (MAX 5MB)
               </p>
             </div>
-            <p
-              v-if="touched.file && !form.file"
-              class="text-xs ml-1 mt-1 font-medium text-red-500 dark:text-[#facc15]"
-            >
+            <p v-if="touched.file && !form.file" class="text-xs ml-1 mt-1 font-medium text-red-500 dark:text-[#facc15]">
               <i class="fa-solid fa-circle-exclamation mr-1"></i> 증빙 서류 업로드는 필수입니다.
             </p>
           </div>
@@ -243,39 +213,18 @@ const handleSubmit = () => {
 
           <div class="space-y-3 rounded-2xl p-4 bg-slate-50 dark:bg-zinc-800/50">
             <div class="flex items-center pb-3 border-b border-slate-200 dark:border-zinc-700">
-              <input
-                type="checkbox"
-                id="all-check"
-                v-model="allChecked"
-                @change="handleAllCheckedChange"
-                class="w-5 h-5 custom-checkbox cursor-pointer"
-              />
-              <label for="all-check" class="ml-3 text-sm font-bold cursor-pointer"
-                >전체 동의하기</label
-              >
+              <input type="checkbox" id="all-check" v-model="allChecked" @change="handleAllCheckedChange"
+                class="w-5 h-5 custom-checkbox cursor-pointer" />
+              <label for="all-check" class="ml-3 text-sm font-bold cursor-pointer">전체 동의하기</label>
             </div>
 
-            <div
-              v-for="(term, index) in terms"
-              :key="index"
-              class="flex items-center justify-between"
-            >
+            <div v-for="(term, index) in terms" :key="index" class="flex items-center justify-between">
               <div class="flex items-center">
-                <input
-                  type="checkbox"
-                  :id="'term-' + index"
-                  v-model="term.checked"
-                  @change="handleTermChange"
-                  class="w-4 h-4 custom-checkbox cursor-pointer"
-                />
-                <label
-                  :for="'term-' + index"
-                  class="ml-3 text-sm cursor-pointer text-slate-600 dark:text-zinc-300"
-                >
-                  <span
-                    class="font-bold"
-                    :class="term.required ? 'text-red-500 dark:text-[#facc15]' : 'text-slate-400'"
-                  >
+                <input type="checkbox" :id="'term-' + index" v-model="term.checked" @change="handleTermChange"
+                  class="w-4 h-4 custom-checkbox cursor-pointer" />
+                <label :for="'term-' + index" class="ml-3 text-sm cursor-pointer text-slate-600 dark:text-zinc-300">
+                  <span class="font-bold"
+                    :class="term.required ? 'text-red-500 dark:text-[#facc15]' : 'text-slate-400'">
                     {{ term.required ? '[필수]' : '[선택]' }}
                   </span>
                   {{ term.title }}
@@ -286,21 +235,16 @@ const handleSubmit = () => {
               </button>
             </div>
           </div>
-          <p
-            v-if="touched.terms && !requiredTermsChecked"
-            class="text-xs ml-1 font-medium text-red-500 dark:text-[#facc15]"
-          >
+          <p v-if="touched.terms && !requiredTermsChecked"
+            class="text-xs ml-1 font-medium text-red-500 dark:text-[#facc15]">
             <i class="fa-solid fa-circle-exclamation mr-1"></i> 필수 약관에 모두 동의하셔야 합니다.
           </p>
         </section>
 
         <!-- 다음 버튼 -->
-        <button
-          type="submit"
-          @click="markAllAsTouched"
+        <button type="submit" @click="markAllAsTouched"
           class="w-full py-4 mt-4 rounded-2xl font-bold text-lg transition-all shadow-lg bg-[#facc15] text-black hover:scale-[1.01] active:scale-95 disabled:opacity-50"
-          :disabled="!canProceed"
-        >
+          :disabled="!canProceed">
           다음
         </button>
       </form>
@@ -326,7 +270,6 @@ const handleSubmit = () => {
   accent-color: #facc15;
 }
 
-/* 외부 CSS 로드 시 transition 부드럽게 */
 .business-signup-container {
   transition:
     background-color 0.3s ease,

@@ -117,9 +117,9 @@ const goBack = () => router.push('/company/joblist')
             { id: 'PASSED', n: '합격' },
             { id: 'FAILED', n: '불합격' },
           ]" :key="f.id" @click="currentFilter = f.id" :class="currentFilter === f.id
-                ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold whitespace-nowrap'
-                : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors whitespace-nowrap'
-              ">
+            ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold whitespace-nowrap'
+            : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors whitespace-nowrap'
+            ">
             {{ f.n }}
           </button>
         </div>

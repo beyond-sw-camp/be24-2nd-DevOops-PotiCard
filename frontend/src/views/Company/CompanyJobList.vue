@@ -116,20 +116,20 @@ const getStatusLabel = (status) => (status === 'RECRUITING' ? '채용 중' : '�
         class="bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-zinc-100 dark:border-zinc-800 shadow-sm overflow-hidden">
         <div class="px-8 pt-8 flex items-center gap-6 border-b border-zinc-50 dark:border-zinc-800">
           <button @click="currentFilter = 'ALL'" :class="currentFilter === 'ALL'
-              ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
-              : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
+            ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
+            : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
             ">
             전체 보기
           </button>
           <button @click="currentFilter = 'RECRUITING'" :class="currentFilter === 'RECRUITING'
-              ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
-              : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
+            ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
+            : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
             ">
             채용 중
           </button>
           <button @click="currentFilter = 'CLOSED'" :class="currentFilter === 'CLOSED'
-              ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
-              : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
+            ? 'text-indigo-600 border-b-2 border-indigo-600 pb-4 font-bold'
+            : 'text-zinc-400 pb-4 font-medium hover:text-zinc-600 transition-colors'
             ">
             마감됨
           </button>
@@ -164,7 +164,7 @@ const getStatusLabel = (status) => (status === 'RECRUITING' ? '채용 중' : '�
                   <span class="flex items-center gap-1.5">📅 등록일: {{ job.createdAt }}</span>
                   <span class="flex items-center gap-1.5">⏳ 마감일:
                     <span :class="job.status === 'RECRUITING' ? 'text-indigo-600 font-semibold' : ''">{{ job.deadline
-                      }}</span></span>
+                    }}</span></span>
                   <span class="flex items-center gap-1.5">👤 고용형태: {{ job.employmentType }}</span>
                 </div>
               </div>

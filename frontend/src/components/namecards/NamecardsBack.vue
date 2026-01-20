@@ -1,31 +1,29 @@
 <script setup>
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import { storeToRefs } from 'pinia' // 반응형 유지를 위해 필수
-import { useNamecardStore } from '@/stores/namecardStore' // 위에서 만든 스토어 import
+import { storeToRefs } from 'pinia'
+import { useNamecardStore } from '@/stores/namecardStore'
 
 const props = defineProps({
   userId: {
     type: [String, Number],
-    required: false, // 필수 아님 (URL 쿼리로 올 수도 있으므로)
+    required: false,
   },
 })
 
 const route = useRoute()
 const store = useNamecardStore()
 
-// 스토어의 state를 반응형으로 가져오기 (구조분해할당 시 storeToRefs 필수)
+// 스토어의 state를 반응형으로 가져오기
 const { cardData, isLoading } = storeToRefs(store)
 
 // 데이터 로드 트리거 함수
 const loadData = async () => {
-  // 우선순위: props > query > route params 등
   const targetId = props.userId || route.query.userId
-  
+
   if (targetId) {
     await store.getUser(targetId)
   } else {
-    // ID가 없을 때 처리 (예: 내 정보 불러오기 등)
     console.log('ID가 제공되지 않았습니다.')
   }
 }
@@ -35,27 +33,20 @@ onMounted(() => {
   loadData()
 })
 
-// (선택사항) 라우트나 props가 변경되면 다시 불러오기
 watch(() => [props.userId, route.query.userId], () => {
   loadData()
 })
 </script>
 
 <template>
-  <div
-    v-if="isLoading"
-    class="flex justify-center items-center w-full max-w-md aspect-[1.58/1] mx-auto text-gray-400"
-  >
+  <div v-if="isLoading" class="flex justify-center items-center w-full max-w-md aspect-[1.58/1] mx-auto text-gray-400">
     Loading Info...
   </div>
 
   <div v-else-if="cardData" class="relative w-full max-w-md aspect-[1.58/1] mx-auto">
     <div
-      class="card-face card-back absolute inset-0 w-full h-full bg-zinc-900 text-white rounded-2xl border border-zinc-700 p-6 sm:p-8 flex flex-col overflow-hidden shadow-lg"
-    >
-      <div
-        class="absolute bottom-0 left-0 w-24 h-24 bg-zinc-800 rounded-tr-full opacity-50 pointer-events-none"
-      ></div>
+      class="card-face card-back absolute inset-0 w-full h-full bg-zinc-900 text-white rounded-2xl border border-zinc-700 p-6 sm:p-8 flex flex-col overflow-hidden shadow-lg">
+      <div class="absolute bottom-0 left-0 w-24 h-24 bg-zinc-800 rounded-tr-full opacity-50 pointer-events-none"></div>
 
       <div class="relative z-10 h-full flex flex-col">
         <h3 class="text-lg font-bold mb-6 flex items-center gap-2">
@@ -78,23 +69,16 @@ watch(() => [props.userId, route.query.userId], () => {
             <span>{{ cardData.address }}</span>
           </div>
 
-          <a
-            v-if="cardData.email"
-            :href="`mailto:${cardData.email}`"
-            class="flex items-center gap-3 hover:text-yellow-400 transition-colors"
-          >
+          <a v-if="cardData.email" :href="`mailto:${cardData.email}`"
+            class="flex items-center gap-3 hover:text-yellow-400 transition-colors">
             <div class="w-8 flex justify-center">
               <i class="fa-solid fa-envelope text-lg"></i>
             </div>
             <span>{{ cardData.email }}</span>
           </a>
 
-          <a
-            v-if="cardData.website"
-            :href="`https://${cardData.website}`"
-            target="_blank"
-            class="flex items-center gap-3 hover:text-yellow-400 transition-colors"
-          >
+          <a v-if="cardData.website" :href="`https://${cardData.website}`" target="_blank"
+            class="flex items-center gap-3 hover:text-yellow-400 transition-colors">
             <div class="w-8 flex justify-center">
               <i class="fa-solid fa-link text-lg"></i>
             </div>
@@ -112,6 +96,4 @@ watch(() => [props.userId, route.query.userId], () => {
   <div v-else class="text-center text-red-500 mt-10">정보를 불러올 수 없습니다.</div>
 </template>
 
-<style scoped>
-/* 필요한 경우 추가 스타일 */
-</style>
+<style scoped></style>

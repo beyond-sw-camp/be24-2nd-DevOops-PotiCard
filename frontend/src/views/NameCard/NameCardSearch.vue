@@ -52,7 +52,7 @@ const toggleModalCardFlip = () => {
   isModalCardFlipped.value = !isModalCardFlipped.value
 }
 
-// 4. 무한 스크롤 옵저버
+// 무한 스크롤 옵저버
 let observer
 onMounted(() => {
   loadMoreIds()
@@ -77,7 +77,7 @@ onUnmounted(() => {
 <template>
   <div class="bg-pattern min-h-screen text-gray-800">
     <div class="flex pt-16 h-screen">
-      <!-- 2. 좌측 고정 패널 (기업용 필터) -->
+      <!-- 좌측 고정 패널 (기업용 필터) -->
 
       <aside
         class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-64 bg-white/90 backdrop-blur border-r border-gray-100 p-6 overflow-y-auto z-40 hidden lg:block transition-colors duration-300">

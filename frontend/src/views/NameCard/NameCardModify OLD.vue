@@ -42,13 +42,13 @@ onMounted(() => {
 
 <template>
   <div class="bg-pattern text-gray-800 dark:text-gray-100 transition-colors duration-300 flex flex-col min-h-screen">
-    <!-- 2. 메인 콘텐츠 -->
+    <!-- 메인 콘텐츠 -->
     <main class="flex-1 pt-24 pb-20 px-4">
       <div class="max-w-6xl mx-auto">
-        <!-- 단계 표시기 (Progress Bar) - 3단계 완료 -->
+        <!-- 단계 표시기 - 3단계 완료 -->
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          <!-- 좌측: 스타일 편집 패널 (lg:col-span-5) -->
+          <!-- 좌측: 스타일 편집 패널 -->
           <div class="lg:col-span-5 space-y-6">
             <div
               class="bg-white dark:bg-zinc-900 rounded-3xl shadow-xl border border-gray-100 dark:border-zinc-800 p-6 md:p-8">
@@ -56,7 +56,7 @@ onMounted(() => {
                 <i class="fa-solid fa-paintbrush text-point-yellow"></i> 스타일 커스터마이징
               </h2>
 
-              <!-- 1. 컬러 팔레트 -->
+              <!-- 컬러 팔레트 -->
               <div class="mb-8">
                 <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase block mb-3">Accent
                   Color</label>
@@ -74,7 +74,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <!-- 2. 폰트 스타일 -->
+              <!-- 폰트 스타일 -->
               <div class="mb-8">
                 <label
                   class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase block mb-3">Typography</label>
@@ -98,7 +98,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <!-- 3. 배경 패턴 -->
+              <!-- 배경 패턴 -->
               <div class="mb-8">
                 <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase block mb-3">Card
                   Texture</label>
@@ -127,7 +127,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <!-- 4. 옵션 -->
+              <!-- 옵션 -->
               <div>
                 <label class="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase block mb-3">Options</label>
                 <div class="space-y-3">
@@ -146,7 +146,7 @@ onMounted(() => {
             </div>
           </div>
 
-          <!-- 우측: 실시간 미리보기 (lg:col-span-7) -->
+          <!-- 우측: 실시간 미리보기 -->
           <div class="lg:col-span-7 flex flex-col">
             <div class="sticky top-24">
               <div class="flex justify-between items-center mb-4">
@@ -162,7 +162,7 @@ onMounted(() => {
                 </div>
               </div>
 
-              <!-- 카드 미리보기 영역 (비율 유지) -->
+              <!-- 카드 미리보기 영역 -->
               <div
                 class="relative w-full aspect-[1.58/1] bg-gray-200 dark:bg-zinc-800 rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center group perspective-1000">
                 <!-- 카드 컨테이너 -->
