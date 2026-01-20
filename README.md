@@ -72,7 +72,11 @@
 
 <details open>
 
-<summary> 개인 회원가입, 로그인 </summary> <br>
+<summary> 개인 회원가입, 로그인 <br>
+  
+  https://github.com/user-attachments/assets/f66770df-1e82-489f-8ad7-5d496c877d92
+  
+</summary> <br>
 
 개인 회원가입, 로그인 시연 영상 첨부
 
@@ -82,7 +86,11 @@
 
 <details open>
 
-<summary> 명함 </summary> <br>
+<summary> 명함 <br>
+  
+  https://github.com/user-attachments/assets/e44b6d44-f67e-49d9-9b57-ef873e970854
+  
+</summary> <br>
 
 명함 검색, 관 시연 영상 첨부
 
@@ -92,7 +100,11 @@
 
 <details open>
 
-<summary> 포트폴리오 </summary> <br>
+<summary> 포트폴리오 <br> 
+  
+  https://github.com/user-attachments/assets/4f5ffb1a-9449-45a6-9b02-855ad73cfd79 
+
+</summary> <br>
 
 포트폴리오 목록, 작성 시연 영상 첨부
 
@@ -102,7 +114,11 @@
 
 <details open>
 
-<summary> 텍스트 채팅 </summary> <br>
+<summary> 텍스트 채팅 <br> 
+
+https://github.com/user-attachments/assets/877d55d2-dd00-4544-a5c6-094291e2fdd2
+
+ </summary> <br>
 
 텍스트 채팅 시연 영상 첨부
 
@@ -112,7 +128,11 @@
 
 <details open>
 
-<summary> 영상통화 </summary> <br>
+<summary> 영상통화 <br>
+
+https://github.com/user-attachments/assets/1244f32d-2c5f-409b-947a-5b17e40d5c28
+
+  </summary> <br>
 
 영상통화 시연 영상 첨부
 
@@ -127,7 +147,11 @@
 
 <details open>
 
-<summary> 기업 전환 </summary> <br>
+<summary> 기업 전환 <br> 
+
+https://github.com/user-attachments/assets/61db1d63-b6db-4f84-be18-02f9764fd098
+
+ </summary> <br>
 
 User -> 기업 전환 영상 첨부
 
@@ -137,7 +161,11 @@ User -> 기업 전환 영상 첨부
 
 <details open>
 
-<summary> 기업 회원가입, 로그인 기능 </summary> <br>
+<summary> 기업 회원가입, 로그인 기능 <br> 
+
+https://github.com/user-attachments/assets/9265c8a8-c77e-4d1a-8d26-da3e634ce2d0
+
+ </summary> <br>
 
 기업 회원가입, 로그인 기능 시연 영상 첨부
 
@@ -147,7 +175,11 @@ User -> 기업 전환 영상 첨부
 
 <details open>
 
-<summary> 기업 서비스 이용 </summary> <br>
+<summary> 기업 서비스 이용 <br>
+
+https://github.com/user-attachments/assets/8f9f89fa-09df-4e26-9e05-b2e52179a093
+
+ </summary> <br>
 
 기업 서비스 이용 시연 영상 첨부
 
