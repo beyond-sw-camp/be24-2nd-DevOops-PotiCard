@@ -192,9 +192,7 @@ function goNext() {
 </script>
 
 <template>
-  <div
-    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors"
-  >
+  <div class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors">
     <main class="max-w-7xl mx-auto px-5 pt-10 pb-16">
       <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
@@ -334,9 +332,10 @@ function goNext() {
 </template>
 <style>
 .bg-pattern {
-    background-color: #f8fafc;
+  background-color: #f8fafc;
 }
+
 .dark .bg-pattern {
-    background-color: #18181b;
+  background-color: #18181b;
 }
 </style>

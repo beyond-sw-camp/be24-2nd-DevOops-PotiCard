@@ -1,5 +1,5 @@
 function initHeader() {
-  // ====== 여기부터 "헤더 기능"만 바인딩 ======
+  // 헤더 기능 바인딩
   const nav = document.getElementById('mainNav')
   const btn = document.getElementById('menuBtn')
 
@@ -14,7 +14,6 @@ function initHeader() {
   function setNamecard(open) {
     namecardOpen = open
     document.documentElement.classList.toggle('namecard-open', open)
-    // 인라인 스타일을 건드렸던 흔적이 있어서, 열고 닫을 때 원복도 같이
     if (namecardPanel) {
       namecardPanel.style.opacity = ''
       namecardPanel.style.visibility = ''
@@ -37,67 +36,7 @@ function initHeader() {
     if (open) setNamecard(false)
   }
 
-  // ✅ 명함 클릭 토글
-  if (namecardLink) {
-    namecardLink.addEventListener('click', (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      if (forcedOpen) setForced(false)
-      setNamecard(!namecardOpen)
-    })
-  }
-
-  // ✅ 명함 바깥 클릭/ESC 닫기
-  document.addEventListener('click', (e) => {
-    if (!namecardOpen) return
-    if (namecardFlyout && namecardFlyout.contains(e.target)) return
-    setNamecard(false)
-  })
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setNamecard(false)
-  })
-
-  // ✅ 전체 메뉴(📋) 토글
-  if (btn && nav) {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      setNamecard(false)
-      setForced(!forcedOpen)
-    })
-
-    // 바깥 클릭 닫기
-    document.addEventListener('click', (e) => {
-      if (!forcedOpen) return
-      if (nav.contains(e.target) || btn.contains(e.target)) return
-      setForced(false)
-    })
-
-    // ESC 닫기
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') setForced(false)
-    })
-
-    // ✅ "📋 버튼 hover로 패널 뜨는 현상" 방지용 원복 로직
-    btn.addEventListener('mouseenter', () => {
-      const panel = document.querySelector('#flyout-namecard > .nav-panel')
-      if (!forcedOpen && !namecardOpen && panel) {
-        panel.style.opacity = '0'
-        panel.style.visibility = 'hidden'
-        panel.style.pointerEvents = 'none'
-      }
-    })
-    btn.addEventListener('mouseleave', () => {
-      const panel = document.querySelector('#flyout-namecard > .nav-panel')
-      if (panel) {
-        panel.style.opacity = ''
-        panel.style.visibility = ''
-        panel.style.pointerEvents = ''
-      }
-    })
-  }
-
-  // ✅ 로그인/회원가입(개인/법인) 모달
+  // 로그인/회원가입(개인/법인) 모달
   const authBtn = document.getElementById('authBtn')
   const modal = document.getElementById('authModal')
   const closeBtn = document.getElementById('authClose')
@@ -123,7 +62,6 @@ function initHeader() {
     })
 
     modal.addEventListener('click', (e) => {
-      // backdrop 클릭이면 닫기
       if (e.target === modal) closeModal()
     })
 
@@ -132,7 +70,7 @@ function initHeader() {
     })
   }
 
-  // ✅ 테마 토글
+  // 테마 토글
   const themeBtn = document.getElementById('themeBtn')
   themeBtn?.addEventListener('click', () => {
     if (typeof window.toggleTheme === 'function') {
@@ -146,7 +84,7 @@ function initHeader() {
     e.preventDefault()
     window.location.href = '/chat'
   })
-  // ✅ 알림 팝업 토글
+  // 알림 팝업 토글
   const notiBtn = document.getElementById('notiBtn')
   const notiPopup = document.getElementById('notiPopup')
   const notiClear = document.getElementById('notiClear')
@@ -182,7 +120,6 @@ function initHeader() {
   // 모두 읽음
   notiClear?.addEventListener('click', (e) => {
     e.preventDefault()
-    // 👉 여기서 실제로는 알림 read 처리 API 호출
     setNoti(false)
 
     // 뱃지 숨기기

@@ -10,15 +10,10 @@
       </div>
 
       <div class="flex gap-4 mb-8 border-b border-gray-200 dark:border-zinc-800">
-        <button 
-          v-for="tab in ['전체', '명함', '기업']" 
-          :key="tab"
-          @click="currentTab = tab"
-          :class="[
-            'pb-4 px-2 text-sm font-bold transition-all relative',
-            currentTab === tab ? 'text-point-yellow' : 'text-gray-500 hover:text-gray-700'
-          ]"
-        >
+        <button v-for="tab in ['전체', '명함', '기업']" :key="tab" @click="currentTab = tab" :class="[
+          'pb-4 px-2 text-sm font-bold transition-all relative',
+          currentTab === tab ? 'text-point-yellow' : 'text-gray-500 hover:text-gray-700'
+        ]">
           {{ tab }}
           <div v-if="currentTab === tab" class="absolute bottom-0 left-0 w-full h-1 bg-point-yellow rounded-full"></div>
         </button>
@@ -30,7 +25,7 @@
 
       <div v-else-if="filteredResults.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <template v-for="item in filteredResults" :key="item.uniqueId">
-          
+
           <div v-if="item.category === '명함'" class="h-[200px]">
             <MiniNamecards :userId="item.userId" />
           </div>
@@ -72,7 +67,8 @@
 
             <div class="mt-6 flex items-center justify-between">
               <div class="text-xs text-zinc-500 dark:text-zinc-400">업데이트: {{ item.updatedAt }}</div>
-              <button class="px-3 py-2 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300 transition-colors"
+              <button
+                class="px-3 py-2 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300 transition-colors"
                 @click="() => alert(`(데모) ${item.name} 상세 페이지 이동`)">
                 보기
               </button>
@@ -108,22 +104,22 @@ const isLoading = ref(false)
 const fetchResults = async (query) => {
   if (!query) return
   isLoading.value = true
-  
+
   try {
-    // 1. 기업 데이터와 개별 명함 데이터들을 동시에 호출
+    // 기업 데이터와 개별 명함 데이터들을 동시에 호출
     const [matchingData, namecardList] = await Promise.all([
       matchingApi.list(),
       namecardApi.list() // 개별 userId_XX.json 파일들을 취합해옴
     ])
 
-    // 2. 명함 데이터 검색용 uniqueId 추가
+    // 명함 데이터 검색용 uniqueId 추가
     const normalizedNamecards = namecardList.map(nc => ({
-        ...nc,
-        userId: nc.id,
-        uniqueId: `nc-${nc.id}`
+      ...nc,
+      userId: nc.id,
+      uniqueId: `nc-${nc.id}`
     }))
 
-    // 3. 기업 데이터 (기존 로직 유지)
+    // 기업 데이터 (기존 로직 유지)
     const companyList = matchingData.map(c => ({
       ...c,
       category: '기업',
@@ -132,7 +128,7 @@ const fetchResults = async (query) => {
 
     const combined = [...normalizedNamecards, ...companyList]
 
-    // 4. 필터링 로직: 이름, 역할, 키워드, 기술스택 등에서 검색
+    // 필터링 로직: 이름, 역할, 키워드, 기술스택 등에서 검색
     const q = query.toLowerCase()
     results.value = combined.filter(item => {
       return (
@@ -168,6 +164,11 @@ watch(() => route.query.q, (newQuery) => {
 </script>
 
 <style scoped>
-.text-point-yellow { color: #facc15; }
-.bg-point-yellow { background-color: #facc15; }
+.text-point-yellow {
+  color: #facc15;
+}
+
+.bg-point-yellow {
+  background-color: #facc15;
+}
 </style>
