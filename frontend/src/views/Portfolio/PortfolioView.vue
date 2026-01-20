@@ -78,14 +78,27 @@ onMounted(async () => {
     >
       <div class="w-full h-48 bg-gray-100 dark:bg-zinc-800 relative overflow-hidden">
         <div class="absolute inset-0 flex items-center justify-center text-gray-300 dark:text-zinc-700">
-          <i :class="project.iconClass || 'fa-regular fa-image'" class="text-4xl"></i>
-        </div>
+  <i :class="project.iconClass || 'fa-regular fa-image'" class="text-4xl"></i>
+</div>
+
+<div class="absolute inset-0 w-full h-full">
+  <img 
+    v-if="project.iconClass && project.iconClass.startsWith('http')" 
+    :src="project.iconClass" 
+    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+    alt="Project Image"
+  />
+  <div v-else class="flex items-center justify-center h-full text-gray-300 dark:text-zinc-700">
+    <i :class="project.iconClass || 'fa-regular fa-image'" class="text-4xl"></i>
+  </div>
+</div>
         
         <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-          <span class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30">
-            View Details
-          </span>
-        </div>
+          <router-link to="/project-detail" 
+          class="px-4 py-2 bg-white/20 backdrop-blur text-white rounded-full text-sm font-bold border border-white/30 hover:bg-white/40 transition-all">
+          View Details
+        </router-link>
+      </div>
       </div>
 
       <div class="p-6">
@@ -140,12 +153,9 @@ onMounted(async () => {
 /* Background Pattern */
 .bg-pattern {
   background-color: #f8fafc;
-  background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-  background-size: 24px 24px;
 }
 .dark .bg-pattern {
   background-color: #09090b;
-  background-image: radial-gradient(#27272a 1px, transparent 1px);
 }
 
 /* ★★★ 3D 플립 핵심 CSS (Tailwind 대신 사용) ★★★ 

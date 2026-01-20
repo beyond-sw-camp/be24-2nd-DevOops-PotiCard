@@ -594,16 +594,15 @@ onMounted(() => {
 
               <!-- Bottom actions -->
               <div class="mt-5 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
-                <button
-                  class="px-4 py-3 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-sm"
-                >
-                  ← 이전 단계
-                </button>
+                <a href="portfolio-update-n-check"
+   class="px-6 py-2 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center">
+    <i class="fa-solid fa-arrow-left mr-2 text-lg"></i> 이전 단계
+</a>
                 <div class="flex gap-3">
                   <!-- (삭제) 화면 캡처 / 링크 공유 -->
                   <a
                     href="portfolio-view"
-                    class="px-4 py-3 rounded-xl bg-amber-400 hover:bg-amber-300 text-zinc-900 font-bold text-sm inline-flex items-center justify-center"
+                    class="px-4 py-3 bg-yellow-50 dark:bg-zinc-800/50 border border-yellow-200 dark:border-yellow-900/30 text-yellow-700 dark:text-yellow-500 rounded-2xl font-black tracking-tight hover:bg-yellow-100 dark:hover:bg-zinc-800 transition-colors inline-flex items-center justify-center"
                   >
                     저장하기 (완료)
                   </a>
