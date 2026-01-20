@@ -1,65 +1,44 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-// api 호출 함수가 정의된 경로 (사용자 환경에 맞게 수정)
-import api from '@/api/namecard/index'
+import { storeToRefs } from 'pinia' // 반응형 유지를 위해 필수
+import { useNamecardStore } from '@/stores/namecardStore' // 위에서 만든 스토어 import
 
-// ★ 핵심: 부모로부터 userId를 받습니다.
 const props = defineProps({
   userId: {
     type: [String, Number],
-    required: true,
+    required: false, // 필수 아님 (URL 쿼리로 올 수도 있으므로)
   },
 })
 
 const route = useRoute()
-const cardData = ref(null)
-const isLoading = ref(true)
+const store = useNamecardStore()
 
-// 명함 정보 불러오는 함수
-const getUser = async (targetId) => {
-  try {
-    // 1. targetId가 없으면 URL 쿼리에서 userId 추출 (예: /card?userId=1)
-    const userId = props.userId || route.query.userId || targetId
-    console.log('타겟 : ' + targetId)
-    if (!userId) {
-      alert('유저 정보가 없습니다.')
-      return
-    }
+// 스토어의 state를 반응형으로 가져오기 (구조분해할당 시 storeToRefs 필수)
+const { cardData, isLoading } = storeToRefs(store)
 
-    // 2. API 호출 (userId를 인자로 전달한다고 가정)
-    // 기존 api.getUserInfo()가 인자를 받도록 수정되어야 합니다.
-    // 만약 apiFetch 로직을 직접 쓴다면: apiFetch(`json/namecards/user_${userId}.json`)
-    const res = await api.getUserInfo(userId)
-
-    // 3. 데이터 매핑 (API 응답 구조 -> 컴포넌트 상태)
-    if (res && res.data) {
-      cardData.value = {
-        name: res.data.name,
-        role: res.data.affiliation,
-        description: res.data.namecard_title, // 혹은 별도 소개글 필드
-        avatar: res.data.style.avatar,
-        keywords: res.data.keywords, // 배열
-        email: res.data.email,
-        github: res.data.url,
-        color: res.data.style.color,
-      }
-    }
-  } catch (error) {
-    console.error('데이터 로딩 실패', error)
-  } finally {
-    isLoading.value = false
+// 데이터 로드 트리거 함수
+const loadData = async () => {
+  // 우선순위: props > query > route params 등
+  const targetId = props.userId || route.query.userId
+  
+  if (targetId) {
+    await store.getUser(targetId)
+  } else {
+    // ID가 없을 때 처리 (예: 내 정보 불러오기 등)
+    console.log('ID가 제공되지 않았습니다.')
   }
 }
 
+// 컴포넌트 마운트 시 실행
 onMounted(() => {
-  getUser('57')
+  loadData()
 })
 
-watch(
-  () => props.userId,
-  () => getUser(),
-)
+// (선택사항) 라우트나 props가 변경되면 다시 불러오기
+watch(() => [props.userId, route.query.userId], () => {
+  loadData()
+})
 </script>
 
 <template>
@@ -112,8 +91,8 @@ watch(
           >
             <div class="flex gap-3 text-gray-400 dark:text-gray-500">
               <a
-                v-if="cardData.github"
-                :href="'https://' + cardData.github"
+                v-if="cardData.website"
+                :href="'https://' + cardData.website"
                 target="_blank"
                 class="hover:text-point-yellow transition-colors"
               >

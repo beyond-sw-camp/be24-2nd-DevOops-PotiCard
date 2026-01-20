@@ -1,61 +1,43 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-// API 파일 경로는 프로젝트 구조에 맞게 수정해주세요
-import api from '@/api/namecard/index'
+import { storeToRefs } from 'pinia' // 반응형 유지를 위해 필수
+import { useNamecardStore } from '@/stores/namecardStore' // 위에서 만든 스토어 import
 
 const props = defineProps({
   userId: {
     type: [String, Number],
-    required: true,
+    required: false, // 필수 아님 (URL 쿼리로 올 수도 있으므로)
   },
 })
 
 const route = useRoute()
-const cardData = ref(null)
-const isLoading = ref(true)
+const store = useNamecardStore()
 
-const getUser = async (targetId) => {
-  try {
-    isLoading.value = true
+// 스토어의 state를 반응형으로 가져오기 (구조분해할당 시 storeToRefs 필수)
+const { cardData, isLoading } = storeToRefs(store)
 
-    // 1. ID 결정 (매개변수 우선 || URL 쿼리)
-    const userId = props.userId || route.query.userId || targetId
-
-    if (!userId) {
-      // ID가 없으면 로딩 종료하고 리턴 (필요시 alert)
-      isLoading.value = false
-      return
-    }
-
-    // 2. API 호출
-    const res = await api.getUserInfo(userId)
-
-    // 3. 뒷면 데이터 매핑
-    // (JSON에 없는 전화번호/주소 등은 임시로 하드코딩하거나 null 처리)
-    if (res && res.data) {
-      cardData.value = {
-        phone: res.data.phone, // JSON에 없다면 기본값 or 빈값
-        address: res.data.address, // JSON에 없다면 기본값
-        email: res.data.email,
-        website: res.data.url, // github.com/...
-        color: res.data.style.color, // 포인트 컬러가 필요하다면 사용
-      }
-    }
-  } catch (error) {
-    console.error('뒷면 데이터 로딩 실패', error)
-  } finally {
-    isLoading.value = false
+// 데이터 로드 트리거 함수
+const loadData = async () => {
+  // 우선순위: props > query > route params 등
+  const targetId = props.userId || route.query.userId
+  
+  if (targetId) {
+    await store.getUser(targetId)
+  } else {
+    // ID가 없을 때 처리 (예: 내 정보 불러오기 등)
+    console.log('ID가 제공되지 않았습니다.')
   }
 }
 
+// 컴포넌트 마운트 시 실행
 onMounted(() => {
-  getUser('57')
+  loadData()
 })
 
-// 부모 컴포넌트에서 호출할 수 있도록 노출
-defineExpose({
-  getUser,
+// (선택사항) 라우트나 props가 변경되면 다시 불러오기
+watch(() => [props.userId, route.query.userId], () => {
+  loadData()
 })
 </script>
 
