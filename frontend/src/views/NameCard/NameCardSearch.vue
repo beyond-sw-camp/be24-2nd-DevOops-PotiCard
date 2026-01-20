@@ -253,7 +253,7 @@ onUnmounted(() => {
   perspective: 1000px;
 }
 .card-object {
-  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
   transform-style: preserve-3d;
 }
 .card-object.is-flipped {

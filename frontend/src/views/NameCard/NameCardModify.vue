@@ -185,7 +185,7 @@ const updateStyle = (type, value) => {
   position: relative;
   width: 100%;
   height: 100%;
-  transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
   transform-style: preserve-3d; /* 3D 공간 유지 */
 }
 
