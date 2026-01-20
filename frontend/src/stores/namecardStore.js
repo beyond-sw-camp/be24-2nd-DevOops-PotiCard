@@ -4,19 +4,19 @@ import api from '@/api/namecard/index'
 
 export const useNamecardStore = defineStore('namecard', () => {
   const cardData = ref(null)
-  
+
   // async 함수가 데이터를 반환하도록 수정
   const getUser = async (userId) => {
     if (!userId) return null
 
     const storageKey = `user_card_${userId}`
-    
+
     try {
       // 세션 스토리지 확인
       const cachedData = sessionStorage.getItem(storageKey)
       if (cachedData) {
         const parsed = JSON.parse(cachedData)
-        cardData.value = parsed 
+        cardData.value = parsed
         return parsed
       }
 

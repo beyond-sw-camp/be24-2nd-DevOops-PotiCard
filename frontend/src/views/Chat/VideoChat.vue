@@ -214,7 +214,7 @@
             </p>
             <div class="flex gap-2 mt-4">
               <span v-for="t in p.tags" :key="t" class="px-2 py-1 bg-black/40 text-[10px] font-bold rounded">#{{ t
-                }}</span>
+              }}</span>
             </div>
           </div>
         </div>

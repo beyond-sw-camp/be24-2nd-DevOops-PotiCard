@@ -228,7 +228,7 @@ const loadMore = () => state.page++
             </div>
             <div class="flex items-center justify-between text-sm">
               <span class="text-zinc-500 font-medium"><b class="text-zinc-900 dark:text-zinc-100">{{
-                  filteredPosts.length }}</b>개의 포스트</span>
+                filteredPosts.length }}</b>개의 포스트</span>
               <button @click="state.page = 1"
                 class="text-zinc-500 hover:text-zinc-900 font-bold flex items-center gap-1">
                 <span>새로고침</span>
@@ -244,7 +244,7 @@ const loadMore = () => state.page++
                   <div class="flex items-center gap-2 mb-3">
                     <span
                       class="px-2 py-0.5 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-[10px] font-black text-zinc-500">{{
-                      post.cat }}</span>
+                        post.cat }}</span>
                     <span v-if="post.cat === 'QNA'" :class="[
                       'px-2 py-0.5 rounded-lg text-[10px] font-black',
                       post.solved

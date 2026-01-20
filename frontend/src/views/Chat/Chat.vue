@@ -46,9 +46,6 @@ let ws = null
 /* 계산된 속성 */
 const filteredRooms = computed(() => {
   const q = searchQuery.value.trim().toLowerCase()
-  // if (!q) return rooms.value
-  // return rooms.value.filter((r) =>
-  //   (r.name + ' ' + r.company + ' ' + r.role + ' ' + r.tags.join(' ')).toLowerCase().includes(q),
   if (!q) return rooms
   return rooms.filter((r) =>
     (r.name + ' ' + r.company + ' ' + r.role + ' ' + (r.tags?.join(' ') || '')).toLowerCase().includes(q),
@@ -309,7 +306,7 @@ onMounted(() => {
                     <div class="flex flex-wrap gap-2">
                       <span v-for="tag in activeRoom.tags" :key="tag"
                         class="px-2.5 py-1 bg-slate-50 border border-slate-100 text-slate-600 text-[10px] font-bold rounded-md">#{{
-                        tag }}</span>
+                          tag }}</span>
                     </div>
                     <div class="pt-4 border-t border-slate-100 flex justify-between items-center">
                       <div class="flex gap-3 text-slate-400">
