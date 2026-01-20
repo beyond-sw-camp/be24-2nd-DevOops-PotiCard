@@ -140,17 +140,30 @@
 
 <br>
 
-<details open>
-
-<summary> </summary>
-
-<br>
-
 
 ### **🏢 기업 사용자 이용 시나리오**
 
 <br>
 
+<details open>
+
+<summary> 기업 전환 </summary> <br>
+
+User -> 기업 전환 영상 첨부
+
+</details>
+
+<br>
+
+<details open>
+
+<summary> 기업 전환 </summary> <br>
+
+User -> 기업 전환 영상 첨부
+
+</details>
+
+<br>
 
 <details open>
 
