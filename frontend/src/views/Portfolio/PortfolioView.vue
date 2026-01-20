@@ -169,7 +169,7 @@ onMounted(async () => {
 
 /* 2. 회전하는 물체 */
 .card-object {
-  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 부드러운 회전 효과 */
+  transition: transform 0.7s cubic-bezier(0.4, 0.2, 0.2, 1);
   transform-style: preserve-3d; /* 3D 공간 유지 필수 */
 }
 
