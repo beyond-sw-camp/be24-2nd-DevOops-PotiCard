@@ -82,9 +82,9 @@
 
 <details open>
 
-<summary> 명함 검색 </summary> <br>
+<summary> 명함 </summary> <br>
 
-명함 검색 시연 영상 첨부
+명함 검색, 관 시연 영상 첨부
 
 </details>
 
@@ -92,9 +92,29 @@
 
 <details open>
 
-<summary> 포트폴리오 작성 </summary> <br>
+<summary> 포트폴리오 </summary> <br>
 
-포트폴리오 작성 시연 영상 첨부
+포트폴리오 목록, 작성 시연 영상 첨부
+
+</details>
+
+<br>
+
+<details open>
+
+<summary> 채용 </summary>
+
+채용 시연 영상 첨부
+
+</details>
+
+<br>
+
+<details open>
+
+<summary> 커뮤니티 </summary>
+
+채용 시연 영상 첨부
 
 </details>
 
@@ -112,13 +132,19 @@
 
 <details open>
 
-<summary> 개인 회원가입, 로그인 </summary> <br>
+<summary> 영상통화 </summary> <br>
 
-개인 회원가입, 로그인 시연 영상 첨부
+영상통화 시연 영상 첨부
 
 </details>
 
-<br><br>
+<br>
+
+<details open>
+
+<summary> </summary>
+
+<br>
 
 
 ### **🏢 기업 사용자 이용 시나리오**
