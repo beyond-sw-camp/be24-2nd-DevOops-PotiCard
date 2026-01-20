@@ -139,7 +139,6 @@ const goBack = () => router.push('/portfolio-view')
 /* 기존 스타일 유지 */
 .dot-bg {
   background-image: radial-gradient(rgba(0, 0, 0, 0.03) 1.5px, transparent 1.5px);
-  background-size: 30px 30px;
 }
 .dark .dot-bg {
   background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1.5px, transparent 1.5px);
