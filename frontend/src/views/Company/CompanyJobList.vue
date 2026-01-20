@@ -75,7 +75,7 @@ const getStatusLabel = (status) => (status === 'RECRUITING' ? '채용 중' : '�
 
 <template>
   <div
-    class="bg-[#fcfcfd] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen font-sans"
+    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors"
   >
     <main class="max-w-7xl mx-auto px-6 py-10">
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
@@ -266,5 +266,11 @@ div {
 }
 .rounded-\[2rem\] {
   border-radius: 2rem;
+}
+.bg-pattern {
+    background-color: #f8fafc;
+}
+.dark .bg-pattern {
+    background-color: #18181b;
 }
 </style>

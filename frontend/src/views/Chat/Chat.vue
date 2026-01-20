@@ -280,7 +280,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="chat-app max-w-7xl mx-auto px-4 py-8 h-[calc(100vh-40px)] flex flex-col relative overflow-hidden font-sans"
+    class="chat-app bg-pattern max-w-7xl mx-auto px-4 py-8 h-[calc(100vh-40px)] flex flex-col relative overflow-hidden font-sans transition-colors"
   >
     <transition name="fade">
       <div
@@ -617,6 +617,13 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* 3D Transform Utilities */
+.bg-pattern {
+    background-color: #f8fafc;
+}
+.dark .bg-pattern {
+    background-color: #18181b;
+}
 /* 3D Transform Utilities */
 .perspective-1000 {
   perspective: 1000px;
