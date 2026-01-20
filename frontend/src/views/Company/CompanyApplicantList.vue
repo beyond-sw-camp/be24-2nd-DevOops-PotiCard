@@ -22,7 +22,7 @@ const currentFilter = ref('ALL')
 // 지원자 목록 데이터
 const applicants = ref([
   {
-    id: 1,
+    id: 101,
     name: '김철수',
     email: 'chulsu.kim@example.com',
     role: 'Backend Developer',
@@ -35,7 +35,7 @@ const applicants = ref([
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Chulsu',
   },
   {
-    id: 2,
+    id: 102,
     name: '이영희',
     email: 'younghee.lee@example.com',
     role: 'AI Researcher',
@@ -48,7 +48,7 @@ const applicants = ref([
     avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Younghee',
   },
   {
-    id: 3,
+    id: 103,
     name: '박민준',
     email: 'minjun.park@example.com',
     role: 'Frontend Developer',
