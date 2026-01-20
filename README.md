@@ -102,26 +102,6 @@
 
 <details open>
 
-<summary> 채용 </summary>
-
-채용 시연 영상 첨부
-
-</details>
-
-<br>
-
-<details open>
-
-<summary> 커뮤니티 </summary>
-
-채용 시연 영상 첨부
-
-</details>
-
-<br>
-
-<details open>
-
 <summary> 텍스트 채팅 </summary> <br>
 
 텍스트 채팅 시연 영상 첨부
@@ -142,16 +122,6 @@
 
 
 ### **🏢 기업 사용자 이용 시나리오**
-
-<br>
-
-<details open>
-
-<summary> 기업 전환 </summary> <br>
-
-User -> 기업 전환 영상 첨부
-
-</details>
 
 <br>
 
