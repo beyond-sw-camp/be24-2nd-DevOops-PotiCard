@@ -401,7 +401,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+  <div
+    class="min-h-screen bg-pattern text-zinc-900 dark:text-zinc-100 font-sans transition-colors"
+  >
     <main class="dot-bg">
       <div class="max-w-6xl mx-auto px-4 py-8">
         <!-- Step progress -->
@@ -618,9 +620,11 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.dot-bg {
-  background-image: radial-gradient(rgba(0, 0, 0, 0.06) 1px, transparent 1px);
-  background-size: 14px 14px;
+.bg-pattern {
+    background-color: #f8fafc;
+}
+.dark .bg-pattern {
+    background-color: #18181b;
 }
 .radio-card input:checked + label {
   border-color: rgb(250 204 21);

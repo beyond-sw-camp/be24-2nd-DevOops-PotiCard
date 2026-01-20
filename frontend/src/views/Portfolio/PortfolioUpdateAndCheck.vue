@@ -489,13 +489,10 @@ const goBack = () => router.back()
   transition: background-color 0.3s ease;
 }
 .bg-pattern {
-  background-color: #fcfcfc;
-  background-image: radial-gradient(#e2e8f0 0.8px, transparent 0.8px);
-  background-size: 20px 20px;
+  background-color: #f8fafc;
 }
 .dark .bg-pattern {
-  background-color: #121212;
-  background-image: radial-gradient(#2d2d2d 0.8px, transparent 0.8px);
+  background-color: #18181b;
 }
 @keyframes fadeIn {
   from {
