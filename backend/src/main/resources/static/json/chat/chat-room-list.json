@@ -11,7 +11,7 @@
 			"unread" : 1,
 			"content" : "Spring 기반 서비스 운영 경험 있으시면 좋을 것 같아요. 간단히 통화 가능하실까요?",
 			"tags" : ["Hiring", "Backend"],
-			"avatar" : "https://randomuser.me/api/portraits/men/35.jpg",
+			"avatar" : "https://api.dicebear.com/9.x/micah/svg?seed=Destiny",
 			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
 		},
 		{
@@ -22,7 +22,7 @@
 			"unread" : 0,
 			"content" : "오 고마워. 인덱스도 같이 잡아볼까?",
 			"tags" : ["Study", "Dev"],
-			"avatar" : "https://randomuser.me/api/portraits/men/21.jpg",
+			"avatar" : "https://api.dicebear.com/9.x/micah/svg?seed=George",
 			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
 		},
 		{
@@ -33,7 +33,7 @@
 			"unread" : 3,
 			"content" : "대답",
 			"tags" : ["PM", "Project"],
-			"avatar" : "https://randomuser.me/api/portraits/women/60.jpg",
+			"avatar" : "https://api.dicebear.com/9.x/micah/svg?seed=Liam",
 			"intro" : "좋은 인재를 찾는 채용 담당자 김채용입니다.\n함께 성장할 개발자를 기다립니다."
 		},
 		{
@@ -44,7 +44,7 @@
 			"unread" : 0,
 			"content" : "넵 ㅈㅅ요",
 			"tags" : ["Network"],
-			"avatar" : "https://randomuser.me/api/portraits/men/30.jpg",
+			"avatar" : "https://api.dicebear.com/9.x/micah/svg?seed=Mason",
 			"intro" : "Do it! IT 서비스 이해를 위한 네트워크 기초 많관부"
 		}
 	]

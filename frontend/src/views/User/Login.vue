@@ -67,7 +67,7 @@ const login = async () => {
       password: loginForm.password,
     })
 
-    const userInfo = typeof res.data === 'object' && res.data ? res.data : { userName: id }
+    const userInfo = typeof res === 'object' && res ? res : { userName: id }
     authStore.login(userInfo)
 
     // ✅ redirect 쿼리가 있으면 우선 사용, 없으면 타입에 따라 분기
