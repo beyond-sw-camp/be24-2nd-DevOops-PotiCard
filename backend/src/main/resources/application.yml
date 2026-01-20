@@ -5,7 +5,7 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: root #${DB_USER}
     password: qwer1234 #${DB_PASSWORD}
-    url: jdbc:mariadb://10.10.10.30:3306/web #${DB_URL}
+    url: jdbc:mariadb://database-1.cdwm40086rim.ap-northeast-2.rds.amazonaws.com:3306/web #${DB_URL}
 
   jpa:
     hibernate:
