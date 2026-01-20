@@ -1,59 +1,35 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
-// api 호출 함수가 정의된 경로 (사용자 환경에 맞게 수정)
-import api from '@/api/namecard/index'
+import { ref, onMounted, watch } from 'vue'
+import { useNamecardStore } from '@/stores/namecardStore'
 
-// ★ 핵심: 부모로부터 userId를 받습니다.
 const props = defineProps({
   userId: {
-    type: [String, Number],
-    required: true,
-  },
+    type: [Number, String],
+    required: true
+  }
 })
 
-const route = useRoute()
+const store = useNamecardStore()
+
+// ★ 핵심: 전역 store.cardData 대신 컴포넌트별 독립적인 상태 사용
 const cardData = ref(null)
 const isLoading = ref(true)
 
-// 명함 정보 불러오는 함수
-const getUser = async (targetId) => {
-  try {
-    // 1. targetId가 없으면 URL 쿼리에서 userId 추출 (예: /card?userId=1)
-    const userId = props.userId || route.query.userId || targetId
-    console.log('타겟 : ' + targetId)
-    if (!userId) {
-      alert('유저 정보가 없습니다.')
-      return
-    }
-
-    // 2. API 호출 (userId를 인자로 전달한다고 가정)
-    // 기존 api.getUserInfo()가 인자를 받도록 수정되어야 합니다.
-    // 만약 apiFetch 로직을 직접 쓴다면: apiFetch(`json/namecards/user_${userId}.json`)
-    const res = await api.getUserInfo(userId)
-
-    // 3. 데이터 매핑 (API 응답 구조 -> 컴포넌트 상태)
-    if (res && res.data) {
-      cardData.value = {
-        name: res.data.name,
-        role: res.data.affiliation,
-        description: res.data.namecard_title, // 혹은 별도 소개글 필드
-        avatar: res.data.style.avatar,
-        keywords: res.data.keywords, // 배열
-        email: res.data.email,
-        github: res.data.url,
-        color: res.data.style.color,
-      }
-    }
-  } catch (error) {
-    console.error('데이터 로딩 실패', error)
-  } finally {
-    isLoading.value = false
-  }
+const loadMyCard = async () => {
+  isLoading.value = true
+  // Store는 데이터를 가져오는 도구로만 사용하고, 결과값은 내 변수(cardData)에 저장
+  const data = await store.getUser(props.userId)
+  cardData.value = data
+  isLoading.value = false
 }
 
 onMounted(() => {
-  getUser('57')
+  loadMyCard()
+})
+
+// props.userId가 바뀔 경우를 대비
+watch(() => props.userId, () => {
+  loadMyCard()
 })
 </script>
 

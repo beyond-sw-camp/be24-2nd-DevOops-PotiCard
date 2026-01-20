@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:5173/api/' // local
+const BASE_URL = '/api' // local
 // const BASE_URL = 'http://192.100.200.10:8080/' // tomcat
 // const BASE_URL = 'https://www.beyond24lsj.kro.kr/api/' // aws
 

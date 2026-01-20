@@ -1,10 +1,8 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import matchingApi from '@/api/matching'
 
-/** =========================
- *  DEMO DATA
- *  ========================= */
-const companies = ref([
+const DEMO_COMPANIES = [
   {
     id: 1,
     name: 'DevOops Labs',
@@ -83,22 +81,46 @@ const companies = ref([
     views: 780,
     updatedAt: '2026-01-05',
   },
-])
+]
 
-/** =========================
- *  UI STATE
- *  ========================= */
+const companies = ref([...DEMO_COMPANIES])
+
+const loading = ref(false)
+const loadError = ref('')
+
+async function loadCompanies() {
+  loading.value = true
+  loadError.value = ''
+  try {
+    const list = await matchingApi.list()
+
+    if (Array.isArray(list) && list.length > 0) {
+      companies.value = list
+    } else {
+      console.warn('[Matching] API list는 성공했지만 데이터가 비어있음. 경로/파일명/응답형태 확인 필요', list)
+    }
+  } catch (e) {
+    console.error('[Matching] loadCompanies error:', e)
+    loadError.value = e?.message || '채용 공고 데이터를 불러오지 못했습니다.'
+  } finally {
+    loading.value = false
+  }
+}
+
+onMounted(() => {
+  loadCompanies()
+})
+
 const q = ref('')
-const sort = ref('popular') // popular | newest | views
-const category = ref('ALL') // ALL | Backend | Frontend | Fullstack | DevOps
-const selectedSkills = ref([]) // ["Spring", ...]
+const sort = ref('popular')
+const category = ref('ALL')
+const selectedSkills = ref([])
 const page = ref(1)
 const pageSize = 6
 
-/** 기술칩 후보(데모에서는 companies에서 유니크로 뽑음) */
 const skillOptions = computed(() => {
   const set = new Set()
-  companies.value.forEach((c) => c.skills.forEach((s) => set.add(s)))
+  companies.value.forEach((c) => (c.skills || []).forEach((s) => set.add(s)))
   return Array.from(set).sort((a, b) => a.localeCompare(b))
 })
 
@@ -125,34 +147,30 @@ function resetFilters() {
   page.value = 1
 }
 
-/** =========================
- *  FILTER + SORT + PAGING
- *  ========================= */
 const filteredCompanies = computed(() => {
   const keyword = q.value.trim().toLowerCase()
 
   let list = companies.value.filter((c) => {
     const matchKeyword =
       !keyword ||
-      c.name.toLowerCase().includes(keyword) ||
-      c.role.toLowerCase().includes(keyword) ||
-      c.skills.some((s) => s.toLowerCase().includes(keyword)) ||
-      c.location.toLowerCase().includes(keyword)
+      (c.name || '').toLowerCase().includes(keyword) ||
+      (c.role || '').toLowerCase().includes(keyword) ||
+      (c.skills || []).some((s) => (s || '').toLowerCase().includes(keyword)) ||
+      (c.location || '').toLowerCase().includes(keyword)
 
     const matchCategory = category.value === 'ALL' || c.category === category.value
 
     const matchSkills =
-      selectedSkills.value.length === 0 || selectedSkills.value.every((s) => c.skills.includes(s))
+      selectedSkills.value.length === 0 ||
+      selectedSkills.value.every((s) => (c.skills || []).includes(s))
 
     return matchKeyword && matchCategory && matchSkills
   })
 
-  // sort
   list = [...list].sort((a, b) => {
-    if (sort.value === 'popular') return b.likes - a.likes
-    if (sort.value === 'views') return b.views - a.views
-    // newest
-    return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    if (sort.value === 'popular') return (b.likes || 0) - (a.likes || 0)
+    if (sort.value === 'views') return (b.views || 0) - (a.views || 0)
+    return new Date(b.updatedAt || 0).getTime() - new Date(a.updatedAt || 0).getTime()
   })
 
   return list
@@ -176,51 +194,34 @@ function goNext() {
 <template>
   <div class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 min-h-screen">
     <main class="max-w-7xl mx-auto px-5 pt-10 pb-16">
-      <!-- Header -->
       <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
         <div>
           <h1 class="text-3xl font-extrabold tracking-tight">채용 공고</h1>
         </div>
 
-        <button
-          @click="resetFilters"
-          class="self-start md:self-auto px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900"
-        >
+        <button @click="resetFilters"
+          class="self-start md:self-auto px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900">
           초기화
         </button>
       </div>
-      <!-- Filters -->
-      <section
-        class="mt-7 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5"
-      >
+      <section class="mt-7 rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5">
         <div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div class="flex flex-col md:flex-row gap-3 md:items-center w-full">
-            <!-- Search -->
             <div class="relative w-full md:max-w-md">
-              <input
-                v-model="q"
-                type="text"
-                placeholder="회사/직무/스킬/지역 검색"
-                class="w-full px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 outline-none focus:ring-2 ring-amber-300"
-              />
+              <input v-model="q" type="text" placeholder="회사/직무/스킬/지역 검색"
+                class="w-full px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 outline-none focus:ring-2 ring-amber-300" />
               <div class="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-400">⌘K</div>
             </div>
 
-            <!-- Category -->
-            <select
-              v-model="category"
-              class="w-full md:w-44 px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
-            >
+            <select v-model="category"
+              class="w-full md:w-44 px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
               <option v-for="c in categoryOptions" :key="c.value" :value="c.value">
                 {{ c.label }}
               </option>
             </select>
 
-            <!-- Sort -->
-            <select
-              v-model="sort"
-              class="w-full md:w-44 px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800"
-            >
+            <select v-model="sort"
+              class="w-full md:w-44 px-4 py-3 rounded-2xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800">
               <option value="popular">인기순</option>
               <option value="newest">최신순</option>
               <option value="views">조회순</option>
@@ -231,24 +232,17 @@ function goNext() {
             결과
             <span class="font-extrabold text-zinc-900 dark:text-zinc-100">{{
               filteredCompanies.length
-            }}</span
-            >개
+            }}</span>개
           </div>
         </div>
 
-        <!-- Skill chips -->
         <div class="mt-4 flex flex-wrap gap-2">
-          <button
-            v-for="s in skillOptions"
-            :key="s"
-            @click="toggleSkill(s)"
-            :class="[
-              'px-3 py-1.5 rounded-full text-xs font-extrabold border transition',
-              selectedSkills.includes(s)
-                ? 'bg-amber-400 text-zinc-900 border-amber-300'
-                : 'bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900',
-            ]"
-          >
+          <button v-for="s in skillOptions" :key="s" @click="toggleSkill(s)" :class="[
+            'px-3 py-1.5 rounded-full text-xs font-extrabold border transition',
+            selectedSkills.includes(s)
+              ? 'bg-amber-400 text-zinc-900 border-amber-300'
+              : 'bg-white dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900',
+          ]">
             {{ s }}
           </button>
         </div>
@@ -261,13 +255,9 @@ function goNext() {
         </div>
       </section>
 
-      <!-- List -->
       <section class="mt-7 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-        <div
-          v-for="c in pagedCompanies"
-          :key="c.id"
-          class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 hover:shadow-sm transition"
-        >
+        <div v-for="c in pagedCompanies" :key="c.id"
+          class="rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-5 hover:shadow-sm transition">
           <div class="flex items-start justify-between gap-3">
             <div>
               <div class="text-xs font-extrabold text-zinc-500 dark:text-zinc-400">
@@ -287,21 +277,15 @@ function goNext() {
           </div>
 
           <div class="mt-3 flex flex-wrap gap-2">
-            <span
-              v-for="b in c.badges"
-              :key="b"
-              class="px-2.5 py-1 rounded-full text-xs font-extrabold border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300"
-            >
+            <span v-for="b in c.badges" :key="b"
+              class="px-2.5 py-1 rounded-full text-xs font-extrabold border border-amber-200 dark:border-amber-500/30 bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-300">
               {{ b }}
             </span>
           </div>
 
           <div class="mt-4 flex flex-wrap gap-2">
-            <span
-              v-for="s in c.skills"
-              :key="s"
-              class="px-2.5 py-1 rounded-full text-xs font-bold border border-zinc-200 dark:border-zinc-800"
-            >
+            <span v-for="s in c.skills" :key="s"
+              class="px-2.5 py-1 rounded-full text-xs font-bold border border-zinc-200 dark:border-zinc-800">
               {{ s }}
             </span>
           </div>
@@ -309,50 +293,37 @@ function goNext() {
           <div class="mt-4 flex items-center justify-between">
             <div class="text-xs text-zinc-500 dark:text-zinc-400">업데이트: {{ c.updatedAt }}</div>
 
-            <button
-              class="px-3 py-2 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300"
-              @click="() => alert(`(데모) ${c.name} 상세/지원 페이지로 연결하면 됨`)"
-            >
+            <button class="px-3 py-2 rounded-2xl font-extrabold bg-amber-400 text-zinc-900 hover:bg-amber-300"
+              @click="() => alert(`(데모) ${c.name} 상세/지원 페이지로 연결하면 됨`)">
               보기
             </button>
           </div>
         </div>
 
-        <!-- Empty -->
-        <div
-          v-if="pagedCompanies.length === 0"
-          class="col-span-full rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-10 text-center"
-        >
+        <div v-if="pagedCompanies.length === 0"
+          class="col-span-full rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 p-10 text-center">
           <div class="text-lg font-extrabold">검색 결과가 없어요.</div>
           <div class="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
             검색어/카테고리/스킬 선택을 바꿔보세요.
           </div>
           <button
             class="mt-5 px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-950"
-            @click="resetFilters"
-          >
+            @click="resetFilters">
             필터 초기화
           </button>
         </div>
       </section>
 
-      <!-- Pagination -->
       <div class="mt-10 flex items-center justify-center gap-3">
-        <button
-          @click="goPrev"
-          :disabled="page <= 1"
-          class="px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 disabled:opacity-40"
-        >
+        <button @click="goPrev" :disabled="page <= 1"
+          class="px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 disabled:opacity-40">
           이전
         </button>
 
         <div class="text-sm font-extrabold">{{ page }} / {{ totalPages }}</div>
 
-        <button
-          @click="goNext"
-          :disabled="page >= totalPages"
-          class="px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 disabled:opacity-40"
-        >
+        <button @click="goNext" :disabled="page >= totalPages"
+          class="px-4 py-2.5 rounded-2xl font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-900 disabled:opacity-40">
           다음
         </button>
       </div>
