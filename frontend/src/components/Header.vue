@@ -6,6 +6,21 @@ import useAuthStore from '@/stores/useAuthStore'
 import '@/assets/css/Header.css'
 import brandLogo from '@/image/poticard-logo.png'
 
+// 1. 검색어 상태 추가
+const searchQuery = ref('')
+
+// 2. 검색 실행 함수 추가
+const handleSearch = () => {
+  if (!searchQuery.value.trim()) return
+  
+// 검색 결과 페이지로 이동하며 쿼리 파라미터 전달
+router.push({
+  path: '/searchresults',
+  query: { q: searchQuery.value }
+  })
+// value 값 초기화  
+  searchQuery.value = ''
+}
 const authStore = useAuthStore()
 const router = useRouter()
 
@@ -230,13 +245,22 @@ onBeforeUnmount(() => {
       </div>
 
       <div class="hidden md:flex flex-1 max-w-md group">
-        <div class="relative w-full">
-          <input type="text" placeholder="기술 스택, 이름, 회사 검색..."
-            class="w-full h-11 pl-12 pr-4 bg-gray-100 dark:bg-zinc-800/50 border-transparent focus:border-point-yellow/50 focus:bg-white dark:focus:bg-zinc-900 border-2 rounded-2xl text-sm transition-all outline-none" />
-          <span
-            class="absolute left-4 top-1/2 -translate-y-1/2 text-lg group-focus-within:scale-110 transition-transform">🔍</span>
-        </div>
-      </div>
+    <div class="relative w-full">
+      <input 
+        v-model="searchQuery"
+        type="text" 
+        placeholder="기술 스택, 이름, 회사 검색..."
+        @keyup.enter="handleSearch"
+        class="w-full h-11 pl-12 pr-4 bg-gray-100 dark:bg-zinc-800/50 border-transparent focus:border-point-yellow/50 focus:bg-white dark:focus:bg-zinc-900 border-2 rounded-2xl text-sm transition-all outline-none" 
+      />
+      <span 
+        class="absolute left-4 top-1/2 -translate-y-1/2 text-lg group-focus-within:scale-110 transition-transform cursor-pointer"
+        @click="handleSearch"
+      >
+        🔍
+      </span>
+    </div>
+  </div>
 
       <div class="flex items-center gap-4">
         <div v-if="!authStore.isLogin" class="flex items-center">
