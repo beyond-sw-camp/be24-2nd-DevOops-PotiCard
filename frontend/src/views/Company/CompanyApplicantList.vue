@@ -280,11 +280,8 @@ const goBack = () => router.push('/company/joblist')
 }
 .bg-pattern {
   background-color: #f8fafc;
-  background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
-  background-size: 24px 24px;
 }
 .dark .bg-pattern {
   background-color: #18181b;
-  background-image: radial-gradient(#27272a 1px, transparent 1px);
 }
 </style>
