@@ -54,7 +54,7 @@
 <br>
 
 ## 🌐 프로젝트 도메인 주소
-🔗 https://www.sspam.kro.kr
+🔗 https://www.poticard.kro.kr
 
 <br>
 
